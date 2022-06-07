@@ -1,5 +1,7 @@
 package model;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class PPMmodel implements IPModel {
   @Override
   public String generateFileName(String imageName, String imagePath)
           throws IllegalArgumentException {
-    return imagePath + "/" + imageName;
+    return imagePath + "/" + imageName + ".ppm";
   }
 
   @Override
@@ -42,13 +44,18 @@ public class PPMmodel implements IPModel {
 
   @Override
   public void save(String imagePath, String imageName) throws IllegalArgumentException {
-
+    try {
+      File file = new File(imagePath + "/" + imageName + ".ppm");
+      file.createNewFile();
+    }
+    catch (IOException e) {
+      throw new IllegalArgumentException("Invalid parameter(s)\n" + e.getMessage());
+    }
   }
 
   @Override
   public void visualizeComponent(int[] color, String imageName, String destName)
           throws IllegalArgumentException {
-
   }
 
   @Override
