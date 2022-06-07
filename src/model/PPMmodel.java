@@ -56,12 +56,40 @@ public class PPMmodel implements IPModel {
   @Override
   public void visualizeComponent(int[] color, String imageName, String destName)
           throws IllegalArgumentException {
+
   }
 
   @Override
   public void visualizeComponent(String visType, String imageName, String destName)
           throws IllegalArgumentException {
-
+    switch (visType) {
+      case "value":
+        ArrayList<Integer> max = new ArrayList<Integer>();
+        for (int i = 0; i < workingImage.size(); i++) {
+          int[] pixCol = workingImage.get(i);
+          if (pixCol[0] > pixCol[1] && pixCol[0] > pixCol[2]) {
+            max.add(pixCol[0]);
+          } else if (pixCol[1] > pixCol[0] && pixCol[1] > pixCol[2]) {
+            max.add(pixCol[1]);
+          } else if (pixCol[2] > pixCol[0] && pixCol[2] > pixCol[1]) {
+            max.add(pixCol[2]);
+          }
+        }
+        break;
+      case "intensity":
+        for (int i = 0; i < workingImage.size(); i++) {
+          int[] pixCol = workingImage.get(i);
+          System.out.println("intensity[" + i + "]  " + (pixCol[0] + pixCol[1] + pixCol[2]) / 3);
+        }
+        break;
+      case "luma":
+        double sum = 0;
+        for (int i = 0; i < workingImage.size(); i++) {
+          int[] colMatrix = workingImage.get(i);
+          sum = sum + (0.2126 * colMatrix[0]) + (0.7152 * colMatrix[0]) + (0.0722 * colMatrix[0]);
+        }
+        break;
+    }
   }
 
   @Override
