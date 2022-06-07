@@ -1,7 +1,10 @@
-package model;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import model.IPModel;
+import model.PPMmodel;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * This class represents all tests needed for the PPM model.
@@ -9,17 +12,22 @@ import org.junit.Test;
 public class PPMmodelTest {
   String koalaName;
   String koalaPath;
+  IPModel m;
 
+  // initializes some conditions and examples before testing
   @Before
   public void init() {
-    this.koalaName = "Koala.ppm";
-    this.koalaPath = "elijahmuraoka/Desktop/OOD/group/ImageProcessor/images/";
-
+    this.koalaName = "Koala";
+    this.koalaPath = "images";
+    this.m = new PPMmodel();
   }
 
   // tests the generateFileName method
   @Test
   public void generateFileName() {
+    String expectedKoalaFileName = "images/Koala.ppm";
+    assertEquals(expectedKoalaFileName,
+            this.m.generateFileName(this.koalaName, this.koalaPath));
   }
 
   // tests the load method
@@ -54,7 +62,7 @@ public class PPMmodelTest {
   public void verticalFlip() {
   }
 
-  // tests the brighten method
+  // tests the changeBrightness method
   @Test
   public void brighten() {
   }

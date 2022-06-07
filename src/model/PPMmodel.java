@@ -1,6 +1,7 @@
 package model;
 
-import java.io.File;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,13 +44,24 @@ public class PPMmodel implements IPModel {
   }
 
   @Override
-  public void save(String imagePath, String imageName) throws IllegalArgumentException {
-    try {
-      File file = new File(imagePath + "/" + imageName + ".ppm");
-      file.createNewFile();
+  public void save(String imageName, String imagePath) throws IllegalArgumentException {
+    String Header = "P3\n" + this.width + " " + this.height + "\n255\n";
+    StringBuilder imageData = new StringBuilder();
+    for (int[] pixel : this.workingImage) {
+      for (int component : pixel) {
+        imageData.append(component).append(" ");
+      }
     }
-    catch (IOException e) {
-      throw new IllegalArgumentException("Invalid parameter(s)\n" + e.getMessage());
+
+    try {
+      BufferedWriter bw = new BufferedWriter(new FileWriter(this.generateFileName(imageName,
+              imagePath)));
+      bw.write(Header);
+      bw.write(imageData.toString());
+      bw.close();
+    } catch (IOException e) {
+      throw new IllegalArgumentException("Invalid parameter(s), cannot save image file\n"
+              + e.getMessage());
     }
   }
 
@@ -77,8 +89,22 @@ public class PPMmodel implements IPModel {
   }
 
   @Override
-  public void brighten(int increment, String imageName, String destName)
+  public void changeBrightness(int increment, String imageName, String destName)
           throws IllegalArgumentException {
+    // LOAD THE APPROPRIATE IMAGE HERE FIRST?
 
+    // for every pixel component in the working image
+    for (int i = 0; i < this.width; i++) {
+      for (int j = 0; j < this.height; j++) {
+        int component = this.workingImage.get(i)[j];
+        // if the pixel component (RGB) is equal to or less than 245
+        if (component <= 245) {
+          // increase or decrease the new pixel component by the increment
+          int newComponent = component + increment;
+          // set the new (brighter or darker) pixel component
+          this.workingImage.get(i)[j] = newComponent;
+        }
+      }
+    }
   }
 }
