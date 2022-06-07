@@ -16,6 +16,13 @@ public class Brighten implements IPCommand {
   String imageName;
   String destName;
 
+  /**
+   * A Brighten command constructor that takes in a scanner and view.
+   *
+   * @param sc the scanner
+   * @param v  the Image Processor view
+   * @throws IOException when the input(s) and/or output(s) cannot be transmitted properly
+   */
   Brighten(Scanner sc, IPView v) throws IOException {
     try {
       this.increment = sc.nextInt();
@@ -30,7 +37,6 @@ public class Brighten implements IPCommand {
 
   @Override
   public void execute(IPModel m) {
-    int increment;
     m.brighten(this.increment, this.imageName, this.destName);
   }
 }

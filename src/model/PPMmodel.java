@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * FILL IN HERE.
+ * An implementation of the Image Processor model interface.
+ * This particular class takes in and manipulates PPM files (type of image).
  */
-public class IPModelImpl implements IPModel {
+public class PPMmodel implements IPModel {
   String fileName;
   // the height of the PPM image
   int height;
@@ -29,9 +30,11 @@ public class IPModelImpl implements IPModel {
     // generates the fileName to initialize the image that this model will be working on
     this.fileName = this.generateFileName(imageName, imagePath);
 
-    // how to verify a correct computer path??
+    // how do you verify a correct computer path??
+    // read the PPM file passed in
     IPUtil util = new IPUtil();
     util.readPPM(this.fileName);
+    // make a copy of the PPM image data in this model
     this.width = util.width;
     this.height = util.height;
     this.workingImage = util.workingImage;

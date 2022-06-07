@@ -4,15 +4,16 @@ import java.io.IOException;
 
 /**
  * An implementation of the Image Processor View interface. This implementation
- * supports the ability to render messages, ADD ON.
+ * supports the ability to render messages,
+ * ADD ON WHEN WE ADD MORE TO THE VIEW.
  */
 public class IPViewImpl implements IPView {
   private final Appendable a;
 
   /**
-   * ADD METHOD PURPOSE STATEMENT;
+   * An Image Processor view implementation constructor that takes in an Appendable object.
    *
-   * @param a when the appendable object
+   * @param a the appendable object
    * @throws IllegalArgumentException when the appendable object is null
    */
   public IPViewImpl(Appendable a) throws IllegalArgumentException {

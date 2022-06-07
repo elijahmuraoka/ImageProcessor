@@ -9,11 +9,14 @@ import view.IPView;
 
 /**
  * An implementation of the Image Processor controller interface used to process user inputs
- * and communicate between the model and view. Specifically this controller supports operations
- * such as...
- * - Loading an Image
- * - Saving an Image
- * - FILL IN THE REST
+ * and communicate between the model and view. Specifically, this controller supports and can
+ * apply any operation provided from its model. This includes...
+ * - Loading an image
+ * - Saving an image
+ * - Visualizing a specific RGB component of an image
+ * - Visualizing value, intensity, or luma of an image
+ * - Flip an image horizontally or vertically
+ * - Brightening an image
  */
 public class IPControllerImpl implements IPController {
   // the view used by this controller to process and display
@@ -25,7 +28,11 @@ public class IPControllerImpl implements IPController {
   private final Readable in;
 
   /**
+   * An Image Processor controller implementation constructor that takes in a model, view, and
+   * readable object.
+   *
    * @param m  an Image Processor model
+   * @param v  an Image Processor view
    * @param in a Readable object
    * @throws IllegalArgumentException when either the model and/or Readable object are null
    */
@@ -34,7 +41,6 @@ public class IPControllerImpl implements IPController {
       throw new IllegalArgumentException("Either the model, view, and/or " +
               "readable object(s) are null.\nPlease try new valid parameters.");
     }
-
     this.m = m;
     this.v = v;
     this.in = in;

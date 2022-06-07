@@ -7,6 +7,8 @@ package controller;
 public interface IPController {
 
   /**
+   * The main controller method which handles user inputs and reacts accordingly.
+   *
    * @throws IllegalStateException when the controller is unable to successfully read the input
    *                               and/or output the value appropriately
    */

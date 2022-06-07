@@ -90,8 +90,8 @@ public interface IPModel {
   void horizontalFlip(String imageName, String destName) throws IllegalArgumentException;
 
   /**
-   * Flip an image vertically to create a new image, referred to henceforth by the given destination
-   * name.
+   * Flip an image vertically to create a new image, referred to henceforth by the given
+   * destination name.
    *
    * @param imageName the name of the image
    * @param destName  the new destination name representing the image
