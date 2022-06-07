@@ -1,3 +1,5 @@
+package model;
+
 public class Pixel {
   int red;
   int green;
