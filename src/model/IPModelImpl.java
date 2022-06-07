@@ -18,12 +18,14 @@ public class IPModelImpl implements IPModel {
   List<int[]> workingImage = new ArrayList<>();
 
   @Override
-  public String generateFileName(String imageName, String imagePath) throws IllegalArgumentException {
+  public String generateFileName(String imageName, String imagePath)
+          throws IllegalArgumentException {
     return imagePath + "/" + imageName;
   }
 
   @Override
-  public void load(String imageName, String imagePath) throws IllegalArgumentException {
+  public void load(String imageName, String imagePath)
+          throws IllegalArgumentException {
     // generates the fileName to initialize the image that this model will be working on
     this.fileName = this.generateFileName(imageName, imagePath);
 
@@ -36,36 +38,37 @@ public class IPModelImpl implements IPModel {
   }
 
   @Override
-  public void save(String imagePath, String imageName) {
-    /*
-    FileOutputStream fos = new FileOutputStream("" + imagePath + imageName);
-    fos.write(new String(matrix).getBytes());
-     */
-    // create new image and copy into a new file destination?
-  }
-
-  @Override
-  public void visualizeComponent(int[] color, String imageName, String destName) throws IllegalArgumentException {
+  public void save(String imagePath, String imageName) throws IllegalArgumentException {
 
   }
 
   @Override
-  public void visualizeComponent(String visType, String imageName, String destName) throws IllegalArgumentException {
+  public void visualizeComponent(int[] color, String imageName, String destName)
+          throws IllegalArgumentException {
 
   }
 
   @Override
-  public void horizontalFlip(String imageName, String imagePath) {
+  public void visualizeComponent(String visType, String imageName, String destName)
+          throws IllegalArgumentException {
 
   }
 
   @Override
-  public void verticalFlip(String imageName, String imagePath) {
+  public void horizontalFlip(String imageName, String destName)
+          throws IllegalArgumentException {
 
   }
 
   @Override
-  public void brighten(int increment, String imageName, String imagePath) {
+  public void verticalFlip(String imageName, String destName)
+          throws IllegalArgumentException {
+
+  }
+
+  @Override
+  public void brighten(int increment, String imageName, String destName)
+          throws IllegalArgumentException {
 
   }
 }
