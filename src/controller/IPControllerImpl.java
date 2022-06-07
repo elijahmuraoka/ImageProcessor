@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.*;
+import java.util.Scanner;
 
 import javax.swing.*;
 
@@ -48,7 +49,8 @@ public class IPControllerImpl implements IPController {
 
   @Override
   public void go() throws IllegalStateException {
-
+    Scanner scan = new Scanner(this.in);
+    scan.next();
   }
 
   public void testMod() {

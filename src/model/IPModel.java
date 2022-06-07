@@ -27,7 +27,7 @@ public interface IPModel {
    *                                  - the image name is unrecognized/invalid
    *                                  - the image path is unrecognized/invalid
    */
-  void load(String imagePath, String imageName) throws IllegalArgumentException;
+  void load(String imageName, String imagePath) throws IllegalArgumentException;
 
   /**
    * Save the image with the given name to the specified path which should
@@ -39,7 +39,7 @@ public interface IPModel {
    *                                  - the image name is unrecognized/invalid
    *                                  - the image path is unrecognized/invalid
    */
-  void save(String imagePath, String imageName) throws IllegalArgumentException;
+  void save(String imageName, String imagePath) throws IllegalArgumentException;
 
   /**
    * Create a greyscale image with the red-component of the image with the given name,
@@ -103,7 +103,7 @@ public interface IPModel {
           throws IllegalArgumentException;
 
   /**
-   * brighten the image by the given increment to create a new image, referred to henceforth by the
+   * Change the brightness of the image by the given increment to create a new image, referred to henceforth by the
    * given destination name. The increment may be positive (brightening) or negative (darkening).
    *
    * @param increment how much to add to/subtract from the image's rgb values.
@@ -113,7 +113,7 @@ public interface IPModel {
    *                                  - the image name is unrecognized/invalid
    *                                  - the destination name has been used already.
    */
-  void brighten(int increment, String imageName, String destName)
+  void changeBrightness(int increment, String imageName, String destName)
           throws IllegalArgumentException;
 }
 
@@ -121,8 +121,8 @@ public interface IPModel {
 #load koala.ppm and call it 'koala'
 load images/koala.ppm koala
 
-#brighten koala by adding 10
-brighten 10 koala koala-brighter
+#changeBrightness koala by adding 10
+changeBrightness 10 koala koala-brighter
 
 #flip koala vertically
 vertical-flip koala koala-vertical

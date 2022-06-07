@@ -22,6 +22,8 @@ public class ImageProcessor {
     IPView view = new IPViewImpl(new StringBuilder());
     Readable in = new InputStreamReader(System.in);
     IPController controller = new IPControllerImpl(model, view, in);
+    model.load("Koala", "images");
+    model.save("Koala2", "testImages");
     controller.go();
   }
 
@@ -87,7 +89,7 @@ public class ImageProcessor {
   //          int incr = scan.nextInt();
   //          String imgName = scan.nextLine();
   //          String destName = scan.nextLine();
-  //          controller.brighten(incr, imgName, destName);
+  //          controller.changeBrightness(incr, imgName, destName);
   //          break;
   //        } catch (Exception e) {
   //          throw new IllegalArgumentException("Illegal args passed");
