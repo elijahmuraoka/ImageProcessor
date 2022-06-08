@@ -6,7 +6,7 @@ import java.io.StringReader;
 import controller.IPController;
 import controller.IPControllerImpl;
 import model.IPModel;
-import model.PPMmodel;
+import model.ImageModel;
 import view.IPView;
 import view.IPViewImpl;
 
@@ -25,7 +25,7 @@ public class IPControllerImplTest {
   @Before
   // initializes some conditions and examples before testing
   public void init() {
-    this.m = new PPMmodel();
+    this.m = new ImageModel();
     this.a = new StringBuilder();
     this.v = new IPViewImpl(this.a);
     this.in = new StringReader("");

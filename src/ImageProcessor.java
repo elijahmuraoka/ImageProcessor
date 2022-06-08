@@ -3,7 +3,7 @@ import java.io.InputStreamReader;
 import controller.IPController;
 import controller.IPControllerImpl;
 import model.IPModel;
-import model.PPMmodel;
+import model.ImageModel;
 import view.IPView;
 import view.IPViewImpl;
 
@@ -18,7 +18,7 @@ public class ImageProcessor {
    * @param args the user's inputs represented as an array of strings
    */
   public static void main(String[] args) {
-    IPModel model = new PPMmodel();
+    IPModel model = new ImageModel();
     IPView view = new IPViewImpl(new StringBuilder());
     Readable in = new InputStreamReader(System.in);
     IPController controller = new IPControllerImpl(model, view, in);

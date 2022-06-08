@@ -2,14 +2,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.IPModel;
-import model.PPMmodel;
+import model.ImageModel;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  * This class represents all tests needed for the PPM model.
  */
-public class PPMmodelTest {
+public class ImageModelTest {
   String koalaName;
   String koalaPath;
   IPModel m;
@@ -19,7 +19,7 @@ public class PPMmodelTest {
   public void init() {
     this.koalaName = "Koala";
     this.koalaPath = "images";
-    this.m = new PPMmodel();
+    this.m = new ImageModel();
   }
 
   // tests the generateFileName method

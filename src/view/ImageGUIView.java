@@ -27,4 +27,14 @@ public class ImageGUIView {
     frame.setContentPane(panel);
   }
 
+  public void show(String imageName, String imagePath) {
+    JFrame frame = new JFrame(imageName + " | " + imagePath);
+    JLabel label = new JLabel("This is a label");
+    JPanel panel = new JPanel();
+
+    panel.add(label);
+    frame.setSize(new Dimension(400, 300));
+    frame.setVisible(true);
+  }
+
 }

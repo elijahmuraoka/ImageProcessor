@@ -1,16 +1,12 @@
 package model;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * An implementation of the Image Processor model interface.
- * This particular class takes in and manipulates PPM files (type of image).
  */
-public class PPMmodel implements IPModel {
+public class ImageModel implements IPModel {
   String fileName;
   // the height of the PPM image
   int height;

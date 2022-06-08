@@ -7,41 +7,6 @@ package model;
 public interface IPModel {
 
   /**
-   * Create and return any image's file name by appending its image path to its name.
-   *
-   * @param imageName the name of the image
-   * @param imagePath the file path for a specific image
-   * @throws IllegalArgumentException when...
-   *                                  - the image name is unrecognized/invalid
-   *                                  - the image path is unrecognized/invalid
-   */
-  String generateFileName(String imageName, String imagePath) throws IllegalArgumentException;
-
-  /**
-   * Load an image from the specified path and refer it to henceforth in the program
-   * by the given image name.
-   *
-   * @param imageName the name of the image
-   * @param imagePath the file path for a specific image
-   * @throws IllegalArgumentException when...
-   *                                  - the image name is unrecognized/invalid
-   *                                  - the image path is unrecognized/invalid
-   */
-  void load(String imageName, String imagePath) throws IllegalArgumentException;
-
-  /**
-   * Save the image with the given name to the specified path which should
-   * include the name of the file.
-   *
-   * @param imageName the name of the image
-   * @param imagePath the file path for a specific image
-   * @throws IllegalArgumentException when...
-   *                                  - the image name is unrecognized/invalid
-   *                                  - the image path is unrecognized/invalid
-   */
-  void save(String imageName, String imagePath) throws IllegalArgumentException;
-
-  /**
    * Create a greyscale image with the red-component of the image with the given name,
    * and refer to it henceforth in the program by the given destination name.
    * <p>

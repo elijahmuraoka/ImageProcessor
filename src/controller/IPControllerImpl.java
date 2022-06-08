@@ -1,11 +1,15 @@
 package controller;
 
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 import javax.swing.*;
 
 import model.IPModel;
+import model.IPUtil;
 import view.IPView;
 
 /**
@@ -53,18 +57,48 @@ public class IPControllerImpl implements IPController {
     scan.next();
   }
 
-  public void testMod() {
-    //
+
+  @Override
+  public String generateFileName(String imageName, String imagePath)
+          throws IllegalArgumentException {
+    return imagePath + "/" + imageName + ".ppm";
   }
 
-  // Damian, this should be in the view.
-  public void show(String imageName, String imagePath) {
-    JFrame frame = new JFrame(imageName + " | " + imagePath);
-    JLabel label = new JLabel("This is a label");
-    JPanel panel = new JPanel();
+  @Override
+  public void load(String imageName, String imagePath)
+          throws IllegalArgumentException {
+    // generates the fileName to initialize the image that this model will be working on
+    this.fileName = this.generateFileName(imageName, imagePath);
 
-    panel.add(label);
-    frame.setSize(new Dimension(400, 300));
-    frame.setVisible(true);
+    // how do you verify a correct computer path??
+    // read the PPM file passed in
+    IPUtil util = new IPUtil();
+    util.readPPM(this.fileName);
+    // make a copy of the PPM image data in this model
+    this.width = util.width;
+    this.height = util.height;
+    this.workingImage = util.workingImage;
+  }
+
+  @Override
+  public void save(String imageName, String imagePath) throws IllegalArgumentException {
+    String Header = "P3\n" + this.width + " " + this.height + "\n255\n";
+    StringBuilder imageData = new StringBuilder();
+    for (int[] pixel : this.workingImage) {
+      for (int component : pixel) {
+        imageData.append(component).append(" ");
+      }
+    }
+
+    try {
+      BufferedWriter bw = new BufferedWriter(new FileWriter(this.generateFileName(imageName,
+              imagePath)));
+      bw.write(Header);
+      bw.write(imageData.toString());
+      bw.close();
+    } catch (IOException e) {
+      throw new IllegalArgumentException("Invalid parameter(s), cannot save image file\n"
+              + e.getMessage());
+    }
   }
 }
