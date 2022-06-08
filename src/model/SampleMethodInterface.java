@@ -38,18 +38,6 @@ public interface SampleMethodInterface {
           throws IllegalArgumentException;
 
   /**
-   * Flip an image horizontally to create a new image, referred to henceforth by the given
-   * destination name.
-   *
-   * @param imageName the name of the image
-   * @param destName  the new destination name representing the image
-   * @throws IllegalArgumentException when...
-   *                                  - the image name is unrecognized/invalid
-   *                                  - the destination name has been used already.
-   */
-  void horizontalFlip(String imageName, String destName) throws IllegalArgumentException;
-
-  /**
    * Flip an image vertically to create a new image, referred to henceforth by the given
    * destination name.
    *

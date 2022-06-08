@@ -4,10 +4,13 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import commands.ChangeBrightness;
+import commands.HorizontalFlip;
 import commands.IPCommand;
 import model.IPModel;
 import model.IPUtil;
@@ -54,6 +57,7 @@ public class IPControllerImpl implements IPController {
     this.knownImageModels = new HashMap<>();
     this.knownCommands = new HashMap<>();
     this.knownCommands.put("ChangeBrightness", new ChangeBrightness());
+    this.knownCommands.put("HorizontalFlip", new HorizontalFlip());
   }
 
   @Override
@@ -63,13 +67,18 @@ public class IPControllerImpl implements IPController {
     String errorIOMessage = "Error: Invalid input and/or output(s)";
     this.printMenu();
     while (!quit && scan.hasNext()) {
-      String userInput = scan.next();
+      String userInput;
+      try {
+        userInput = scan.next();
+      } catch (NoSuchElementException e) {
+        throw new IllegalStateException("Error: There are no more inputs.");
+      }
       switch (userInput) {
         case "q":
         case "Q":
           quit = true;
           try {
-            this.v.renderMessage("Successfully quit the Image Processor Application!");
+            this.v.renderMessage("Quitting the Image Processor Application now...");
           } catch (IOException e) {
             throw new IllegalStateException(errorIOMessage);
           }
@@ -81,8 +90,6 @@ public class IPControllerImpl implements IPController {
             String imageName = scan.next();
             String imagePath = scan.next();
             this.load(imageName, imagePath);
-            this.v.renderMessage("Successfully loaded "
-                    + imageName + " from " + imagePath + "!\n");
           } catch (IOException e) {
             throw new IllegalStateException(errorIOMessage);
           }
@@ -93,8 +100,6 @@ public class IPControllerImpl implements IPController {
             String imageName = scan.next();
             String imagePath = scan.next();
             this.save(imageName, imagePath);
-            this.v.renderMessage("Successfully saved "
-                    + imageName + " to " + imagePath + "!\n");
           } catch (IOException e) {
             throw new IllegalStateException(errorIOMessage);
           }
@@ -119,15 +124,27 @@ public class IPControllerImpl implements IPController {
   private void printMenu() throws IllegalStateException {
     try {
       this.v.renderMessage("Welcome to our Image Processor Program!\n"
-              + "Listed below are some basic commands you can execute on an image\n"
-              + "(1) ChangeBrightness <imageName> <increment> <destName>\n");
+              + "Press `q` or `Q' to quit the program at any time.\n"
+              + "Listed below are some basic commands you can execute on an image:\n\n"
+              + "(1) Load and store an image in this application.\n"
+              + "    Input Format: load <imageName> <imagePath>\n"
+              + "(2) Save any (un)modified images to this device.\n"
+              + "    Input Format: save <imageName> <imagePath>\n"
+              + "(3) Change the brightness of an image.\n"
+              + "    Input Format: ChangeBrightness <imageName> <increment> <destName>\n"
+              + "(4) Flip an image horizontally.\n"
+              + "    Input Format: HorizontalFlip <imageName> <destName>\n"
+              + "\nType 'menu' if you would like to see this information again.\n");
     } catch (IOException e) {
       throw new IllegalStateException("Error: Invalid input and/or output(s)");
     }
   }
 
   /**
-   * Process the user's inputs and apply some command to a given image model if
+   * Process the user's inputs and apply some command to the given image model
+   * as long as the inputs are valid and sufficient.
+   * Required: The command input must be contained in the list of known commands
+   * Required: The image name input must be recognizable to retrieve its corresponding model
    *
    * @param userInput the user's input to the controller
    * @param scan      the scanner used to read the user's inputs
@@ -146,7 +163,7 @@ public class IPControllerImpl implements IPController {
       } else {
         try {
           m = cmd.execute(m, scan);
-          this.v.renderMessage("Sucessfully executed the command: " + userInput + "\n");
+          this.v.renderMessage("Successfully executed the command: " + userInput + "\n");
           this.knownImageModels.put(m.getImageName(), m);
         } catch (IllegalStateException e) {
           this.v.renderMessage(e.getMessage());
@@ -186,16 +203,23 @@ public class IPControllerImpl implements IPController {
     } else {
       String Header = "P3\n" + m.getWidth() + " " + m.getHeight() + "\n255\n";
       StringBuilder imageData = new StringBuilder();
-      for (int[] pixel : m.getWorkingImageData()) {
-        for (int component : pixel) {
-          imageData.append(component).append(" ");
+      for (List<int[]> row : m.getWorkingImageData()) {
+        for (int[] pixel : row) {
+          for (int component : pixel) {
+            imageData.append(component).append(" ");
+          }
         }
       }
-      BufferedWriter bw = new BufferedWriter(new FileWriter(this.generateFileName(imageName,
-              imagePath)));
-      bw.write(Header);
-      bw.write(imageData.toString());
-      bw.close();
+      try {
+        BufferedWriter bw = new BufferedWriter(new FileWriter(this.generateFileName(imageName,
+                imagePath)));
+        bw.write(Header);
+        bw.write(imageData.toString());
+        this.v.renderMessage("Successfully saved " + imageName + " to " + imagePath + "\n");
+        bw.close();
+      } catch (IOException e) {
+        this.v.renderMessage("Invalid file path. Please input new values and try again.\n");
+      }
     }
   }
 }

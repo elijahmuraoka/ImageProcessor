@@ -22,7 +22,7 @@ public class IPUtil {
   // the working image displayed as a 1-D list of Pixels
   // Each Pixel is an array of 3 integers that represent
   // its RGB components respectively
-  private List<int[]> workingImageData;
+  private List<List<int[]>> workingImageData;
 
   /**
    * Read an image file in the PPM format and print the colors.
@@ -35,7 +35,7 @@ public class IPUtil {
     try {
       sc = new Scanner(new FileInputStream(filename));
     } catch (FileNotFoundException e) {
-      v.renderMessage("File " + filename + " not found!");
+      v.renderMessage("File " + filename + " not found!\n");
       return;
     }
     StringBuilder builder = new StringBuilder();
@@ -44,7 +44,7 @@ public class IPUtil {
     while (sc.hasNextLine()) {
       String s = sc.nextLine();
       if (s.charAt(0) != '#') {
-        builder.append(s + System.lineSeparator());
+        builder.append(s).append(System.lineSeparator());
       }
     }
 
@@ -55,27 +55,30 @@ public class IPUtil {
 
     token = sc.next();
     if (!token.equals("P3")) {
-      v.renderMessage("Invalid PPM file: plain RAW file should begin with P3");
+      v.renderMessage("Invalid PPM file: plain RAW file should begin with P3.");
     }
     this.width = sc.nextInt();
-    v.renderMessage("Width of image: " + width);
+    v.renderMessage("Width of image: " + width + "\n");
     this.height = sc.nextInt();
-    v.renderMessage("Height of image: " + height);
+    v.renderMessage("Height of image: " + height + "\n");
     int maxValue = sc.nextInt();
-    v.renderMessage("Maximum value of a color in this file (usually 255): " + maxValue);
+    v.renderMessage("Maximum value of a color in this file (usually 255): " + maxValue + "\n");
 
     this.workingImageData = new ArrayList<>();
     for (int i = 0; i < this.height; i++) {
+      ArrayList<int[]> newColumn = new ArrayList<>();
       for (int j = 0; j < this.width; j++) {
         int r = sc.nextInt();
         int g = sc.nextInt();
         int b = sc.nextInt();
 
-        int[] cols = {r, g, b};
-        this.workingImageData.add(cols);
+        int[] pixel = {r, g, b};
+        newColumn.add(pixel);
         // System.out.println("Color of pixel (" + j + "," + i + "): " + r + "," + g + "," + b);
       }
+      this.workingImageData.add(newColumn);
     }
+    v.renderMessage("Successfully loaded image: " + filename + "\n");
   }
 
   public int getWidth() {
@@ -86,7 +89,7 @@ public class IPUtil {
     return this.height;
   }
 
-  public List<int[]> getWorkingImageData() {
+  public List<List<int[]>> getWorkingImageData() {
     return this.workingImageData;
   }
 }

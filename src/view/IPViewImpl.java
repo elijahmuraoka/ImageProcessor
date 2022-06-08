@@ -11,6 +11,14 @@ public class IPViewImpl implements IPView {
   private final Appendable a;
 
   /**
+   * An empty Image Processor view implementation constructor that
+   * uses the System console as its Appendable object.
+   */
+  public IPViewImpl() {
+    this.a = System.out;
+  }
+
+  /**
    * An Image Processor view implementation constructor that takes in an Appendable object.
    *
    * @param a the appendable object
