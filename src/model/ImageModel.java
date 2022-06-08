@@ -22,50 +22,6 @@ public class PPMmodel implements IPModel {
   List<int[]> workingImage = new ArrayList<>();
 
   @Override
-  public String generateFileName(String imageName, String imagePath)
-          throws IllegalArgumentException {
-    return imagePath + "/" + imageName + ".ppm";
-  }
-
-  @Override
-  public void load(String imageName, String imagePath)
-          throws IllegalArgumentException {
-    // generates the fileName to initialize the image that this model will be working on
-    this.fileName = this.generateFileName(imageName, imagePath);
-
-    // how do you verify a correct computer path??
-    // read the PPM file passed in
-    IPUtil util = new IPUtil();
-    util.readPPM(this.fileName);
-    // make a copy of the PPM image data in this model
-    this.width = util.width;
-    this.height = util.height;
-    this.workingImage = util.workingImage;
-  }
-
-  @Override
-  public void save(String imageName, String imagePath) throws IllegalArgumentException {
-    String Header = "P3\n" + this.width + " " + this.height + "\n255\n";
-    StringBuilder imageData = new StringBuilder();
-    for (int[] pixel : this.workingImage) {
-      for (int component : pixel) {
-        imageData.append(component).append(" ");
-      }
-    }
-
-    try {
-      BufferedWriter bw = new BufferedWriter(new FileWriter(this.generateFileName(imageName,
-              imagePath)));
-      bw.write(Header);
-      bw.write(imageData.toString());
-      bw.close();
-    } catch (IOException e) {
-      throw new IllegalArgumentException("Invalid parameter(s), cannot save image file\n"
-              + e.getMessage());
-    }
-  }
-
-  @Override
   public void visualizeComponent(int[] color, String imageName, String destName)
           throws IllegalArgumentException {
   }
