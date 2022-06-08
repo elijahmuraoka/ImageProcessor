@@ -1,5 +1,7 @@
 package commands;
 
+import java.util.Scanner;
+
 import model.IPModel;
 
 /**
@@ -12,5 +14,5 @@ public interface IPCommand {
    *
    * @param m the Image Processor model to be used
    */
-  IPModel execute(IPModel m);
+  IPModel execute(IPModel m, Scanner scan);
 }

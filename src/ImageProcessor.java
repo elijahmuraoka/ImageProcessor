@@ -18,12 +18,12 @@ public class ImageProcessor {
    * @param args the user's inputs represented as an array of strings
    */
   public static void main(String[] args) {
-    IPModel model = new ImageModel();
-    IPView view = new IPViewImpl(new StringBuilder());
+    // IPModel model = new ImageModel();
+    IPView view = new IPViewImpl(System.out);
     Readable in = new InputStreamReader(System.in);
-    IPController controller = new IPControllerImpl(model, view, in);
-    controller.load("Koala", "images");
-    controller.save("Koala2", "testImages");
+    IPController controller = new IPControllerImpl(view, in);
+//    controller.load("Koala", "images");
+//    controller.save("Koala2", "testImages");
     controller.go();
   }
 
@@ -89,7 +89,7 @@ public class ImageProcessor {
   //          int incr = scan.nextInt();
   //          String imgName = scan.nextLine();
   //          String destName = scan.nextLine();
-  //          controller.changeBrightness(incr, imgName, destName);
+  //          controller.ChangeBrightness(incr, imgName, destName);
   //          break;
   //        } catch (Exception e) {
   //          throw new IllegalArgumentException("Illegal args passed");

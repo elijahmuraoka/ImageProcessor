@@ -70,7 +70,7 @@ public class IPUtil {
 
         int[] cols = {r, g, b};
         this.workingImageData.add(cols);
-        System.out.println("Color of pixel (" + j + "," + i + "): " + r + "," + g + "," + b);
+        // System.out.println("Color of pixel (" + j + "," + i + "): " + r + "," + g + "," + b);
       }
     }
   }
