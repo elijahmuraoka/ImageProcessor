@@ -22,8 +22,8 @@ public class ImageProcessor {
     IPView view = new IPViewImpl(new StringBuilder());
     Readable in = new InputStreamReader(System.in);
     IPController controller = new IPControllerImpl(model, view, in);
-    model.load("Koala", "images");
-    model.save("Koala2", "testImages");
+    controller.load("Koala", "images");
+    controller.save("Koala2", "testImages");
     controller.go();
   }
 

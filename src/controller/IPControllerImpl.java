@@ -1,15 +1,20 @@
 package controller;
 
-import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.function.Function;
 
-import javax.swing.*;
-
+import commands.IPCommand;
+import commands.changeBrightness;
 import model.IPModel;
 import model.IPUtil;
+import model.ImageModel;
 import view.IPView;
 
 /**
@@ -28,27 +33,31 @@ public class IPControllerImpl implements IPController {
   // system-generated outputs
   private final IPView v;
   // the model which this controller will process and use to run operations
-  private final IPModel m;
+  // private final IPModel m;
   // the Readable object representing the user's inputs
   private final Readable in;
+  // the map used to store all current working images
+  private final List<IPModel> knownImageModels;
+  private final Map<String, Function<Scanner, IPCommand>> knownCommands;
 
   /**
    * An Image Processor controller implementation constructor that takes in a model, view, and
    * readable object.
    *
-   * @param m  an Image Processor model
    * @param v  an Image Processor view
    * @param in a Readable object
    * @throws IllegalArgumentException when either the model and/or Readable object are null
    */
   public IPControllerImpl(IPModel m, IPView v, Readable in) throws IllegalArgumentException {
-    if (m == null || v == null || in == null) {
+    if (v == null || in == null) {
       throw new IllegalArgumentException("Either the model, view, and/or " +
               "readable object(s) are null.\nPlease try new valid parameters.");
     }
-    this.m = m;
     this.v = v;
     this.in = in;
+    this.knownImageModels = new ArrayList<>();
+    this.knownCommands = new HashMap<>();
+    this.knownCommands.put("changeBrightness", scan -> new changeBrightness(scan));
   }
 
   @Override
@@ -68,23 +77,32 @@ public class IPControllerImpl implements IPController {
   public void load(String imageName, String imagePath)
           throws IllegalArgumentException {
     // generates the fileName to initialize the image that this model will be working on
-    this.fileName = this.generateFileName(imageName, imagePath);
+    String fileName = this.generateFileName(imageName, imagePath);
 
     // how do you verify a correct computer path??
     // read the PPM file passed in
     IPUtil util = new IPUtil();
-    util.readPPM(this.fileName);
+    util.readPPM(fileName);
     // make a copy of the PPM image data in this model
-    this.width = util.width;
-    this.height = util.height;
-    this.workingImage = util.workingImage;
+    IPModel m = new ImageModel();
+    m.setWidth(util.getWidth());
+    m.setHeight(util.getHeight());
+    m.setWorkingImageData(util.getWorkingImageData());
+    this.knownImageModels.add(m);
   }
 
   @Override
   public void save(String imageName, String imagePath) throws IllegalArgumentException {
-    String Header = "P3\n" + this.width + " " + this.height + "\n255\n";
+    IPModel m = null;
+    for (int i = 0; i < this.knownImageModels.size(); i++) {
+      if (this.knownImageModels.get(i).getImageName().equals(imageName)) {
+        m = this.knownImageModels.get(i);
+        break;
+      }
+    }
+    String Header = "P3\n" + m.getWidth() + " " + m.getHeight() + "\n255\n";
     StringBuilder imageData = new StringBuilder();
-    for (int[] pixel : this.workingImage) {
+    for (int[] pixel : m.getWorkingImageData()) {
       for (int component : pixel) {
         imageData.append(component).append(" ");
       }

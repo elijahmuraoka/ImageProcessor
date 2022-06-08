@@ -13,13 +13,13 @@ import java.util.Scanner;
  */
 public class IPUtil {
   // the height of the PPM image
-  int height;
+  private int height;
   // the width of the PPM image
-  int width;
+  private int width;
   // the working image displayed as a 1-D list of Pixels
   // Each Pixel is an array of 3 integers that represent
   // its RGB components respectively
-  List<int[]> workingImage = new ArrayList<>();
+  private List<int[]> workingImageData;
 
   /**
    * Read an image file in the PPM format and print the colors.
@@ -61,6 +61,7 @@ public class IPUtil {
     int maxValue = sc.nextInt();
     System.out.println("Maximum value of a color in this file (usually 255): " + maxValue);
 
+    this.workingImageData = new ArrayList<>();
     for (int i = 0; i < this.height; i++) {
       for (int j = 0; j < this.width; j++) {
         int r = sc.nextInt();
@@ -68,10 +69,23 @@ public class IPUtil {
         int b = sc.nextInt();
 
         int[] cols = {r, g, b};
-        this.workingImage.add(cols);
+        this.workingImageData.add(cols);
         System.out.println("Color of pixel (" + j + "," + i + "): " + r + "," + g + "," + b);
       }
     }
   }
+
+  public int getWidth() {
+    return this.width;
+  }
+
+  public int getHeight() {
+    return this.height;
+  }
+
+  public List<int[]> getWorkingImageData() {
+    return this.workingImageData;
+  }
+
 }
 

@@ -12,5 +12,5 @@ public interface IPCommand {
    *
    * @param m the Image Processor model to be used
    */
-  void execute(IPModel m);
+  IPModel execute(IPModel m);
 }
