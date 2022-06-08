@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.IOException;
+
 /**
  * The Image Processor's controller interface which supports the 'go' method used to run the
  * application and transmit inputs and outputs between the view and the model.
@@ -19,11 +21,8 @@ public interface IPController {
    *
    * @param imageName the name of the image
    * @param imagePath the file path for a specific image
-   * @throws IllegalArgumentException when...
-   *                                  - the image name is unrecognized/invalid
-   *                                  - the image path is unrecognized/invalid
    */
-  String generateFileName(String imageName, String imagePath) throws IllegalArgumentException;
+  String generateFileName(String imageName, String imagePath);
 
   /**
    * Load an image from the specified path and refer it to henceforth in the program
@@ -31,21 +30,17 @@ public interface IPController {
    *
    * @param imageName the name of the image
    * @param imagePath the file path for a specific image
-   * @throws IllegalArgumentException when...
-   *                                  - the image name is unrecognized/invalid
-   *                                  - the image path is unrecognized/invalid
+   * @throws IOException when unable to transmit the input(s) and/or output(s) properly
    */
-  void load(String imageName, String imagePath) throws IllegalArgumentException;
+  void load(String imageName, String imagePath) throws IOException;
 
   /**
-   * Save the image with the given name to the specified path which should
-   * include the name of the file.
+   * Save the image with the given name to the specified path.
    *
    * @param imageName the name of the image
    * @param imagePath the file path for a specific image
-   * @throws IllegalArgumentException when...
-   *                                  - the image name is unrecognized/invalid
-   *                                  - the image path is unrecognized/invalid
+   * @throws IllegalArgumentException when unable to transmit the input(s)
+   *                                  and/or output(s) properly
    */
-  void save(String imageName, String imagePath) throws IllegalArgumentException;
+  void save(String imageName, String imagePath) throws IOException;
 }

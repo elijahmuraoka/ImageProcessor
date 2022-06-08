@@ -17,7 +17,7 @@ import view.IPView;
 /**
  * An implementation of the Image Processor controller interface used to process user inputs
  * and communicate between the model and view. Specifically, this controller supports and can
- * apply any operation provided from its model. This includes...
+ * apply any operation provided from its list of commands. This includes...
  * - Loading an image
  * - Saving an image
  * - Visualizing a specific RGB component of an image
@@ -29,17 +29,16 @@ public class IPControllerImpl implements IPController {
   // the view used by this controller to process and display
   // system-generated outputs
   private final IPView v;
-  // the model which this controller will process and use to run operations
-  // private final IPModel m;
-  // the Readable object representing the user's inputs
+  // the Readable object which represents the user's inputs
   private final Readable in;
-  // the map used to store all current working images
+  // a map used to store all current working images
   private final HashMap<String, IPModel> knownImageModels;
+  // a map used to store all known Image Processing commands
   private final Map<String, IPCommand> knownCommands;
 
   /**
-   * An Image Processor controller implementation constructor that takes in a model, view, and
-   * readable object.
+   * An Image Processor controller implementation constructor that takes in
+   * a view and readable object.
    *
    * @param v  an Image Processor view
    * @param in a Readable object
@@ -58,57 +57,6 @@ public class IPControllerImpl implements IPController {
   }
 
   @Override
-  public String generateFileName(String imageName, String imagePath)
-          throws IllegalArgumentException {
-    return imagePath + "/" + imageName + ".ppm";
-  }
-
-  @Override
-  public void load(String imageName, String imagePath)
-          throws IllegalArgumentException {
-    // generates the fileName to initialize the image that this model will be working on
-    String fileName = this.generateFileName(imageName, imagePath);
-
-    // how do you verify a correct computer path??
-    // read the PPM file passed in
-    IPUtil util = new IPUtil();
-    util.readPPM(fileName);
-    // make a copy of the PPM image data in this model
-    IPModel m = new ImageModel();
-    m.setImageName(imageName);
-    m.setWidth(util.getWidth());
-    m.setHeight(util.getHeight());
-    m.setWorkingImageData(util.getWorkingImageData());
-    this.knownImageModels.put(m.getImageName(), m);
-  }
-
-  @Override
-  public void save(String imageName, String imagePath) throws IllegalArgumentException {
-    IPModel m = this.knownImageModels.getOrDefault(imageName, null);
-    if (m == null) {
-      throw new IllegalArgumentException("This image name is not recognized. Please try again.\n");
-    }
-    String Header = "P3\n" + m.getWidth() + " " + m.getHeight() + "\n255\n";
-    StringBuilder imageData = new StringBuilder();
-    for (int[] pixel : m.getWorkingImageData()) {
-      for (int component : pixel) {
-        imageData.append(component).append(" ");
-      }
-    }
-
-    try {
-      BufferedWriter bw = new BufferedWriter(new FileWriter(this.generateFileName(imageName,
-              imagePath)));
-      bw.write(Header);
-      bw.write(imageData.toString());
-      bw.close();
-    } catch (IOException e) {
-      throw new IllegalArgumentException("Invalid parameter(s), cannot save image file\n"
-              + e.getMessage());
-    }
-  }
-
-  @Override
   public void go() throws IllegalStateException {
     Scanner scan = new Scanner(this.in);
     boolean quit = false;
@@ -120,6 +68,11 @@ public class IPControllerImpl implements IPController {
         case "q":
         case "Q":
           quit = true;
+          try {
+            this.v.renderMessage("Successfully quit the Image Processor Application!");
+          } catch (IOException e) {
+            throw new IllegalStateException(errorIOMessage);
+          }
           break;
         case "menu":
           this.printMenu();
@@ -128,12 +81,10 @@ public class IPControllerImpl implements IPController {
             String imageName = scan.next();
             String imagePath = scan.next();
             this.load(imageName, imagePath);
-          } catch (IllegalArgumentException e1) {
-            try {
-              this.v.renderMessage(e1.getMessage());
-            } catch (IOException e2) {
-              throw new IllegalStateException(errorIOMessage);
-            }
+            this.v.renderMessage("Successfully loaded "
+                    + imageName + " from " + imagePath + "!\n");
+          } catch (IOException e) {
+            throw new IllegalStateException(errorIOMessage);
           }
           break;
         }
@@ -142,18 +93,10 @@ public class IPControllerImpl implements IPController {
             String imageName = scan.next();
             String imagePath = scan.next();
             this.save(imageName, imagePath);
-            try {
-              this.v.renderMessage("Successfully saved "
-                      + imageName + " to " + imagePath + "!\n");
-            } catch (IOException e) {
-              throw new IllegalStateException(errorIOMessage);
-            }
-          } catch (IllegalArgumentException e1) {
-            try {
-              this.v.renderMessage(e1.getMessage());
-            } catch (IOException e2) {
-              throw new IllegalStateException(errorIOMessage);
-            }
+            this.v.renderMessage("Successfully saved "
+                    + imageName + " to " + imagePath + "!\n");
+          } catch (IOException e) {
+            throw new IllegalStateException(errorIOMessage);
           }
           break;
         }
@@ -165,18 +108,14 @@ public class IPControllerImpl implements IPController {
           }
           break;
       }
-//      if (userInput.equalsIgnoreCase("q")) {
-//        quit = true;
-//        // this.printFarewellMessage
-//      } else if (userInput.equalsIgnoreCase("menu")) {
-//        this.printMenu();
-//      }
-//      else {
-//        this.processCommand(userInput, scan);
-//      }
     }
   }
 
+  /**
+   * Prints and displays the menu instructions to the user.
+   *
+   * @throws IllegalStateException when unable to transmit the input(s) and/or output(s) properly
+   */
   private void printMenu() throws IllegalStateException {
     try {
       this.v.renderMessage("Welcome to our Image Processor Program!\n"
@@ -187,6 +126,13 @@ public class IPControllerImpl implements IPController {
     }
   }
 
+  /**
+   * Process the user's inputs and apply some command to a given image model if
+   *
+   * @param userInput the user's input to the controller
+   * @param scan      the scanner used to read the user's inputs
+   * @throws IOException when unable to transmit the input(s) and/or output(s) properly
+   */
   private void processCommand(String userInput, Scanner scan) throws IOException {
     IPModel m;
     IPCommand cmd = this.knownCommands.getOrDefault(userInput, null);
@@ -206,6 +152,50 @@ public class IPControllerImpl implements IPController {
           this.v.renderMessage(e.getMessage());
         }
       }
+    }
+  }
+
+  @Override
+  public String generateFileName(String imageName, String imagePath) {
+    return imagePath + "/" + imageName + ".ppm";
+  }
+
+  @Override
+  public void load(String imageName, String imagePath) throws IOException {
+    // generates the fileName to initialize the image that this model will be working on
+    String fileName = this.generateFileName(imageName, imagePath);
+
+    // how do you verify a correct computer path??
+    // read the PPM file passed in
+    IPUtil util = new IPUtil();
+    util.readPPM(fileName, this.v);
+    // make a copy of the PPM image data in this model
+    IPModel m = new ImageModel();
+    m.setImageName(imageName);
+    m.setWidth(util.getWidth());
+    m.setHeight(util.getHeight());
+    m.setWorkingImageData(util.getWorkingImageData());
+    this.knownImageModels.put(m.getImageName(), m);
+  }
+
+  @Override
+  public void save(String imageName, String imagePath) throws IOException {
+    IPModel m = this.knownImageModels.getOrDefault(imageName, null);
+    if (m == null) {
+      this.v.renderMessage("This image name is not recognized. Please try again.\n");
+    } else {
+      String Header = "P3\n" + m.getWidth() + " " + m.getHeight() + "\n255\n";
+      StringBuilder imageData = new StringBuilder();
+      for (int[] pixel : m.getWorkingImageData()) {
+        for (int component : pixel) {
+          imageData.append(component).append(" ");
+        }
+      }
+      BufferedWriter bw = new BufferedWriter(new FileWriter(this.generateFileName(imageName,
+              imagePath)));
+      bw.write(Header);
+      bw.write(imageData.toString());
+      bw.close();
     }
   }
 }

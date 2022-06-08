@@ -2,9 +2,12 @@ package model;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import view.IPView;
 
 /**
  * This class contains utility methods to read a PPM image from file and simply print its contents.
@@ -26,13 +29,13 @@ public class IPUtil {
    *
    * @param filename the path of the file.
    */
-  public void readPPM(String filename) {
+  public void readPPM(String filename, IPView v) throws IOException {
     Scanner sc;
 
     try {
       sc = new Scanner(new FileInputStream(filename));
     } catch (FileNotFoundException e) {
-      System.out.println("File " + filename + " not found!");
+      v.renderMessage("File " + filename + " not found!");
       return;
     }
     StringBuilder builder = new StringBuilder();
@@ -52,14 +55,14 @@ public class IPUtil {
 
     token = sc.next();
     if (!token.equals("P3")) {
-      System.out.println("Invalid PPM file: plain RAW file should begin with P3");
+      v.renderMessage("Invalid PPM file: plain RAW file should begin with P3");
     }
     this.width = sc.nextInt();
-    System.out.println("Width of image: " + width);
+    v.renderMessage("Width of image: " + width);
     this.height = sc.nextInt();
-    System.out.println("Height of image: " + height);
+    v.renderMessage("Height of image: " + height);
     int maxValue = sc.nextInt();
-    System.out.println("Maximum value of a color in this file (usually 255): " + maxValue);
+    v.renderMessage("Maximum value of a color in this file (usually 255): " + maxValue);
 
     this.workingImageData = new ArrayList<>();
     for (int i = 0; i < this.height; i++) {
@@ -86,6 +89,5 @@ public class IPUtil {
   public List<int[]> getWorkingImageData() {
     return this.workingImageData;
   }
-
 }
 

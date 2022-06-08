@@ -12,7 +12,8 @@ public interface IPCommand {
   /**
    * This method carries out a specific function, applying it to the given model.
    *
-   * @param m the Image Processor model to be used
+   * @param m    the Image Processor model to be used
+   * @param scan the scanner used to read user inputs and execute this command
    */
   IPModel execute(IPModel m, Scanner scan);
 }
