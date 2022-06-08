@@ -62,7 +62,7 @@ public class ImageModelTest {
   public void verticalFlip() {
   }
 
-  // tests the changeBrightness method
+  // tests the ChangeBrightness method
   @Test
   public void brighten() {
   }
