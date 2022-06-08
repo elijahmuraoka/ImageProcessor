@@ -66,9 +66,24 @@ public class PPMmodel implements IPModel {
   }
 
   @Override
-  public void visualizeComponent(int[] color, String imageName, String destName)
+  public void visualizeComponent(int[] colour, String imageName, String destName)
           throws IllegalArgumentException {
+    for (int i = 0; i < this.width; i++) {
+      for (int j = 0; j < this.height; j++) {
+        int r = this.workingImage.get(i)[0];
+        int g = this.workingImage.get(i)[1];
+        int b = this.workingImage.get(i)[2];
 
+        // if the pixel component (RGB) is not equal to given RGB values then make that pixel grey.
+        if (r != colour[0] && g != colour[1] && b != colour[2]) {
+          //0.2989 * R + 0.5870 * G + 0.1140 * B
+          int grey = (int)((0.2989 * r) + (0.5870 * g) + (0.1140 * b));
+          this.workingImage.get(i)[0] = grey;
+          this.workingImage.get(i)[1] = grey;
+          this.workingImage.get(i)[2] = grey;
+        }
+      }
+    }
   }
 
   @Override
@@ -87,6 +102,7 @@ public class PPMmodel implements IPModel {
             max.add(pixCol[2]);
           }
         }
+        System.out.println(max);
         break;
       case "intensity":
         for (int i = 0; i < workingImage.size(); i++) {
@@ -100,6 +116,7 @@ public class PPMmodel implements IPModel {
           int[] colMatrix = workingImage.get(i);
           sum = sum + (0.2126 * colMatrix[0]) + (0.7152 * colMatrix[0]) + (0.0722 * colMatrix[0]);
         }
+        System.out.println(sum);
         break;
     }
   }
@@ -110,10 +127,24 @@ public class PPMmodel implements IPModel {
 
   }
 
+  // Try this on a diff shaped/sized images
   @Override
   public void verticalFlip(String imageName, String destName)
           throws IllegalArgumentException {
+    for (int i = 0; i < workingImage.size() / 2; i++) {
+      swap(i, (workingImage.size() - this.width) + i);
+      // 2nd param of swap won't always work
+    }
+  }
 
+  // swaps a pixel at one index with a pixel from another index
+  private void swap(int here, int there) {
+    int[] h = workingImage.get(here);
+    int[] t = workingImage.get(there);
+    int[] temp = {h[0], h[1], h[2]};
+
+    workingImage.set(here, new int[]{t[0], t[1], t[2]});
+    workingImage.set(here, temp);
   }
 
   @Override
