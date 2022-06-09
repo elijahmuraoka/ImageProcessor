@@ -176,20 +176,16 @@ public class IPControllerImpl implements IPController {
     }
   }
 
-  @Override
-  public String generateFileName(String imageName, String imagePath) {
-    return imagePath + "/" + imageName + ".ppm";
+  protected String generateFileName(String imageName, String imagePath) {
+    return imagePath + "/" + imageName;
   }
 
   @Override
   public void load(String imageName, String imagePath) throws IOException {
-    // generates the fileName to initialize the image that this model will be working on
-    String fileName = this.generateFileName(imageName, imagePath);
-
     // how do you verify a correct computer path??
     // read the PPM file passed in
     IPUtil util = new IPUtil();
-    util.readPPM(fileName, this.v);
+    util.readPPM(imagePath, this.v);
     // make a copy of the PPM image data in this model
     IPModel m = new ImageModel();
     m.setImageName(imageName);

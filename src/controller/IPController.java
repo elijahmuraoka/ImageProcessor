@@ -17,14 +17,6 @@ public interface IPController {
   void go() throws IllegalStateException;
 
   /**
-   * Create and return any image's file name by appending its image path to its name.
-   *
-   * @param imageName the name of the image
-   * @param imagePath the file path for a specific image
-   */
-  String generateFileName(String imageName, String imagePath);
-
-  /**
    * Load an image from the specified path and refer it to henceforth in the program
    * by the given image name.
    *
