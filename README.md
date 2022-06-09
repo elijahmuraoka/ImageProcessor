@@ -1,10 +1,9 @@
 # ImageProcessor
 
 # Design Overview
-**public interface IPCommand** This class represents any command that can be executed on a specific image.
+**public interface IPCommand:** This class represents any command that can be executed on a specific image.
 
-**public class VerticalFlip implements IPCommand**
-* This class represents the command that is used to flip an image vertically.
+* **public class VerticalFlip implements IPCommand:** This class represents the command that is used to flip an image vertically.
 
 **public class HorizontalFlip implements IPCommand**
 * This class represents the command that is used to flip an image Horizontally.
