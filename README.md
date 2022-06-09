@@ -4,7 +4,7 @@
 * menu || displays a list of commands
 * q || quits the program at any time
 
-* load {imageName} {imagePath} || Loads and stores an image in this application
+> load {imageName} {imagePath} **Loads and stores an image in this application**
   
 * save {imageName} {saveAsName} {imagePath} || Save any (un)modified images to this device
   
