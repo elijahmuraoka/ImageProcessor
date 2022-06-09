@@ -6,17 +6,17 @@ import java.util.Scanner;
 import model.IPModel;
 
 /**
- * The command is used to flip an image horizontally.
+ * The command is used to flip an image vertically.
  */
-public class HorizontalFlip implements IPCommand {
+public class VerticalFlip implements IPCommand {
 
   /**
-   * Flip an image horizontally to create a new image, referred to henceforth by the given
+   * Flip an image vertically to create a new image, referred to henceforth by the given
    * destination name.
    *
    * @param m    the Image represented model to be used and acted on
    * @param scan the scanner used to read and retrieve user inputs
-   * @return the modified IPModel that is now flipped horizontally
+   * @return the modified IPModel that is now flipped vertically
    * @throws IllegalStateException when the image data retrieved from the scanner does
    *                               not meet the required command arguments needed
    */
@@ -31,16 +31,16 @@ public class HorizontalFlip implements IPCommand {
               "ChangeBrightness <increment> <imageName> <destName>\n");
     }
 
-    // for all rows
-    for (int i = 0; i < m.getHeight(); i++) {
-      // for the first half of the image's columns
-      for (int j = 0; j < m.getWidth() / 2; j++) {
+    // for the first half of the image's rows
+    for (int i = 0; i < m.getHeight() / 2; i++) {
+      // for all columns
+      for (int j = 0; j < m.getWidth(); j++) {
         for (int k = 0; k < 3; k++) {
-          int oppositeX = m.getWidth() - j - 1;
+          int oppositeY = m.getHeight() - i - 1;
           int component1 = m.getWorkingImageData().get(i).get(j)[k];
-          int component2 = m.getWorkingImageData().get(i).get(oppositeX)[k];
+          int component2 = m.getWorkingImageData().get(oppositeY).get(j)[k];
           m.getWorkingImageData().get(i).get(j)[k] = component2;
-          m.getWorkingImageData().get(i).get(oppositeX)[k] = component1;
+          m.getWorkingImageData().get(oppositeY).get(j)[k] = component1;
         }
       }
     }

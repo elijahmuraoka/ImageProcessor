@@ -10,9 +10,10 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import commands.ChangeBrightness;
+import commands.GreyScale;
 import commands.HorizontalFlip;
 import commands.IPCommand;
-import commands.VisualiseComp;
+import commands.VerticalFlip;
 import model.IPModel;
 import model.IPUtil;
 import model.ImageModel;
@@ -58,8 +59,13 @@ public class IPControllerImpl implements IPController {
     this.knownImageModels = new HashMap<>();
     this.knownCommands = new HashMap<>();
     this.knownCommands.put("ChangeBrightness", new ChangeBrightness());
+    this.knownCommands.put("cb", new ChangeBrightness());
     this.knownCommands.put("HorizontalFlip", new HorizontalFlip());
-    this.knownCommands.put("Visualise", new VisualiseComp());
+    this.knownCommands.put("flip-h", new HorizontalFlip());
+    this.knownCommands.put("VerticalFlip", new VerticalFlip());
+    this.knownCommands.put("flip-v", new VerticalFlip());
+    this.knownCommands.put("GreyScale", new GreyScale());
+    this.knownCommands.put("gs", new GreyScale());
   }
 
   @Override
@@ -197,9 +203,12 @@ public class IPControllerImpl implements IPController {
 
   @Override
   public void save(String imageName, String imagePath) throws IOException {
-    IPModel m = this.knownImageModels.getOrDefault(imageName, null);
+    String[] fullPath = imagePath.split("/");
+    String imageReference = fullPath[fullPath.length - 1];
+    IPModel m = this.knownImageModels.getOrDefault(imageReference, null);
     if (m == null) {
-      this.v.renderMessage("This image name is not recognized. Please try again.\n");
+      this.v.renderMessage("The image name, " + imageReference
+              + ", is not recognized. Please try again.\n");
     } else {
       String Header = "P3\n" + m.getWidth() + " " + m.getHeight() + "\n255\n";
       StringBuilder imageData = new StringBuilder();
@@ -211,11 +220,10 @@ public class IPControllerImpl implements IPController {
         }
       }
       try {
-        BufferedWriter bw = new BufferedWriter(new FileWriter(this.generateFileName(imageName,
-                imagePath)));
+        BufferedWriter bw = new BufferedWriter(new FileWriter(imagePath + ".ppm"));
         bw.write(Header);
         bw.write(imageData.toString());
-        this.v.renderMessage("Successfully saved " + imageName + " to " + imagePath + "\n");
+        this.v.renderMessage("Successfully saved " + imagePath + " as " + imageName + "\n");
         bw.close();
       } catch (IOException e) {
         this.v.renderMessage("Invalid file path. Please input new values and try again.\n");
