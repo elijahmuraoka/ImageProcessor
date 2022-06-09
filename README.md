@@ -1,8 +1,8 @@
 # ImageProcessor
 
-Commands:
+# Commands:
 * menu
-  # display a list of commands
+  + display a list of commands
 * q
   # quit the program at any time
 
