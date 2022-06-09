@@ -24,7 +24,6 @@
 * This Image Processor application is used to edit photos and save them as a new file.
 
 
-
 # Commands:
 
 **Upon running the programme, type the load command below to import an image you want to work on.**
@@ -37,22 +36,29 @@
 > menu
 
 **quits the program at any time.**
+~~~~
 > q
-
-**Change the brightness of an image. Increases all values by a set amount.**
-> cb {imageName} {increment} {destName}
+> Q
+~~~~
   
 **Change the brightness of an image. Increasing then decrease bright wont go back to original image.**
+~~~~
 > ChangeBrightness {imageName} {increment} {destName}
+> cb {imageName} {increment} {destName}
+~~~~
 
 **Flips an image horizontally.**
+~~~~
 > HorizontalFlip {imageName} {destName}
 > flip-h {imageName} {destName}
+~~~~
 
 **Flips an image horizontally.**
+~~~~
 > VerticalFlip {imageName} {destName}
 > flip-v {imageName} {destName}
-  
+~~~~
+
 **Creates a greyscale image.**
 ~~~~
 > Greyscale {imageName} {visType} {destName}
