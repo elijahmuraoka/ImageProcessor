@@ -1,5 +1,6 @@
 # ImageProcessor
 
+
 # Design Overview
 **public interface IPCommand:** This class represents any command that can be executed on a specific image.
 * **public class VerticalFlip implements IPCommand:** This class represents the command that is used to flip an image vertically.
@@ -26,17 +27,17 @@
 
 # Commands:
 
+**Upon running the programme, type the load command below to import an image you want to work on.**
+> load {imageName} {imagePath}
+
+**Save any (un)modified images to a path on your deveice device.**
+> save {imageName} {saveAsName} {imagePath}
+
 **displays a list of commands.**
 > menu
 
 **quits the program at any time.**
 > q
-
-**Load and store an image in this application.**
-> load {imageName} {imagePath}
-
-**Save any (un)modified images to this device.**
-> save {imageName} {saveAsName} {imagePath}
 
 **Change the brightness of an image. Increases all values by a set amount.**
 > cb {imageName} {increment} {destName}
