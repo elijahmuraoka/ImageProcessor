@@ -27,13 +27,19 @@
 # Commands:
 
 **Upon running the programme, type the load command below to import an image you want to work on.**
+~~~~
 > load {imageName} {imagePath}
+~~~~
 
 **Save any (un)modified images to a path on your deveice device.**
+~~~~
 > save {imageName} {saveAsName} {imagePath}
+~~~~
 
 **displays a list of commands.**
+~~~~
 > menu
+~~~~
 
 **quits the program at any time.**
 ~~~~
@@ -66,19 +72,31 @@
 ~~~~
 
 **Creates a greyscale that visualizes the red component of an image.**
+~~~~
 > gs-red {imageName} {destName}
+~~~~
 
 **Creates a greyscale that visualizes the blue component of an image.**
+~~~~
 > gs-blue {imageName} {destName}
+~~~~
 
 **Creates a greyscale that visualizes the green component of an image.**
+~~~~
 > gs-green {imageName} {destName}
+~~~~
 
 **Creates a greyscale that visualizes the value component of an image.**
+~~~~
 > gs-value {imageName} {destName}
+~~~~
 
 **Creates a greyscale that visualizes the intensity component of an image.**
+~~~~
 > gs-intensity {imageName} {destName}
+~~~~
   
 **Creates a greyscale that visualizes the luma component of an image.**
+~~~~
 > gs-luma {imageName} {destName}
+~~~~
