@@ -5,14 +5,11 @@
 
 * **public class VerticalFlip implements IPCommand:** This class represents the command that is used to flip an image vertically.
 
-**public class HorizontalFlip implements IPCommand**
-* This class represents the command that is used to flip an image Horizontally.
+* **public class HorizontalFlip implements IPCommand:** This class represents the command that is used to flip an image Horizontally.
 
-**public class GreyScale implements IPCommand**
-* This class represents the command that is used to create a greyscale version of an image according to a specific channel. Either red, blue, green, value, intensity or luma.
+* **public class GreyScale implements IPCommand:** This class represents the command that is used to create a greyscale version of an image according to a specific channel. Either red, blue, green, value, intensity or luma.
 
-**public class ChangeBrightness implements IPCommand**
-* This class represents the command that is used to change the brightness of a certain image. This means all RGB values increase or decrease by a set increment amount.
+* **public class ChangeBrightness implements IPCommand:** This class represents the command that is used to change the brightness of a certain image. This means all RGB values increase or decrease by a set increment amount.
 
 ~~-~~
 
