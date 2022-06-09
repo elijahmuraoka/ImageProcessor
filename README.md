@@ -6,19 +6,19 @@
 * **public class HorizontalFlip implements IPCommand:** This class represents the command that is used to flip an image Horizontally.
 * **public class GreyScale implements IPCommand:** This class represents the command that is used to create a greyscale version of an image according to a specific channel. Either red, blue, green, value, intensity or luma.
 * **public class ChangeBrightness implements IPCommand:** This class represents the command that is used to change the brightness of a certain image. This means all RGB values increase or decrease by a set increment amount.
-~~-~~
+
 **public interface IPController:** The Image Processor's controller interface which supports the 'go' method used to run the application and transmit inputs and outputs between the view and the model.
 * **public class IPControllerImpl implements IPController:** An implementation of the Image Processor controller interface used to process user inputs and communicate between the model and view. Specifically, this controller supports and can apply any operation provided from its list of commands (See Commands section below).
-~~-~~
+
 **public interface IPModel:** The interface for a generic Image Processor model which supports various operations that can be applied to a specific image.
 * **public class ImageModel implements IPModel:** An implementation of the Image Processor model interface.
-~~-~~
+
 **public class IPUtil**
 * This class contains utility methods to read a PPM image from file and simply print its contents. Feel free to change this method as required.
-~~-~~
+
 **public interface IPView:** The view interface.
 * **public class IPViewImpl implements IPView:** An implementation of the Image Processor View interface. This implementation supports the ability to render messages.
-~~-~~
+
 **public class ImageProcessor**
 * This Image Processor application is used to edit photos and save them as a new file.
 
