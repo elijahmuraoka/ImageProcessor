@@ -34,4 +34,4 @@
   
 * gs-intensity {imageName} {destName} || Creates a greyscale that visualizes the intensity component of an image
   
-* gs-luma {imageName} {destName} || Creates a greyscale that visualizes the luma component of an image
+* gs-luma {imageName} {destName} #Creates a greyscale that visualizes the luma component of an image
