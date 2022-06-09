@@ -14,11 +14,22 @@ public class GreyScale implements IPCommand {
   private String visType;
   // the new destination name representing the image
   private String destName;
-  // a single pixel represented by an array of three integers
-  private int[] pixel;
 
+  /**
+   * An empty GrayScale command constructor.
+   */
   public GreyScale() {
+  }
 
+  /**
+   * A GreyScale command constructor that takes in and sets
+   * a specific type of visualization.
+   *
+   * @param visType the type of greyscale to create, dictating how exactly to visualize
+   *                the image
+   */
+  public GreyScale(String visType) {
+    this.visType = visType;
   }
 
 
@@ -43,32 +54,44 @@ public class GreyScale implements IPCommand {
   @Override
   public IPModel execute(IPModel m, Scanner scan) throws IllegalStateException {
     try {
-      this.visType = scan.next();
+      if (this.visType == null) {
+        this.visType = scan.next();
+      }
       this.destName = scan.next();
     } catch (NoSuchElementException e) {
-      throw new IllegalStateException("The Visualize command was not called properly.\n"
-              + "Please pass in new parameters with the following format:\n"
-              + "GreyScale <c> <imageName> <destName>\n");
+      throw new IllegalStateException("The GreyScale command was not called properly.\n"
+              + "Please pass in new parameters with the correct format.\n"
+              + "\nHere is an example:\n"
+              + "GreyScale <imageName> <visType> <destName>\n");
     }
     // for every pixel component in the working image
     for (int i = 0; i < m.getHeight(); i++) {
       for (int j = 0; j < m.getWidth(); j++) {
-        pixel = m.getWorkingImageData().get(i).get(j);
-        vHelper(this.visType, pixel);
+        int[] current = m.getWorkingImageData().get(i).get(j);
+        vHelper(current);
       }
     }
     m.setImageName(this.destName);
     return m;
   }
 
-  private void vHelper(String s, int[] pixel) {
+  /**
+   * The helper method used to alter a pixel's components according to the greyscale
+   * visualizing type (visType).
+   *
+   * @param pixel a size-3 array of integers each representing a red, green, and blue
+   *              component respectively
+   */
+  private void vHelper(int[] pixel) {
     int r = pixel[0];
     int g = pixel[1];
     int b = pixel[2];
 
-    //int grey = (int)((0.2989 * r) + (0.5870 * g) + (0.1140 * b));
+    int intensified = (r + g + b) / 3;
+    int lumafied = (int) ((0.2126 * r) + (0.7152 * g) + (0.0722 * b));
+    int maxComponent = Math.max(r, (Math.max(g, b)));
 
-    switch (s) {
+    switch (this.visType) {
       case "red":
         pixel[1] = pixel[0];
         pixel[2] = pixel[0];
@@ -81,8 +104,23 @@ public class GreyScale implements IPCommand {
         pixel[0] = pixel[2];
         pixel[1] = pixel[2];
         break;
-      case "default":
-        throw new IllegalStateException("Invalid visualize parameter: " + s);
+      case "luma":
+        pixel[0] = lumafied;
+        pixel[1] = lumafied;
+        pixel[2] = lumafied;
+        break;
+      case "intensity":
+        pixel[0] = intensified;
+        pixel[1] = intensified;
+        pixel[2] = intensified;
+        break;
+      case "value":
+        pixel[0] = maxComponent;
+        pixel[1] = maxComponent;
+        pixel[2] = maxComponent;
+        break;
+      default:
+        throw new IllegalStateException("Invalid greyscale visualize type: " + this.visType);
     }
   }
 }

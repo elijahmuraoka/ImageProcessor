@@ -27,12 +27,13 @@ public interface IPController {
   void load(String imageName, String imagePath) throws IOException;
 
   /**
-   * Save the image with the given name to the specified path.
+   * Save an image using its current name and new save name to the specified path.
    *
-   * @param imageName the name of the image
-   * @param imagePath the file path for a specific image
+   * @param imageName  the current name of the image
+   * @param saveAsName the name used to save this image as
+   * @param imagePath  the file path for a specific image
    * @throws IllegalArgumentException when unable to transmit the input(s)
    *                                  and/or output(s) properly
    */
-  void save(String imageName, String imagePath) throws IOException;
+  void save(String imageName, String saveAsName, String imagePath) throws IOException;
 }

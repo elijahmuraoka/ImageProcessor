@@ -9,6 +9,8 @@ import model.IPModel;
  * The command is used to flip an image vertically.
  */
 public class VerticalFlip implements IPCommand {
+  // the new destination name representing the image
+  private String destName;
 
   /**
    * Flip an image vertically to create a new image, referred to henceforth by the given
@@ -22,13 +24,13 @@ public class VerticalFlip implements IPCommand {
    */
   @Override
   public IPModel execute(IPModel m, Scanner scan) throws IllegalStateException {
-    String destName;
     try {
-      destName = scan.next();
+      this.destName = scan.next();
     } catch (NoSuchElementException e) {
-      throw new IllegalStateException("The ChangeBrightness command was not called properly.\n" +
-              "Please pass in new parameters with the following format:\n" +
-              "ChangeBrightness <increment> <imageName> <destName>\n");
+      throw new IllegalStateException("The VerticalFlip command was not called properly.\n"
+              + "Please pass in new parameters with the following format.\n"
+              + "\nHere is an example:\n"
+              + "VerticalFlip <imageName> <destName>\n");
     }
 
     // for the first half of the image's rows
@@ -44,7 +46,7 @@ public class VerticalFlip implements IPCommand {
         }
       }
     }
-    m.setImageName(destName);
+    m.setImageName(this.destName);
     return m;
   }
 }

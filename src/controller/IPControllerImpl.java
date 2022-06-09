@@ -66,6 +66,12 @@ public class IPControllerImpl implements IPController {
     this.knownCommands.put("flip-v", new VerticalFlip());
     this.knownCommands.put("GreyScale", new GreyScale());
     this.knownCommands.put("gs", new GreyScale());
+    this.knownCommands.put("gs-red", new GreyScale("red"));
+    this.knownCommands.put("gs-blue", new GreyScale("blue"));
+    this.knownCommands.put("gs-green", new GreyScale("green"));
+    this.knownCommands.put("gs-value", new GreyScale("value"));
+    this.knownCommands.put("gs-intensity", new GreyScale("intensity"));
+    this.knownCommands.put("gs-luma", new GreyScale("luma"));
   }
 
   @Override
@@ -93,6 +99,7 @@ public class IPControllerImpl implements IPController {
           break;
         case "menu":
           this.printMenu();
+          break;
         case "load": {
           try {
             String imageName = scan.next();
@@ -106,8 +113,9 @@ public class IPControllerImpl implements IPController {
         case "save": {
           try {
             String imageName = scan.next();
+            String saveAsName = scan.next();
             String imagePath = scan.next();
-            this.save(imageName, imagePath);
+            this.save(imageName, saveAsName, imagePath);
           } catch (IOException e) {
             throw new IllegalStateException(errorIOMessage);
           }
@@ -135,15 +143,34 @@ public class IPControllerImpl implements IPController {
               + "Press `q` or `Q' to quit the program at any time.\n"
               + "Listed below are some basic commands you can execute on an image:\n\n"
               + "(1) Load and store an image in this application.\n"
-              + "    Input Format: load <imageName> <imagePath>\n"
+              + "    Input Format Example(s):\n"
+              + "       load <imageName> <imagePath>\n"
               + "(2) Save any (un)modified images to this device.\n"
-              + "    Input Format: save <imageName> <imagePath>\n"
+              + "    Input Format Example(s):\n"
+              + "       save <imageName> <saveAsName> <imagePath>\n"
               + "(3) Change the brightness of an image.\n"
-              + "    Input Format: ChangeBrightness <imageName> <increment> <destName>\n"
+              + "    Input Format Example(s):\n"
+              + "       ChangeBrightness <imageName> <increment> <destName>\n"
+              + "       cb <imageName> <increment> <destName>\n"
               + "(4) Flip an image horizontally.\n"
-              + "    Input Format: HorizontalFlip <imageName> <destName>\n"
-              + "(5) Visualise the red, green, or blue component of an image.\n"
-              + "    Input Format: Visualise <imageName> <component> <destName>\n"
+              + "    Input Format Example(s):\n"
+              + "       HorizontalFlip <imageName> <destName>\n"
+              + "       flip-h <imageName> <destName>\n"
+              + "(4) Flip an image vertically.\n"
+              + "    Input Format Example(s):\n"
+              + "       VerticalFlip <imageName> <destName>\n"
+              + "       flip-v <imageName> <destName>\n"
+              + "(5) Create a greyscale that visualizes the red, green, blue,\n"
+              + "    value, intensity, or luma component of an image.\n"
+              + "    Input Format Example(s):\n"
+              + "       Greyscale <imageName> <visType> <destName>\n"
+              + "       gs <imageName> <visType> <destName>\n"
+              + "       gs-red <imageName> <destName>\n"
+              + "       gs-blue <imageName> <destName>\n"
+              + "       gs-green <imageName> <destName>\n"
+              + "       gs-value <imageName> <destName>\n"
+              + "       gs-intensity <imageName> <destName>\n"
+              + "       gs-luma <imageName> <destName>\n"
               + "\nType 'menu' if you would like to see this information again.\n");
     } catch (IOException e) {
       throw new IllegalStateException("Error: Invalid input and/or output(s)");
@@ -161,6 +188,7 @@ public class IPControllerImpl implements IPController {
    * @throws IOException when unable to transmit the input(s) and/or output(s) properly
    */
   private void processCommand(String userInput, Scanner scan) throws IOException {
+    System.out.println(this.knownImageModels);
     IPModel m;
     IPCommand cmd = this.knownCommands.getOrDefault(userInput, null);
     if (cmd == null) {
@@ -172,9 +200,10 @@ public class IPControllerImpl implements IPController {
         this.v.renderMessage("This image name is not recognized. Please try again.\n");
       } else {
         try {
-          m = cmd.execute(m, scan);
+          IPModel newM = m;
+          newM = cmd.execute(newM, scan);
           this.v.renderMessage("Successfully executed the command: " + userInput + "\n");
-          this.knownImageModels.put(m.getImageName(), m);
+          this.knownImageModels.put(newM.getImageName(), newM);
         } catch (IllegalStateException e) {
           this.v.renderMessage(e.getMessage());
         }
@@ -182,13 +211,8 @@ public class IPControllerImpl implements IPController {
     }
   }
 
-  protected String generateFileName(String imageName, String imagePath) {
-    return imagePath + "/" + imageName;
-  }
-
   @Override
   public void load(String imageName, String imagePath) throws IOException {
-    // how do you verify a correct computer path??
     // read the PPM file passed in
     IPUtil util = new IPUtil();
     util.readPPM(imagePath, this.v);
@@ -202,12 +226,10 @@ public class IPControllerImpl implements IPController {
   }
 
   @Override
-  public void save(String imageName, String imagePath) throws IOException {
-    String[] fullPath = imagePath.split("/");
-    String imageReference = fullPath[fullPath.length - 1];
-    IPModel m = this.knownImageModels.getOrDefault(imageReference, null);
+  public void save(String imageName, String saveAsName, String imagePath) throws IOException {
+    IPModel m = this.knownImageModels.getOrDefault(imageName, null);
     if (m == null) {
-      this.v.renderMessage("The image name, " + imageReference
+      this.v.renderMessage("The image name, " + imageName
               + ", is not recognized. Please try again.\n");
     } else {
       String Header = "P3\n" + m.getWidth() + " " + m.getHeight() + "\n255\n";
@@ -220,14 +242,41 @@ public class IPControllerImpl implements IPController {
         }
       }
       try {
-        BufferedWriter bw = new BufferedWriter(new FileWriter(imagePath + ".ppm"));
+        BufferedWriter bw = new BufferedWriter(new FileWriter(imagePath
+                + "/" + saveAsName + ".ppm"));
         bw.write(Header);
         bw.write(imageData.toString());
-        this.v.renderMessage("Successfully saved " + imagePath + " as " + imageName + "\n");
+        this.v.renderMessage("Successfully saved " + imagePath + " as " + saveAsName + "\n");
         bw.close();
       } catch (IOException e) {
         this.v.renderMessage("Invalid file path. Please input new values and try again.\n");
       }
     }
+    //    String[] fullPath = imagePath.split("/");
+    //    String imageReference = fullPath[fullPath.length - 1];
+    //    IPModel m = this.knownImageModels.getOrDefault(imageReference, null);
+    //    if (m == null) {
+    //      this.v.renderMessage("The image name, " + imageReference
+    //              + ", is not recognized. Please try again.\n");
+    //    } else {
+    //      String Header = "P3\n" + m.getWidth() + " " + m.getHeight() + "\n255\n";
+    //      StringBuilder imageData = new StringBuilder();
+    //      for (List<int[]> row : m.getWorkingImageData()) {
+    //        for (int[] pixel : row) {
+    //          for (int component : pixel) {
+    //            imageData.append(component).append(" ");
+    //          }
+    //        }
+    //      }
+    //      try {
+    //        BufferedWriter bw = new BufferedWriter(new FileWriter(imagePath + ".ppm"));
+    //        bw.write(Header);
+    //        bw.write(imageData.toString());
+    //        this.v.renderMessage("Successfully saved " + imagePath + " as " + imageName + "\n");
+    //        bw.close();
+    //      } catch (IOException e) {
+    //        this.v.renderMessage("Invalid file path. Please input new values and try again.\n");
+    //      }
+    //    }
   }
 }

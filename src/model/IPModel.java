@@ -39,28 +39,28 @@ public interface IPModel {
   void setWorkingImageData(List<List<int[]>> workingImageData);
 
   /**
-   * Retrieve the name of this image model
+   * Retrieve the name of this image model.
    *
    * @return the image field
    */
   String getImageName();
 
   /**
-   * Retrieve the width of this image model
+   * Retrieve the width of this image model.
    *
    * @return the width field
    */
   int getWidth();
 
   /**
-   * Retrieve the height of this image model
+   * Retrieve the height of this image model.
    *
    * @return the height field
    */
   int getHeight();
 
   /**
-   * Retrieve the pixel data of this image model
+   * Retrieve the pixel data of this image model.
    *
    * @return the workingImageData field
    */

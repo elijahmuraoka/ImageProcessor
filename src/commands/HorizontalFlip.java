@@ -4,11 +4,14 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import model.IPModel;
+import model.ImageModel;
 
 /**
  * The command is used to flip an image horizontally.
  */
 public class HorizontalFlip implements IPCommand {
+  // the new destination name representing the image
+  private String destName;
 
   /**
    * Flip an image horizontally to create a new image, referred to henceforth by the given
@@ -22,13 +25,13 @@ public class HorizontalFlip implements IPCommand {
    */
   @Override
   public IPModel execute(IPModel m, Scanner scan) throws IllegalStateException {
-    String destName;
     try {
-      destName = scan.next();
+      this.destName = scan.next();
     } catch (NoSuchElementException e) {
-      throw new IllegalStateException("The ChangeBrightness command was not called properly.\n" +
-              "Please pass in new parameters with the following format:\n" +
-              "ChangeBrightness <increment> <imageName> <destName>\n");
+      throw new IllegalStateException("The HorizontalFlip command was not called properly.\n"
+              + "Please pass in new parameters with the correct format.\n"
+              + "\nHere is an example:\n"
+              + "HorizontalFlip <imageName> <destName>\n");
     }
 
     // for all rows
@@ -44,7 +47,7 @@ public class HorizontalFlip implements IPCommand {
         }
       }
     }
-    m.setImageName(destName);
+    m.setImageName(this.destName);
     return m;
   }
 }
