@@ -1,6 +1,7 @@
 # ImageProcessor
 
 
+
 ## Design Overview
 **Interface IPCommand (public):** This class represents any command that can be executed on a specific image.
 * **Class VerticalFlip (public):** This class represents the command that is used to flip an image vertically.
@@ -21,6 +22,7 @@
 
 **public class ImageProcessor**
 * This Image Processor application is used to edit photos and save them as a new file.
+
 
 
 ## Commands:
@@ -101,5 +103,8 @@
 ~~~~
 
 
+
 ## UML Diagram
+
+
 ![ImageProcessorUML](https://user-images.githubusercontent.com/91427887/172942545-6bfd5fc2-f131-4196-bd35-694b3d16cfa5.png)
