@@ -1,8 +1,10 @@
 # ImageProcessor
 
-
+Welcome to Elijah and Damian's Image Processor Application!
+In this document, you will find everything you need to understand our program design and also use it yourself.
 
 ## Design Overview
+> This section provides details on all interfaces, classes, and methods within our program including their purposes and relationships with one another.
 **Interface IPCommand (public):** This class represents any command that can be executed on a specific image.
 * **Class VerticalFlip (public):** This class represents the command that is used to flip an image vertically.
 * **Class HorizontalFlip (public):** This class represents the command that is used to flip an image Horizontally.
@@ -15,14 +17,18 @@
 **Interface IPModel (public):** The interface for a generic Image Processor model which supports various operations that can be applied to a specific image.
 * **Class ImageModel (public):** An implementation of the Image Processor model interface.
 
-**Class IPUtil (public)** This class contains utility methods to read an image from file and simply print its contents. Feel free to change this method as required.
+**Class IPUtil (public):** This class contains utility methods to read an image from file and simply print its contents. Feel free to change this method as required.
 
 **Interface IPView (public):** The view interface. MORE TO BE ADDED.
 * **Class IPViewImpl (public):** An implementation of the Image Processor View interface. This implementation supports the ability to render messages.
 
-**public class ImageProcessor**
+**Class ImageProcessor (public):**
 * This Image Processor application is used to edit photos and save them as a new file.
 
+
+## UML Diagram
+
+![ImageProcessorUML](https://user-images.githubusercontent.com/91427887/172942545-6bfd5fc2-f131-4196-bd35-694b3d16cfa5.png)
 
 
 ## Commands:
@@ -101,10 +107,3 @@
 ~~~~
 > gs-luma {imageName} {destName}
 ~~~~
-
-
-
-## UML Diagram
-
-
-![ImageProcessorUML](https://user-images.githubusercontent.com/91427887/172942545-6bfd5fc2-f131-4196-bd35-694b3d16cfa5.png)
