@@ -7,13 +7,15 @@
 **Load and store an image in this application**
 > load {imageName} {imagePath}
 
-**Save any (un)modified images to this device**
-* save {imageName} {saveAsName} {imagePath}
+**Save any (un)modified images to this device.**
+> save {imageName} {saveAsName} {imagePath}
+
+**Change the brightness of an image. Increases all values by a set amount.**
+> cb {imageName} {increment} {destName}
   
-* cb {imageName} {increment} {destName}Change the brightness of an image
-  
-* ChangeBrightness {imageName} {increment} {destName} || Change the brightness of an image
-  
+**Change the brightness of an image. Increasing then decrease bright wont go back to original image.**
+> ChangeBrightness {imageName} {increment} {destName} || 
+
 * HorizontalFlip {imageName} {destName} || Flips an image horizontally
   
 * flip-h {imageName} {destName} || Flips an image horizontally
