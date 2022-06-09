@@ -55,6 +55,7 @@
   
 **Creates a greyscale image.**
 > Greyscale {imageName} {visType} {destName}
+~~ ~~
 > gs {imageName} {visType} {destName}
 
 **Creates a greyscale that visualizes the red component of an image.**
