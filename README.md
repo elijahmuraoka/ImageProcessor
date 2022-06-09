@@ -54,9 +54,10 @@
 > flip-v {imageName} {destName}
   
 **Creates a greyscale image.**
+~~~~
 > Greyscale {imageName} {visType} {destName}
-\n
 > gs {imageName} {visType} {destName}
+~~~~
 
 **Creates a greyscale that visualizes the red component of an image.**
 > gs-red {imageName} {destName}
