@@ -1,10 +1,9 @@
 # ImageProcessor
 
 # Commands:
-* menu
-  + display a list of commands
+* menu || displays a list of commands
 * q
-  # quit the program at any time
+  + quits the program at any time
 
 * load <imageName> <imagePath>
   # Loads and stores an image in this application
