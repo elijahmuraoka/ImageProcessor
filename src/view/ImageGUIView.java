@@ -1,3 +1,4 @@
+/*
 package view;
 
 import java.awt.*;
@@ -36,5 +37,5 @@ public class ImageGUIView {
     frame.setSize(new Dimension(400, 300));
     frame.setVisible(true);
   }
-
 }
+*/

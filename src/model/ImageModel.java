@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class ImageModel implements IPModel {
   // the current name of the image
-  String imageName;
+  private String imageName;
   // the height of the image
   private int height;
   // the width of the image
@@ -16,6 +16,36 @@ public class ImageModel implements IPModel {
   // Each Pixel is an array of 3 integers that represent
   // its RGB components respectively
   private List<List<int[]>> workingImageData;
+
+  /**
+   * An empty Image model constructor.
+   */
+  public ImageModel() {
+  }
+
+  /**
+   * An image model constructor used to create representative image objects using
+   * the given image name, height, width, and a 2D array of pixels (size-3 arrays)
+   * representing the image's data.
+   *
+   * @param imageName        the current name of the image
+   * @param height           the height of the image
+   * @param width            the width of the image
+   * @param workingImageData the working image data displayed as a 2-D list of Pixels
+   *                         Each Pixel is an array of 3 integers that represent
+   *                         its RGB components respectively
+   * @throws IllegalArgumentException when the image's height and/or width are negative
+   */
+  public ImageModel(String imageName, int height, int width,
+                    List<List<int[]>> workingImageData) throws IllegalArgumentException {
+    if (height <= 0 || width <= 0) {
+      throw new IllegalArgumentException("Image height and width must be greater than 0.");
+    }
+    this.imageName = imageName;
+    this.height = height;
+    this.width = width;
+    this.workingImageData = workingImageData;
+  }
 
   @Override
   public void setImageName(String imageName) {

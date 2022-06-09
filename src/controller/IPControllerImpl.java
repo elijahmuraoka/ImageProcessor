@@ -117,7 +117,7 @@ public class IPControllerImpl implements IPController {
             String imagePath = scan.next();
             this.save(imageName, saveAsName, imagePath);
           } catch (IOException e) {
-            throw new IllegalStateException(errorIOMessage);
+            throw new IllegalStateException(errorIOMessage);//break;
           }
           break;
         }
