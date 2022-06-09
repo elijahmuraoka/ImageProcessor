@@ -16,7 +16,7 @@
 **public class ChangeBrightness implements IPCommand**
 * This class represents the command that is used to change the brightness of a certain image. This means all RGB values increase or decrease by a set increment amount.
 
-\n
+~~~~
 
 **public interface IPController**
 * The Image Processor's controller interface which supports the 'go' method used to run the application and transmit inputs and outputs between the view and the model.
