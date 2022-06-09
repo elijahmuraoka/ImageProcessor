@@ -12,6 +12,7 @@ import java.util.Scanner;
 import commands.ChangeBrightness;
 import commands.HorizontalFlip;
 import commands.IPCommand;
+import commands.VisualiseComp;
 import model.IPModel;
 import model.IPUtil;
 import model.ImageModel;
@@ -58,6 +59,7 @@ public class IPControllerImpl implements IPController {
     this.knownCommands = new HashMap<>();
     this.knownCommands.put("ChangeBrightness", new ChangeBrightness());
     this.knownCommands.put("HorizontalFlip", new HorizontalFlip());
+    this.knownCommands.put("Visualise", new VisualiseComp());
   }
 
   @Override
@@ -134,6 +136,8 @@ public class IPControllerImpl implements IPController {
               + "    Input Format: ChangeBrightness <imageName> <increment> <destName>\n"
               + "(4) Flip an image horizontally.\n"
               + "    Input Format: HorizontalFlip <imageName> <destName>\n"
+              + "(5) Visualise the red, green, or blue component of an image.\n"
+              + "    Input Format: Visualise <imageName> <component> <destName>\n"
               + "\nType 'menu' if you would like to see this information again.\n");
     } catch (IOException e) {
       throw new IllegalStateException("Error: Invalid input and/or output(s)");
