@@ -1,5 +1,9 @@
 # ImageProcessor
 
+# Design Overview
+**IPCommand**
+* This class represents any command that can be executed on a specific image.
+
 # Commands:
 
 **displays a list of commands.**
