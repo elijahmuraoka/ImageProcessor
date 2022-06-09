@@ -1,7 +1,7 @@
 # ImageProcessor
 
-##### Welcome to Elijah and Damian's Image Processor Application!
-##### In this document, you will find everything you need to understand our program design and also use it yourself.
+### Welcome to Elijah and Damian's Image Processor Application!
+> In this document, you will find everything you need to understand our program design and also use it yourself.
 
 ## Design Overview
 > This section provides details on all interfaces, classes, and methods within our program including their purposes and relationships with one another.
