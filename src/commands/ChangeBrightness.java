@@ -102,6 +102,7 @@ public class ChangeBrightness implements IPCommand {
       newIncrement = this.increment - (Math.min(newR, Math.min(newG, newB)));
     }
 
+
     r += newIncrement;
     g += newIncrement;
     b += newIncrement;
