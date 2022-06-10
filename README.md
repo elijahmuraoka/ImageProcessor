@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ImageProcessor
 
 ### Welcome to Elijah and Damian's Image Processor Application!
@@ -108,3 +109,6 @@
 ~~~~
 > gs-luma {imageName} {destName}
 ~~~~
+=======
+# ImageProcessor2.0
+>>>>>>> af842dc (Initial commit)
