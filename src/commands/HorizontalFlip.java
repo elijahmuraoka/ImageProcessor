@@ -4,7 +4,6 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import model.IPModel;
-import model.ImageModel;
 
 /**
  * The command is used to flip an image horizontally.
@@ -33,7 +32,6 @@ public class HorizontalFlip implements IPCommand {
               + "\nHere is an example:\n"
               + "HorizontalFlip <imageName> <destName>\n");
     }
-
     // for all rows
     for (int i = 0; i < m.getHeight(); i++) {
       // for the first half of the image's columns

@@ -21,6 +21,7 @@ public class ImageModel implements IPModel {
    * An empty Image model constructor.
    */
   public ImageModel() {
+    // generates an empty image model object that can be initialized later
   }
 
   /**

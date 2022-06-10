@@ -3,7 +3,7 @@ package controller;
 import java.io.IOException;
 
 /**
- * The Image Processor's controller interface which supports the 'go' method used to run the
+ * The Image Processor's controller interface which supports the 'run' method used to run the
  * application and transmit inputs and outputs between the view and the model.
  */
 public interface IPController {
@@ -14,7 +14,7 @@ public interface IPController {
    * @throws IllegalStateException when the controller is unable to successfully read the input
    *                               and/or output the value appropriately
    */
-  void go() throws IllegalStateException;
+  void run() throws IllegalStateException;
 
   /**
    * Load an image from the specified path and refer it to henceforth in the program

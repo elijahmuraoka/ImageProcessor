@@ -19,6 +19,7 @@ public class GreyScale implements IPCommand {
    * An empty GrayScale command constructor.
    */
   public GreyScale() {
+    // used to generate a blank greyscale command object that will be initialized later
   }
 
   /**

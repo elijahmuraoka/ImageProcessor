@@ -113,24 +113,34 @@ public class ImageModelTest {
 
     expected.add(row1);
 
+    //ArrayList of pixels represented as strings
     ArrayList<String> allPixExpected = new ArrayList<>();
-    ArrayList<String> allPix = new ArrayList<>();
+    ArrayList<String> allPixActual = new ArrayList<>();
 
+    // for each row in the expected arrayList.
     for (List<int[]> row : expected) {
+      // for each pixel in a row.
       for (int[] pixel : row) {
+        // converts a pixel to a string and sends it to expected list of strings.
         allPixExpected.add(Arrays.toString(pixel));
       }
     }
 
+
+    // for each row in the arrayList of pixel from actual model
     for (List<int[]> row : this.m.getWorkingImageData()) {
+      // for each pixel in a row
       for (int[] pixel : row) {
-        allPix.add(Arrays.toString(pixel));
+        /* convert the actual model's pixel to a string and send it to a list of strings for actual
+        model.
+         */
+        allPixActual.add(Arrays.toString(pixel));
       }
     }
-    assertEquals(allPixExpected, allPix);
+    assertEquals(allPixExpected, allPixActual);
 
     List<List<int[]>> fail = new ArrayList<>(new ArrayList<>(Arrays.asList(
-            new ArrayList<>(Arrays.asList(new int[]{1, 50, 47}, new int[]{84, 130, 68})))));
+        new ArrayList<>(Arrays.asList(new int[]{1, 50, 47}, new int[]{84, 130, 68})))));
 
     assertNotEquals(fail, this.m.getWorkingImageData());
   }

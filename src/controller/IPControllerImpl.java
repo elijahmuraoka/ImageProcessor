@@ -75,7 +75,7 @@ public class IPControllerImpl implements IPController {
   }
 
   @Override
-  public void go() throws IllegalStateException {
+  public void run() throws IllegalStateException {
     Scanner scan = new Scanner(this.in);
     boolean quit = false;
     String errorIOMessage = "Error: Invalid input and/or output(s)";
@@ -200,6 +200,7 @@ public class IPControllerImpl implements IPController {
         this.v.renderMessage("This image name is not recognized. Please try again.\n");
       } else {
         try {
+          // this.v.renderMessage("Editing " + imageName + " now...\n");
           IPModel newM = m;
           newM = cmd.execute(newM, scan);
           this.v.renderMessage("Successfully executed the command: " + userInput + "\n");
@@ -213,6 +214,7 @@ public class IPControllerImpl implements IPController {
 
   @Override
   public void load(String imageName, String imagePath) throws IOException {
+    this.v.renderMessage("Currently loading image...\n");
     // read the PPM file passed in
     IPUtil util = new IPUtil();
     util.readPPM(imagePath, this.v);
@@ -232,7 +234,8 @@ public class IPControllerImpl implements IPController {
       this.v.renderMessage("The image name, " + imageName
               + ", is not recognized. Please try again.\n");
     } else {
-      String Header = "P3\n" + m.getWidth() + " " + m.getHeight() + "\n255\n";
+      this.v.renderMessage("Saving image to " + imagePath + " now...\n");
+      String header = "P3\n" + m.getWidth() + " " + m.getHeight() + "\n255\n";
       StringBuilder imageData = new StringBuilder();
       for (List<int[]> row : m.getWorkingImageData()) {
         for (int[] pixel : row) {
@@ -244,9 +247,9 @@ public class IPControllerImpl implements IPController {
       try {
         BufferedWriter bw = new BufferedWriter(new FileWriter(imagePath
                 + "/" + saveAsName + ".ppm"));
-        bw.write(Header);
+        bw.write(header);
         bw.write(imageData.toString());
-        this.v.renderMessage("Successfully saved " + imagePath + " as " + saveAsName + "\n");
+        this.v.renderMessage("Successfully saved " + saveAsName + " to " + imagePath + "!\n");
         bw.close();
       } catch (IOException e) {
         this.v.renderMessage("Invalid file path. Please input new values and try again.\n");

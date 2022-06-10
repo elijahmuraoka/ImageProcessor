@@ -16,10 +16,9 @@ public class ImageProcessor {
    * @param args the user's inputs represented as an array of strings
    */
   public static void main(String[] args) {
-    // IPModel model = new ImageModel();
     IPView view = new IPViewImpl();
     Readable in = new InputStreamReader(System.in);
     IPController controller = new IPControllerImpl(view, in);
-    controller.go();
+    controller.run();
   }
 }
