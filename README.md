@@ -30,7 +30,8 @@
 
 ## UML Diagram
 
-![ImageProcessorUML](https://user-images.githubusercontent.com/91427887/172942545-6bfd5fc2-f131-4196-bd35-694b3d16cfa5.png)
+![ImageProcessor](https://user-images.githubusercontent.com/91427887/173166302-d8cc9330-cea0-4dfc-a199-78bd84eaf418.png)
+
 
 
 ## Commands:
