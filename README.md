@@ -110,8 +110,5 @@ In testFiles, there is a text file called "ScriptCommandExamples", if you are no
 ~~~~
 > gs-luma {imageName} {destName}
 ~~~~
-=======
-# ImageProcessor2.0
->>>>>>> af842dc (Initial commit)
 
 ####**We own the Thanos.ppm image and authorize its use in this project.**
