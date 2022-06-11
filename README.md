@@ -111,4 +111,4 @@ In testFiles, there is a text file called "ScriptCommandExamples", if you are no
 > gs-luma {imageName} {destName}
 ~~~~
 
-####**We own the Thanos.ppm image and authorize its use in this project.**
+##### **We own the Thanos.ppm image and authorize its use in this project.**
