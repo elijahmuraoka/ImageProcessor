@@ -20,9 +20,15 @@
 ~~~~
 * **Class VerticalFlip (public):** This class represents the command that is used to flip an image vertically.
 ~~~~
-@Override IPModel execute(IPModel m, Scanner scan): Flip an image vertically to create a new image, referred to henceforth by the given destination name.
+@Override IPModel execute(IPModel m, Scanner scan): Flip an image vertically to create a new image,
+referred to henceforth by the given destination name.
 ~~~~
 * **Class HorizontalFlip (public):** This class represents the command that is used to flip an image Horizontally.
+~~~~
+@Override IPModel execute(IPModel m, Scanner scan): Flip an image vertically to create a new image,
+referred to henceforth by the given destination name.
+* @return the modified IPModel that is now flipped vertically
+~~~~
 * **Class GreyScale (public):** This class represents the command that is used to create a greyscale version of an image according to a specific channel. Either red, blue, green, value, intensity or luma.
 * **Class ChangeBrightness (public):** This class represents the command that is used to change the brightness of a certain image. This means all RGB values increase or decrease by a set increment amount.
 
