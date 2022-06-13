@@ -7,7 +7,21 @@
 > This section provides details on all interfaces, classes, and methods within our program including their purposes and relationships with one another.
 
 **Interface IPCommand (public):** This class represents any command that can be executed on a specific image.
+~~~~
+  /**
+   * This method carries out a specific function, applying it to the given model.
+   *
+   * @param m    the Image represented model to be used and acted on.
+   * @param scan the scanner used to read and retrieve user inputs.
+   * @return the modified Image model.
+   * @throws IllegalStateException when the image data retrieved from the scanner does not meet the required command arguments needed.
+   */
+  IPModel execute(IPModel m, Scanner scan) throws IllegalStateException;
+~~~~
 * **Class VerticalFlip (public):** This class represents the command that is used to flip an image vertically.
+~~~~
+@Override IPModel execute(IPModel m, Scanner scan): Flip an image vertically to create a new image, referred to henceforth by the given destination name.
+~~~~
 * **Class HorizontalFlip (public):** This class represents the command that is used to flip an image Horizontally.
 * **Class GreyScale (public):** This class represents the command that is used to create a greyscale version of an image according to a specific channel. Either red, blue, green, value, intensity or luma.
 * **Class ChangeBrightness (public):** This class represents the command that is used to change the brightness of a certain image. This means all RGB values increase or decrease by a set increment amount.
