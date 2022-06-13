@@ -22,15 +22,48 @@
 ~~~~
 @Override IPModel execute(IPModel m, Scanner scan): Flip an image vertically to create a new image,
 referred to henceforth by the given destination name.
+  @return the modified IPModel that is now flipped vertically.
 ~~~~
+
 * **Class HorizontalFlip (public):** This class represents the command that is used to flip an image Horizontally.
 ~~~~
-@Override IPModel execute(IPModel m, Scanner scan): Flip an image vertically to create a new image,
+@Override IPModel execute(IPModel m, Scanner scan): Flip an image horizontally to create a new image,
 referred to henceforth by the given destination name.
-* @return the modified IPModel that is now flipped vertically
+  @return the modified IPModel that is now flipped horizontally.
 ~~~~
+
 * **Class GreyScale (public):** This class represents the command that is used to create a greyscale version of an image according to a specific channel. Either red, blue, green, value, intensity or luma.
+~~~~
+@Override IPModel execute(IPModel m, Scanner scan): Create a greyscale version of the image with a new name, and
+  refer to it henceforth in the program by the given destination name.
+  You should be able to create greyscale images that specifically visualize the following:
+   * Red: a pixel's red component
+   * Green: a pixel's green component
+   * Blue: a pixel's blue component
+   * Value: the maximum value of the three components for each pixel
+   * Intensity: the average of the three components for each pixel
+   * Luma: the weighted sum (0.2126 * R) + (0.7152 * G) + (0.0722 * B)
+  @return the modified IPModel that is now greyscaled.
+~~~~
+~~~~
+private void vHelper(int[] pixel): The helper method used to alter a pixel's components according 
+  to the greyscale * visualizing type (visType).
+  @param pixel a size-3 array of integers each representing a red, green, and blue component respectively.
+  @return the modified IPModel that is now greyscaled.
+~~~~
+
 * **Class ChangeBrightness (public):** This class represents the command that is used to change the brightness of a certain image. This means all RGB values increase or decrease by a set increment amount.
+~~~~
+@Override IPModel execute(IPModel m, Scanner scan):Change the brightness of the image by the given increment to create a new image,
+  referred to henceforth by the given destination name. The increment may be positive (brightening) or negative (darkening).
+  @return the modified image model with a new level of brightness.
+~~~~
+~~~~
+private int[] cbHelper(int[] pixel): The helper method used to change the brightness of a pixel.
+  @param pixel a size-3 array of integers each representing a red, green, and blue component respectively
+  @return a new pixel with its components incremented(or decremented) appropriately
+~~~~
+
 
 **Interface IPController (public):** The Image Processor's controller interface which supports the 'go' method used to run the application and transmit inputs and outputs between the view and the model.
 * **Class IPControllerImpl (public):** An implementation of the Image Processor controller interface used to process user inputs and communicate between the model and view. Specifically, this controller supports and can apply any operation provided from its list of commands (See Commands section below).
