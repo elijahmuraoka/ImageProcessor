@@ -1,0 +1,4 @@
+Thanos.ppm filter=lfs diff=lfs merge=lfs -text
+ThanosFlip.ppm filter=lfs diff=lfs merge=lfs -text
+images/Thanos.ppm filter=lfs diff=lfs merge=lfs -text
+images/Thanos.ppm.psd filter=lfs diff=lfs merge=lfs -text

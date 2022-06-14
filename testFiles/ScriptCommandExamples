@@ -1,0 +1,7 @@
+NotAValidCommand
+load Thanos images/Thanos.ppm
+gs-intensity Thanos gs-intensity-Thanos
+flip-v gs-intensity-Thanos gs-intensity-vflipped-thanos
+save gs-intensity-Thanos new-thanos res
+menu
+q
