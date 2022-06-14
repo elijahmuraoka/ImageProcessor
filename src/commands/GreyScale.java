@@ -91,6 +91,10 @@ public class GreyScale implements IPCommand {
     int intensified = (r + g + b) / 3;
     int lumafied = (int) ((0.2126 * r) + (0.7152 * g) + (0.0722 * b));
     int maxComponent = Math.max(r, (Math.max(g, b)));
+    
+    int sepiaR = (int) ((0.393 * r) + (0.749 * g) + (0.189 * b));
+    int sepiaG = (int) ((0.349 * r) + (0.686 * g) + (0.168 * b));
+    int sepiaB = (int) ((0.272 * r) + (0.534 * g) + (0.131 * b));
 
     switch (this.visType) {
       case "red":
@@ -119,6 +123,11 @@ public class GreyScale implements IPCommand {
         pixel[0] = maxComponent;
         pixel[1] = maxComponent;
         pixel[2] = maxComponent;
+        break;
+      case "sepia":
+        pixel[0] = sepiaR;
+        pixel[1] = sepiaG;
+        pixel[2] = sepiaB;
         break;
       default:
         throw new IllegalStateException("Invalid greyscale visualize type: " + this.visType);
