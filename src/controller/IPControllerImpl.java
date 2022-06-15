@@ -74,6 +74,7 @@ public class IPControllerImpl implements IPController {
     this.knownCommands.put("gs-value", new GreyScale("value"));
     this.knownCommands.put("gs-intensity", new GreyScale("intensity"));
     this.knownCommands.put("gs-luma", new GreyScale("luma"));
+    this.knownCommands.put("gs-sepia", new GreyScale("sepia"));
   }
 
   @Override

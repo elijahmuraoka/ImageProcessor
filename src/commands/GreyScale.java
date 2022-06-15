@@ -7,7 +7,7 @@ import model.IPModel;
 
 /**
  * This command is used to create a greyscale version of an image according to
- * a specific channel. Either red, blue, green, value, intensity or luma.
+ * a specific channel. Either red, blue, green, value, intensity, luma, or sepia.
  */
 public class GreyScale implements IPCommand {
   // a string that describes the type of greyscale to create and how to visualize it
@@ -92,7 +92,7 @@ public class GreyScale implements IPCommand {
     int intensified = (r + g + b) / 3;
     int lumafied = (int) ((0.2126 * r) + (0.7152 * g) + (0.0722 * b));
     int maxComponent = Math.max(r, (Math.max(g, b)));
-    
+
     int sepiaR = (int) ((0.393 * r) + (0.749 * g) + (0.189 * b));
     int sepiaG = (int) ((0.349 * r) + (0.686 * g) + (0.168 * b));
     int sepiaB = (int) ((0.272 * r) + (0.534 * g) + (0.131 * b));
