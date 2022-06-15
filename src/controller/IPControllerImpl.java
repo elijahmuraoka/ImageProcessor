@@ -7,15 +7,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Scanner;
 
+import Utils.ImageFactory;
+import Utils.ImageFile;
 import commands.ChangeBrightness;
 import commands.GreyScale;
 import commands.HorizontalFlip;
 import commands.IPCommand;
 import commands.VerticalFlip;
 import model.IPModel;
-import model.IPUtil;
 import model.ImageModel;
 import view.IPView;
 
@@ -52,7 +54,7 @@ public class IPControllerImpl implements IPController {
   public IPControllerImpl(IPView v, Readable in) throws IllegalArgumentException {
     if (v == null || in == null) {
       throw new IllegalArgumentException("Either the model, view, and/or "
-          + "readable object(s) are null.\nPlease try new valid parameters.\n");
+              + "readable object(s) are null.\nPlease try new valid parameters.\n");
     }
     this.v = v;
     this.in = in;
@@ -115,7 +117,8 @@ public class IPControllerImpl implements IPController {
             String imageName = scan.next();
             String saveAsName = scan.next();
             String imagePath = scan.next();
-            this.save(imageName, saveAsName, imagePath);
+            String extension = scan.next();
+            this.save(imageName, saveAsName, imagePath, extension);
           } catch (IOException e) {
             throw new IllegalStateException(errorIOMessage);//break;
           }
@@ -214,21 +217,27 @@ public class IPControllerImpl implements IPController {
 
   @Override
   public void load(String imageName, String imagePath) throws IOException {
-    this.v.renderMessage("Currently loading image...\n");
-    // read the PPM file passed in
-    IPUtil util = new IPUtil();
-    util.readPPM(imagePath, this.v);
-    // make a copy of the PPM image data in this model
-    IPModel m = new ImageModel();
-    m.setImageName(imageName);
-    m.setWidth(util.getWidth());
-    m.setHeight(util.getHeight());
-    m.setWorkingImageData(util.getWorkingImageData());
-    this.knownImageModels.put(m.getImageName(), m);
+    try {
+      this.v.renderMessage("Currently loading image...\n");
+      IPModel m = new ImageModel();
+      // read the image file passed in
+      ImageFactory factory = new ImageFactory(imagePath);
+      ImageFile i = factory.createImageFile();
+      i.read(imagePath, this.v);
+      m.setImageFile(i);
+      // make a copy of the image data in this model
+      m.setImageName(imageName);
+      m.setWidth(i.getWidth());
+      m.setHeight(i.getHeight());
+      m.setWorkingImageData(i.getWorkingImageData());
+      this.knownImageModels.put(m.getImageName(), m);
+    } catch (IllegalStateException e) {
+      this.v.renderMessage(e.getMessage());
+    }
   }
 
   @Override
-  public void save(String imageName, String saveAsName, String imagePath) throws IOException {
+  public void save(String imageName, String saveAsName, String imagePath, String extension) throws IOException {
     IPModel m = this.knownImageModels.getOrDefault(imageName, null);
     if (m == null) {
       this.v.renderMessage("The image name, " + imageName
@@ -244,42 +253,26 @@ public class IPControllerImpl implements IPController {
           }
         }
       }
+      BufferedWriter bw = null;
       try {
-        BufferedWriter bw = new BufferedWriter(new FileWriter(imagePath
-                + "/" + saveAsName + ".ppm"));
+        ImageFactory factory = new ImageFactory("." + extension);
+        ImageFile i = factory.createImageFile();
+        bw = new BufferedWriter(new FileWriter(
+                i.generateFileName(saveAsName, imagePath)));
+      } catch (IllegalStateException e) {
+        this.v.renderMessage(e.getMessage());
+        return;
+      }
+      try {
+        Objects.requireNonNull(bw);
         bw.write(header);
         bw.write(imageData.toString());
-        this.v.renderMessage("Successfully saved " + saveAsName + " to " + imagePath + "!\n");
+        this.v.renderMessage("Successfully saved " + saveAsName + " to " + imagePath
+                + " as a " + extension + " image!\n");
         bw.close();
       } catch (IOException e) {
         this.v.renderMessage("Invalid file path. Please input new values and try again.\n");
       }
     }
-    //    String[] fullPath = imagePath.split("/");
-    //    String imageReference = fullPath[fullPath.length - 1];
-    //    IPModel m = this.knownImageModels.getOrDefault(imageReference, null);
-    //    if (m == null) {
-    //      this.v.renderMessage("The image name, " + imageReference
-    //              + ", is not recognized. Please try again.\n");
-    //    } else {
-    //      String Header = "P3\n" + m.getWidth() + " " + m.getHeight() + "\n255\n";
-    //      StringBuilder imageData = new StringBuilder();
-    //      for (List<int[]> row : m.getWorkingImageData()) {
-    //        for (int[] pixel : row) {
-    //          for (int component : pixel) {
-    //            imageData.append(component).append(" ");
-    //          }
-    //        }
-    //      }
-    //      try {
-    //        BufferedWriter bw = new BufferedWriter(new FileWriter(imagePath + ".ppm"));
-    //        bw.write(Header);
-    //        bw.write(imageData.toString());
-    //        this.v.renderMessage("Successfully saved " + imagePath + " as " + imageName + "\n");
-    //        bw.close();
-    //      } catch (IOException e) {
-    //        this.v.renderMessage("Invalid file path. Please input new values and try again.\n");
-    //      }
-    //    }
   }
 }

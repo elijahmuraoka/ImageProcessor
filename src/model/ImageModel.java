@@ -38,7 +38,7 @@ public class ImageModel implements IPModel {
    * @throws IllegalArgumentException when the image's height and/or width are negative.
    */
   public ImageModel(String imageName, int height, int width,
-          List<List<int[]>> workingImageData) throws IllegalArgumentException {
+                    List<List<int[]>> workingImageData) throws IllegalArgumentException {
     if (height <= 0 || width <= 0) {
       throw new IllegalArgumentException("Image height and width must be greater than 0.");
     }
