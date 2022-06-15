@@ -12,11 +12,10 @@ public interface ImageFile {
   /**
    * Read any image file and store its data.
    *
-   * @param imagePath the path of the file.
    * @param v         the Image Processor's view to render necessary message
    * @throws IOException when either the input(s) and/or output(s) are invalid
    */
-  void read(String imagePath, IPView v) throws IOException;
+  void read(IPView v) throws IOException;
 
   /**
    * Appends the appropriate extension and makes an appropriate file name
@@ -33,7 +32,7 @@ public interface ImageFile {
    *
    * @return the width of the image
    */
-  public int getWidth();
+   int getWidth();
 
   /**
    * Retrieves the height of the image file.

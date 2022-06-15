@@ -20,6 +20,8 @@ import view.IPView;
  * - BMP
  */
 public abstract class AbstractImageFile implements ImageFile {
+  // the (desired) file name for this ImageFile object
+  protected String fileName;
   // the height of the PPM image
   protected int height;
   // the width of the PPM image
@@ -30,19 +32,28 @@ public abstract class AbstractImageFile implements ImageFile {
   protected final List<List<int[]>> workingImageData = new ArrayList<>();
 
   /**
+   * The abstract image file constructor used to create an Image File object and store its
+   * file name.
+   *
+   * @param fileName the (desired) name of the file
+   */
+  AbstractImageFile(String fileName) {
+    this.fileName = fileName;
+  }
+
+  /**
    * Read any image file and store its data.
    *
-   * @param filename the path of the file.
-   * @param v        the Image Processor's view to render necessary message
+   * @param v the Image Processor's view to render necessary message
    * @throws IOException when either the input(s) and/or output(s) are invalid
    */
   @Override
-  public void read(String filename, IPView v) throws IOException {
+  public void read(IPView v) throws IOException {
     BufferedImage img;
     try {
-      img = ImageIO.read(new File(filename));
+      img = ImageIO.read(new File(this.fileName));
     } catch (IOException e) {
-      v.renderMessage("File " + filename + " not found!\n");
+      v.renderMessage("File " + this.fileName + " not found!\n");
       return;
     }
     if (img != null) {
@@ -65,7 +76,7 @@ public abstract class AbstractImageFile implements ImageFile {
         }
         this.workingImageData.add(newColumn);
       }
-      v.renderMessage("Successfully loaded image: " + filename + "\n");
+      v.renderMessage("Successfully loaded image: " + this.fileName + "\n");
     }
   }
 

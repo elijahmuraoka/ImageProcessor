@@ -5,15 +5,15 @@ package Utils;
  * according to a specific file path.
  */
 public class ImageFactory {
-  private final String imagePath;
+  private final String fileName;
 
   /**
    * An ImageFactory constructor used to initialize the imagePath field when given one.
    *
-   * @param imagePath the path of the file
+   * @param fileName the path of the file
    */
-  public ImageFactory(String imagePath) {
-    this.imagePath = imagePath;
+  public ImageFactory(String fileName) {
+    this.fileName = fileName;
   }
 
   /**
@@ -23,21 +23,21 @@ public class ImageFactory {
    * @throws IllegalStateException when there is no valid extension found
    */
   public ImageFile createImageFile() throws IllegalStateException {
-    String reverseImgPath = new StringBuilder(this.imagePath).reverse().toString();
+    String reverseImgPath = new StringBuilder(this.fileName).reverse().toString();
     String[] splitImgPath = reverseImgPath.split("\\.");
     String reverseExtension = splitImgPath[0];
     String extension = new StringBuilder(reverseExtension).reverse().toString();
 
     switch (extension.toLowerCase()) {
       case "ppm":
-        return new PPMImage();
+        return new PPMImage(this.fileName);
       case "jpeg":
       case "jpg":
-        return new JPGImage();
+        return new JPGImage(this.fileName);
       case "png":
-        return new PNGImage();
+        return new PNGImage(this.fileName);
       case "bmp":
-        return new BMPImage();
+        return new BMPImage(this.fileName);
       default:
         throw new IllegalStateException("No valid extension found. Please try again.\n");
     }

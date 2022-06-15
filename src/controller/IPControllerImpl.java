@@ -81,7 +81,7 @@ public class IPControllerImpl implements IPController {
     Scanner scan = new Scanner(this.in);
     boolean quit = false;
     String errorIOMessage = "Error: Invalid input and/or output(s)";
-    this.printMenu();
+    this.printHelpMenu();
     while (!quit && scan.hasNext()) {
       String userInput;
       try {
@@ -89,9 +89,8 @@ public class IPControllerImpl implements IPController {
       } catch (NoSuchElementException e) {
         throw new IllegalStateException("Error: There are no more inputs.");
       }
-      switch (userInput) {
+      switch (userInput.toLowerCase()) {
         case "q":
-        case "Q":
           quit = true;
           try {
             this.v.renderMessage("Quitting the Image Processor Application now...");
@@ -99,8 +98,12 @@ public class IPControllerImpl implements IPController {
             throw new IllegalStateException(errorIOMessage);
           }
           break;
+        case "help":
         case "menu":
-          this.printMenu();
+          this.printHelpMenu();
+          break;
+        case "commands":
+          this.printCommands();
           break;
         case "load": {
           try {
@@ -136,21 +139,37 @@ public class IPControllerImpl implements IPController {
   }
 
   /**
-   * Prints and displays the menu instructions to the user.
+   * Prints and displays both a welcome message and a help menu for the user to reference whenever
+   * they would like.
    *
    * @throws IllegalStateException when unable to transmit the input(s) and/or output(s) properly
    */
-  private void printMenu() throws IllegalStateException {
+  private void printHelpMenu() throws IllegalStateException {
     try {
       this.v.renderMessage("Welcome to our Image Processor Program!\n"
-              + "Press `q` or `Q' to quit the program at any time.\n"
-              + "Listed below are some basic commands you can execute on an image:\n\n"
+              + "Press `q` or 'Q' to quit the program at any time.\n"
+              + "Type 'commands' to see the available list of image processing commands.\n"
+              + "Type 'help' or 'menu' if you would like to see this information again.\n");
+    } catch (IOException e) {
+      throw new IllegalStateException("Error: Invalid input and/or output(s)");
+    }
+  }
+
+  /**
+   * Prints and displays an extensive list of available commands for the user to use when
+   * editing and processing their images.
+   *
+   * @throws IllegalStateException when unable to transmit the input(s) and/or output(s) properly
+   */
+  private void printCommands() throws IllegalStateException {
+    try {
+      this.v.renderMessage("Listed below are some basic commands you can execute on an image:\n\n"
               + "(1) Load and store an image in this application.\n"
               + "    Input Format Example(s):\n"
               + "       load <imageName> <imagePath>\n"
               + "(2) Save any (un)modified images to this device.\n"
               + "    Input Format Example(s):\n"
-              + "       save <imageName> <saveAsName> <imagePath>\n"
+              + "       save <imageName> <saveAsName> <saveLocation> <extension> (jpg, png, etc.)\n"
               + "(3) Change the brightness of an image.\n"
               + "    Input Format Example(s):\n"
               + "       ChangeBrightness <imageName> <increment> <destName>\n"
@@ -173,8 +192,7 @@ public class IPControllerImpl implements IPController {
               + "       gs-green <imageName> <destName>\n"
               + "       gs-value <imageName> <destName>\n"
               + "       gs-intensity <imageName> <destName>\n"
-              + "       gs-luma <imageName> <destName>\n"
-              + "\nType 'menu' if you would like to see this information again.\n");
+              + "       gs-luma <imageName> <destName>\n");
     } catch (IOException e) {
       throw new IllegalStateException("Error: Invalid input and/or output(s)");
     }
@@ -223,8 +241,7 @@ public class IPControllerImpl implements IPController {
       // read the image file passed in
       ImageFactory factory = new ImageFactory(imagePath);
       ImageFile i = factory.createImageFile();
-      i.read(imagePath, this.v);
-      m.setImageFile(i);
+      i.read(this.v);
       // make a copy of the image data in this model
       m.setImageName(imageName);
       m.setWidth(i.getWidth());

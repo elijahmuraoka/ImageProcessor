@@ -111,7 +111,7 @@ public class GreyScale implements IPCommand {
         pixel[2] = lumafied;
         break;
       case "intensity":
-        pixel[0] = lumafied;
+        pixel[0] = intensified;
         pixel[1] = intensified;
         pixel[2] = intensified;
         break;
