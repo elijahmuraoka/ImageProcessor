@@ -68,8 +68,8 @@ public class BlurTest {
     this.b.execute(this.m, this.scan);
     // blur the pixels by using the kernel algorithm appropriately
     List<List<int[]>> expectedBlur = new ArrayList<>(Arrays.asList((new ArrayList<>(
-            Arrays.asList(new int[]{107, 53, 68}, new int[]{106, 55, 70}))), (new ArrayList<>(
-            Arrays.asList(new int[]{102, 74, 100}, new int[]{96, 72, 103})))));
+            Arrays.asList(new int[]{108, 54, 70}, new int[]{108, 57, 71}))), (new ArrayList<>(
+            Arrays.asList(new int[]{104, 75, 102}, new int[]{98, 73, 105})))));
 
     // compare each element of the blurred expected array and the
     // newly modified image data array

@@ -7,7 +7,7 @@ import model.IPModel;
 
 /**
  * This command is used to create a greyscale version of an image according to
- * a specific channel. Either red, blue, green, value, intensity, luma, or sepia.
+ * a specific channel. Either red, blue, green, value, intensity, or luma.
  */
 public class GreyScale implements IPCommand {
   // a string that describes the type of greyscale to create and how to visualize it
@@ -21,8 +21,7 @@ public class GreyScale implements IPCommand {
   }
 
   /**
-   * A GreyScale command constructor that takes in and sets
-   * a specific type of visualization.
+   * A GreyScale command constructor that takes in and sets a specific type of visualization.
    *
    * @param visType the type of greyscale to create, dictating how exactly to visualize
    *                the image
@@ -43,7 +42,6 @@ public class GreyScale implements IPCommand {
    * - Value: the maximum value of the three components for each pixel
    * - Intensity: the average of the three components for each pixel
    * - Luma: the weighted sum (0.2126 * R) + (0.7152 * G) + (0.0722 * B)
-   * - Sepia: the weighted sum (0.2126 * R) + (0.7152 * G) + (0.0722 * B)
    *
    * @param m    the Image represented model to be used and acted on
    * @param scan the scanner used to read and retrieve user inputs
@@ -93,10 +91,6 @@ public class GreyScale implements IPCommand {
     int lumafied = (int) ((0.2126 * r) + (0.7152 * g) + (0.0722 * b));
     int maxComponent = Math.max(r, (Math.max(g, b)));
 
-    int sepiaR = (int) ((0.393 * r) + (0.749 * g) + (0.189 * b));
-    int sepiaG = (int) ((0.349 * r) + (0.686 * g) + (0.168 * b));
-    int sepiaB = (int) ((0.272 * r) + (0.534 * g) + (0.131 * b));
-
     switch (this.visType.toLowerCase()) {
       case "red":
         pixel[1] = pixel[0];
@@ -124,11 +118,6 @@ public class GreyScale implements IPCommand {
         pixel[0] = maxComponent;
         pixel[1] = maxComponent;
         pixel[2] = maxComponent;
-        break;
-      case "sepia":
-        pixel[0] = sepiaR;
-        pixel[1] = sepiaG;
-        pixel[2] = sepiaB;
         break;
       default:
         throw new IllegalStateException("Invalid greyscale visualize type: " + this.visType);

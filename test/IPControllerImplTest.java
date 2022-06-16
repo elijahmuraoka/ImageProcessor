@@ -86,8 +86,8 @@ public class IPControllerImplTest {
   // and save it to a new directory with a new name
   @Test
   public void run() {
-    // load Thanos, make a intensity greyscale version of Thanos, and save the new
-    // version of Thanos to testFiles folder
+    // load bucketboi.jpg, make a intensity greyscale version of Thanos, and save the new
+    // version of bucketboi as a ppm image to th res folder
     try {
       this.in = new FileReader("testFiles/ScriptCommandExamples");
     } catch (FileNotFoundException e) {
@@ -99,9 +99,9 @@ public class IPControllerImplTest {
     this.c.run();
     System.out.println(this.a.toString());
     // assertEquals("", this.a.toString());
-    File newThanos = new File("res/new-thanos.ppm");
-    boolean existsNewThanos = newThanos.exists();
-    assertTrue(existsNewThanos);
+    File newImage = new File("res/new-bucketboi.ppm");
+    boolean existsNewImage = newImage.exists();
+    assertTrue(existsNewImage);
   }
 
   // Tests the load method in the controller implementation class

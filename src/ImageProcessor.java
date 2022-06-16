@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 
 import controller.IPController;
@@ -15,9 +17,16 @@ public class ImageProcessor {
    *
    * @param args the user's inputs represented as an array of strings.
    */
-  public static void main(String[] args) {
+  public static void main(String... args) throws FileNotFoundException {
+    Readable in = null;
     IPView view = new IPViewImpl();
-    Readable in = new InputStreamReader(System.in);
+    if (args.length > 0) {
+      for (String arg : args) {
+        in = new FileReader(arg);
+      }
+    } else {
+      in = new InputStreamReader(System.in);
+    }
     IPController controller = new IPControllerImpl(view, in);
     controller.run();
   }

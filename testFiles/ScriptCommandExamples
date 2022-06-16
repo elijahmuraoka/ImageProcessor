@@ -1,7 +1,9 @@
 NotAValidCommand
-load Thanos images/Thanos.ppm
-gs-intensity Thanos gs-intensity-Thanos
-flip-v gs-intensity-Thanos gs-intensity-vflipped-thanos
-save gs-intensity-Thanos new-thanos res
+load bucketboi images/bucketboi.jpg
+sharpen bucketboi bucketboi1
+flip-v bucketboi1 bucketboi2
+cb bucketboi2 30 bucketboi3
+save bucketboi3 new-bucketboi res ppm
 menu
+commands
 q

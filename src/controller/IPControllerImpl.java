@@ -77,9 +77,9 @@ public class IPControllerImpl implements IPController {
     this.knownCommands.put("gs-value", new GreyScale("value"));
     this.knownCommands.put("gs-intensity", new GreyScale("intensity"));
     this.knownCommands.put("gs-luma", new GreyScale("luma"));
-    this.knownCommands.put("sepia", new Sepia());
-    this.knownCommands.put("blur", new Blur());
-    this.knownCommands.put("sharpen", new Sharpen());
+    this.knownCommands.put("Blur", new Blur());
+    this.knownCommands.put("Sharpen", new Sharpen());
+    this.knownCommands.put("Sepia", new Sepia());
   }
 
   @Override
@@ -99,7 +99,7 @@ public class IPControllerImpl implements IPController {
         case "q":
           quit = true;
           try {
-            this.v.renderMessage("Quitting the Image Processor Application now...");
+            this.v.renderMessage("Quitting the Image Processor Application now...\n");
           } catch (IOException e) {
             throw new IllegalStateException(errorIOMessage);
           }
@@ -169,13 +169,14 @@ public class IPControllerImpl implements IPController {
    */
   private void printCommands() throws IllegalStateException {
     try {
-      this.v.renderMessage("Listed below are some basic commands you can execute on an image:\n\n"
+      this.v.renderMessage("Listed below are some basic commands you can execute on an image:\n"
+              + "* All commands are case-insensitive *\n\n"
               + "(1) Load and store an image in this application.\n"
               + "    Input Format Example(s):\n"
               + "       load <imageName> <imagePath>\n"
               + "(2) Save any (un)modified images to this device.\n"
               + "    Input Format Example(s):\n"
-              + "       save <imageName> <saveAsName> <saveLocation> <extension> (jpg, png, etc.)\n"
+              + "       save <imageName> <saveAsName> <saveLocation> <extensionType>\n"
               + "(3) Change the brightness of an image.\n"
               + "    Input Format Example(s):\n"
               + "       ChangeBrightness <imageName> <increment> <destName>\n"
@@ -198,7 +199,17 @@ public class IPControllerImpl implements IPController {
               + "       gs-green <imageName> <destName>\n"
               + "       gs-value <imageName> <destName>\n"
               + "       gs-intensity <imageName> <destName>\n"
-              + "       gs-luma <imageName> <destName>\n");
+              + "       gs-luma <imageName> <destName>\n"
+              + "(6) Blur an image.\n"
+              + "    Input Format Example(s):\n"
+              + "       Blur <imageName> <destName>\n"
+              + "(7) Sharpen an image.\n"
+              + "    Input Format Example(s):\n"
+              + "       Sharpen <imageName> <destName>\n"
+              + "(8) Add a sepia-tone color filter to an image.\n"
+              + "    Input Format Example(s):\n"
+              + "       Sepia <imageName> <destName>\n"
+              + "\nType 'commands' if you would like to see this information again.\n");
     } catch (IOException e) {
       throw new IllegalStateException("Error: Invalid input and/or output(s)");
     }

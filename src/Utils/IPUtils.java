@@ -45,7 +45,6 @@ public class IPUtils {
    *               or sharpen an image
    */
   public void blurAndSharpenHelper(IPModel m, double[][] matrix) {
-    IPUtils utils = new IPUtils();
     int matrixStart = (matrix.length - 1) / 2;
     List<List<int[]>> result = new ArrayList<>();
     // for each row
@@ -53,19 +52,19 @@ public class IPUtils {
       // for each column
       List<int[]> newColumn = new ArrayList<>();
       for (int j = 0; j < m.getWidth(); j++) {
-        int sumRed = 0;
-        int sumGreen = 0;
-        int sumBlue = 0;
+        double sumRed = 0;
+        double sumGreen = 0;
+        double sumBlue = 0;
         // for every cell in the given matrix
         for (int matrixI = 0; matrixI < matrix.length; matrixI++) {
           for (int matrixJ = 0; matrixJ < matrix.length; matrixJ++) {
             // math to get the matrix coordinate with respect to the original image 2-D array
-            // and the current center
+            // and the current center pixel
             int overlapPixelRow = i - matrixStart + matrixI;
             int overlapPixelCol = j - matrixStart + matrixJ;
             // if the matrix's row and column values are both within the imageData's
             // width and height
-            if (utils.isWithinDimensions(m, overlapPixelRow, overlapPixelCol)) {
+            if (this.isWithinDimensions(m, overlapPixelRow, overlapPixelCol)) {
               // get the appropriate pixel from the image
               int[] overlapPixel = m.getWorkingImageData().get(overlapPixelRow)
                       .get(overlapPixelCol);
@@ -77,10 +76,45 @@ public class IPUtils {
           }
         }
         // make a new pixel with the new pixel components
-        int newR = utils.capComponent(m, sumRed);
-        int newG = utils.capComponent(m, sumGreen);
-        int newB = utils.capComponent(m, sumBlue);
+        int newR = this.capComponent(m, (int) sumRed);
+        int newG = this.capComponent(m, (int) sumGreen);
+        int newB = this.capComponent(m, (int) sumBlue);
         int[] newPixel = new int[]{newR, newG, newB};
+        newColumn.add(newPixel);
+      }
+      result.add(newColumn);
+    }
+    m.setWorkingImageData(result);
+  }
+
+  /**
+   * A helper method used for color transformation commands.
+   *
+   * @param m      the IPModel to be modified
+   * @param matrix the matrix which will be used in the image processing algorithm to either blur
+   *               or sharpen an image
+   */
+  public void transformColorHelper(IPModel m, double[][] matrix) {
+    List<List<int[]>> result = new ArrayList<>();
+    // for each row
+    for (int i = 0; i < m.getHeight(); i++) {
+      // for each column
+      List<int[]> newColumn = new ArrayList<>();
+      for (int j = 0; j < m.getWidth(); j++) {
+        int[] pixel = m.getWorkingImageData().get(i).get(j);
+        int[] newPixel = new int[3];
+        // for every cell in the given matrix
+        for (int matrixI = 0; matrixI < matrix.length; matrixI++) {
+          // initialize new component pixel
+          double newComponent = 0;
+          for (int matrixJ = 0; matrixJ < matrix.length; matrixJ++) {
+            // multiply each item in the matrix's row and the respective pixel component
+            // add the resulting product to the current sum of the new component
+            newComponent += matrix[matrixI][matrixJ] * pixel[matrixJ];
+          }
+          // adds and caps the new pixel component to the new pixel
+          newPixel[matrixI] = this.capComponent(m, (int) newComponent);
+        }
         newColumn.add(newPixel);
       }
       result.add(newColumn);
