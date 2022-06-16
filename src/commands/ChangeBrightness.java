@@ -45,9 +45,9 @@ public class ChangeBrightness implements IPCommand {
           int component = m.getWorkingImageData().get(i).get(j)[k];
           // increase or decrease the new pixel component by the increment
           int newComponent = component + increment;
-          utils.capComponent(m, newComponent);
           // set the new (brighter or darker) pixel component
-          m.getWorkingImageData().get(i).get(j)[k] = newComponent;
+          m.getWorkingImageData().get(i).get(j)[k] = utils.capComponent(m, newComponent);
+          ;
         }
       }
     }

@@ -70,9 +70,9 @@ public class ChangeBrightnessTest {
     this.cb.execute(this.m, this.scan);
     // brighten the pixels by increasing each component appropriately
     List<List<int[]>> expectedBright = new ArrayList<>(Arrays.asList((new ArrayList<>(Arrays.asList(
-            new int[]{73, 72, 195}))), (new ArrayList<>(Arrays.asList(new int[]{255, 149, 255}))), (
+            new int[]{73, 72, 195}))), (new ArrayList<>(Arrays.asList(new int[]{249, 149, 249}))), (
             new ArrayList<>(Arrays.asList(new int[]{222, 231, 100}))), (new ArrayList<>(
-            Arrays.asList(new int[]{213, 79, 255})))));
+            Arrays.asList(new int[]{213, 79, 249})))));
 
     // compare each element of the bright expected array and the
     // newly modified image data array
