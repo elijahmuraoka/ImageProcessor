@@ -88,7 +88,7 @@ public class IPUtils {
   }
 
   /**
-   * A helper method used for color transformation commands.
+   * A helper method used that can be used in color transformation commands.
    *
    * @param m      the IPModel to be modified
    * @param matrix the matrix which will be used in the image processing algorithm to either blur

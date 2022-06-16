@@ -13,6 +13,15 @@ import model.IPModel;
  */
 public class Sharpen implements IPCommand {
 
+  /**
+   * Sharpen an image model copy which will be referred to henceforth by the given destination name.
+   *
+   * @param m    the Image model to be used and acted on.
+   * @param scan the scanner used to read and retrieve user inputs.
+   * @return the image model to be sharpened
+   * @throws IllegalStateException when the image data retrieved from the scanner does
+   *                               not meet the required command arguments needed.
+   */
   @Override
   public IPModel execute(IPModel m, Scanner scan) throws IllegalStateException {
     IPUtils utils = new IPUtils();
@@ -32,42 +41,16 @@ public class Sharpen implements IPCommand {
   }
 
   /**
-   * Generates a specific matrix kernel used to sharpen an image.
+   * Generates a specific kernel matrix used to sharpen an image.
    *
    * @return a 2-D array representing the matrix to be used in the blur and sharpening algorithm
    */
   private double[][] generateSharpenMatrix() {
-    double[][] result = new double[5][5];
-    result[0][0] = 1.0 / -8;
-    result[0][1] = 1.0 / -8;
-    result[0][2] = 1.0 / -8;
-    result[0][3] = 1.0 / -8;
-    result[0][4] = 1.0 / -8;
-
-    result[1][0] = 1.0 / -8;
-    result[1][1] = 1.0 / 4;
-    result[1][2] = 1.0 / 4;
-    result[1][3] = 1.0 / 4;
-    result[1][4] = 1.0 / -8;
-
-    result[2][0] = 1.0 / -8;
-    result[2][1] = 1.0 / 4;
-    result[2][2] = 1.0;
-    result[2][3] = 1.0 / 4;
-    result[2][4] = 1.0 / -8;
-
-    result[3][0] = 1.0 / -8;
-    result[3][1] = 1.0 / 4;
-    result[3][2] = 1.0 / 4;
-    result[3][3] = 1.0 / 4;
-    result[3][4] = 1.0 / -8;
-
-    result[4][0] = 1.0 / -8;
-    result[4][1] = 1.0 / -8;
-    result[4][2] = 1.0 / -8;
-    result[4][3] = 1.0 / -8;
-    result[4][4] = 1.0 / -8;
-
-    return result;
+    return new double[][]{
+            new double[]{-1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8},
+            new double[]{-1.0 / 8, 1.0 / 4, 1.0 / 4, 1.0 / 4, -1.0 / 8},
+            new double[]{-1.0 / 8, 1.0 / 4, 1.0, 1.0 / 4, -1.0 / 8},
+            new double[]{-1.0 / 8, 1.0 / 4, 1.0 / 4, 1.0 / 4, -1.0 / 8},
+            new double[]{-1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8}};
   }
 }

@@ -3,6 +3,7 @@ package controller;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,13 +64,13 @@ public class IPControllerImpl implements IPController {
     this.in = in;
     this.knownImageModels = new HashMap<>();
     this.knownCommands = new HashMap<>();
-    this.knownCommands.put("ChangeBrightness", new ChangeBrightness());
+    this.knownCommands.put("changebrightness", new ChangeBrightness());
     this.knownCommands.put("cb", new ChangeBrightness());
-    this.knownCommands.put("HorizontalFlip", new HorizontalFlip());
+    this.knownCommands.put("horizontalFlip", new HorizontalFlip());
     this.knownCommands.put("flip-h", new HorizontalFlip());
-    this.knownCommands.put("VerticalFlip", new VerticalFlip());
+    this.knownCommands.put("verticalFlip", new VerticalFlip());
     this.knownCommands.put("flip-v", new VerticalFlip());
-    this.knownCommands.put("GreyScale", new GreyScale());
+    this.knownCommands.put("greyscale", new GreyScale());
     this.knownCommands.put("gs", new GreyScale());
     this.knownCommands.put("gs-red", new GreyScale("red"));
     this.knownCommands.put("gs-blue", new GreyScale("blue"));
@@ -77,9 +78,9 @@ public class IPControllerImpl implements IPController {
     this.knownCommands.put("gs-value", new GreyScale("value"));
     this.knownCommands.put("gs-intensity", new GreyScale("intensity"));
     this.knownCommands.put("gs-luma", new GreyScale("luma"));
-    this.knownCommands.put("Blur", new Blur());
-    this.knownCommands.put("Sharpen", new Sharpen());
-    this.knownCommands.put("Sepia", new Sepia());
+    this.knownCommands.put("blur", new Blur());
+    this.knownCommands.put("sharpen", new Sharpen());
+    this.knownCommands.put("sepia", new Sepia());
   }
 
   @Override
@@ -228,7 +229,7 @@ public class IPControllerImpl implements IPController {
   private void processCommand(String userInput, Scanner scan) throws IOException {
     //System.out.println(this.knownImageModels);
     IPModel m;
-    IPCommand cmd = this.knownCommands.getOrDefault(userInput, null);
+    IPCommand cmd = this.knownCommands.getOrDefault(userInput.toLowerCase(), null);
     if (cmd == null) {
       this.v.renderMessage("Not a valid command. Please try again.\n");
     } else {
@@ -238,8 +239,21 @@ public class IPControllerImpl implements IPController {
         this.v.renderMessage("This image name is not recognized. Please try again.\n");
       } else {
         try {
+          List<List<int[]>> copyImageData = new ArrayList<>();
+          for (int i = 0; i < m.getHeight(); i++) {
+            List<int[]> copyRow = new ArrayList<>();
+            for (int j = 0; j < m.getWidth(); j++) {
+              int[] copyPixel = new int[3];
+              for (int k = 0; k < 3; k++) {
+                copyPixel[k] = m.getWorkingImageData().get(i).get(j)[k];
+              }
+              copyRow.add(copyPixel);
+            }
+            copyImageData.add(copyRow);
+          }
           // this.v.renderMessage("Editing " + imageName + " now...\n");
-          IPModel newM = m;
+          IPModel newM = new ImageModel(m.getImageName(), m.getHeight(),
+                  m.getWidth(), copyImageData, m.getMaxComponent());
           newM = cmd.execute(newM, scan);
           this.v.renderMessage("Successfully executed the command: " + userInput + "\n");
           this.knownImageModels.put(newM.getImageName(), newM);
@@ -272,7 +286,8 @@ public class IPControllerImpl implements IPController {
   }
 
   @Override
-  public void save(String imageName, String saveAsName, String imagePath, String extension) throws IOException {
+  public void save(String imageName, String saveAsName, String imagePath, String extension)
+          throws IOException {
     IPModel m = this.knownImageModels.getOrDefault(imageName, null);
     if (m == null) {
       this.v.renderMessage("The image name, " + imageName

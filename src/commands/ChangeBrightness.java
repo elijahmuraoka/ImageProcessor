@@ -23,6 +23,7 @@ public class ChangeBrightness implements IPCommand {
    * @throws IllegalStateException when the image data retrieved from the scanner does
    *                               not meet the required command arguments needed.
    */
+  @Override
   public IPModel execute(IPModel m, Scanner scan) throws IllegalStateException {
     IPUtils utils = new IPUtils();
     // how much to add to/subtract from the image's rgb values.

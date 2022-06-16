@@ -17,6 +17,7 @@ import view.IPView;
 import view.IPViewImpl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -75,6 +76,7 @@ public class GreyScaleTest {
     // compare each element of the red greyscale expected array and the
     // newly modified image data array
     TestUtils.imageDataEquals(m, expectedGsRed, this.m.getWorkingImageData());
+    assertTrue(true);
   }
 
   @Test
@@ -90,6 +92,7 @@ public class GreyScaleTest {
     // compare each element of the green greyscale expected array and the
     // newly modified image data array
     TestUtils.imageDataEquals(m, expectedGsGreen, this.m.getWorkingImageData());
+    assertTrue(true);
   }
 
   @Test
@@ -105,6 +108,7 @@ public class GreyScaleTest {
     // compare each element of the blue greyscale expected array and the
     // newly modified image data array
     TestUtils.imageDataEquals(m, expectedGSBlue, this.m.getWorkingImageData());
+    assertTrue(true);
   }
 
   @Test
@@ -119,6 +123,7 @@ public class GreyScaleTest {
     // compare each element of the luma greyscale expected array and the
     // newly modified image data array
     TestUtils.imageDataEquals(m, expectedGsLuma, this.m.getWorkingImageData());
+    assertTrue(true);
   }
 
   @Test
@@ -134,6 +139,7 @@ public class GreyScaleTest {
     // compare each element of the intensity greyscale expected array and the
     // newly modified image data array
     TestUtils.imageDataEquals(m, expectedGsIntensity, this.m.getWorkingImageData());
+    assertTrue(true);
   }
 
   @Test
@@ -149,5 +155,6 @@ public class GreyScaleTest {
     // compare each element of the value greyscale expected array and the
     // newly modified image data array
     TestUtils.imageDataEquals(m, expectedGsValue, this.m.getWorkingImageData());
+    assertTrue(true);
   }
 }

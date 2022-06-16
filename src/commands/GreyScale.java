@@ -68,7 +68,7 @@ public class GreyScale implements IPCommand {
     for (int i = 0; i < m.getHeight(); i++) {
       for (int j = 0; j < m.getWidth(); j++) {
         int[] current = m.getWorkingImageData().get(i).get(j);
-        vHelper(current);
+        this.vHelper(current);
       }
     }
     m.setImageName(destName);

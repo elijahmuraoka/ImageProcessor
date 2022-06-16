@@ -12,15 +12,6 @@ import model.IPModel;
  * which had a characteristic reddish brown tone.
  */
 public class Sepia implements IPCommand {
-  //  private double[][] matrix;
-  //
-  //  public Sepia() {
-  //    this.matrix = new double[][]{
-  //            new double[]{0.393, 0.769, 0.189},
-  //            new double[]{0.349, 0.686, 0.168},
-  //            new double[]{0.272, 0.534, 0.131},
-  //    };
-  //  }
 
   @Override
   public IPModel execute(IPModel m, Scanner scan) throws IllegalStateException {
@@ -41,7 +32,7 @@ public class Sepia implements IPCommand {
   }
 
   /**
-   * Generates a specific matrix kernel used to create a Sepia-tone image.
+   * Generates a specific kernel matrix used to create a Sepia-tone image.
    *
    * @return a 2-D array representing the matrix to be used in the color transformation algorithm
    */
