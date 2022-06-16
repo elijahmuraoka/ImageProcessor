@@ -29,7 +29,8 @@ public class ImageModelTest {
 
     workingImageData.add(row1);
 
-    this.m = new ImageModel("TestModel", 3, 4, workingImageData);
+    this.m = new ImageModel("TestModel", 3, 4, workingImageData,
+            255);
   }
 
   // tests any exceptions needing to be thrown when constructing an invalid co
@@ -38,7 +39,8 @@ public class ImageModelTest {
     // tests for an invalid negative height passed to an Image Model
     try {
       List<List<int[]>> test = new ArrayList<>();
-      this.m = new ImageModel("Bob's Selfie", -32, 50, test);
+      this.m = new ImageModel("Bob's Selfie", -32, 50, test,
+              255);
       fail("Did not throw an IllegalArgumentException when given a negative height.");
     } catch (IllegalArgumentException e) {
       // successfully caught an IAE when given a negative height
@@ -46,7 +48,8 @@ public class ImageModelTest {
     // tests for an invalid negative width passed to an Image Model
     try {
       List<List<int[]>> test = new ArrayList<>();
-      this.m = new ImageModel("Bob's Selfie", 502, -4320, test);
+      this.m = new ImageModel("Bob's Selfie", 502, -4320, test,
+              255);
       fail("Did not throw an IllegalArgumentException when given a negative height.");
     } catch (IllegalArgumentException e) {
       // successfully caught an IAE when given a negative width
@@ -77,7 +80,7 @@ public class ImageModelTest {
   @Test
   public void setWorkingImageData() {
     List<List<int[]>> expected = new ArrayList<>(new ArrayList<>(Arrays.asList(new ArrayList<>(
-        Arrays.asList(new int[]{1, 50, 47}, new int[]{84, 130, 68})))));
+            Arrays.asList(new int[]{1, 50, 47}, new int[]{84, 130, 68})))));
     assertNotEquals(expected, this.m.getWorkingImageData());
     this.m.setWorkingImageData(expected);
     assertEquals(expected, this.m.getWorkingImageData());
@@ -139,7 +142,7 @@ public class ImageModelTest {
     assertEquals(allPixExpected, allPixActual);
 
     List<List<int[]>> fail = new ArrayList<>(new ArrayList<>(Arrays.asList(
-        new ArrayList<>(Arrays.asList(new int[]{1, 50, 47}, new int[]{84, 130, 68})))));
+            new ArrayList<>(Arrays.asList(new int[]{1, 50, 47}, new int[]{84, 130, 68})))));
 
     assertNotEquals(fail, this.m.getWorkingImageData());
   }

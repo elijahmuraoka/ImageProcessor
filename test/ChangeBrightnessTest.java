@@ -48,6 +48,7 @@ public class ChangeBrightnessTest {
     this.m.setWidth(this.file.getWidth());
     this.m.setHeight(this.file.getHeight());
     this.m.setWorkingImageData(this.file.getWorkingImageData());
+    this.m.setMaxComponent(this.file.getMaxComponent());
     this.cb = new ChangeBrightness();
   }
 

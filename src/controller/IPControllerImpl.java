@@ -12,10 +12,12 @@ import java.util.Scanner;
 
 import Utils.ImageFactory;
 import Utils.ImageFile;
+import commands.Blur;
 import commands.ChangeBrightness;
 import commands.GreyScale;
 import commands.HorizontalFlip;
 import commands.IPCommand;
+import commands.Sharpen;
 import commands.VerticalFlip;
 import model.IPModel;
 import model.ImageModel;
@@ -75,6 +77,8 @@ public class IPControllerImpl implements IPController {
     this.knownCommands.put("gs-intensity", new GreyScale("intensity"));
     this.knownCommands.put("gs-luma", new GreyScale("luma"));
     this.knownCommands.put("gs-sepia", new GreyScale("sepia"));
+    this.knownCommands.put("blur", new Blur());
+    this.knownCommands.put("sharpen", new Sharpen());
   }
 
   @Override
@@ -247,6 +251,7 @@ public class IPControllerImpl implements IPController {
       m.setImageName(imageName);
       m.setWidth(i.getWidth());
       m.setHeight(i.getHeight());
+      m.setMaxComponent(i.getMaxComponent());
       m.setWorkingImageData(i.getWorkingImageData());
       this.knownImageModels.put(m.getImageName(), m);
     } catch (IllegalStateException e) {
@@ -262,7 +267,8 @@ public class IPControllerImpl implements IPController {
               + ", is not recognized. Please try again.\n");
     } else {
       this.v.renderMessage("Saving image to " + imagePath + " now...\n");
-      String header = "P3\n" + m.getWidth() + " " + m.getHeight() + "\n255\n";
+      String header = "P3\n" + m.getWidth() + " " + m.getHeight() + "\n"
+              + m.getMaxComponent() + "\n";
       StringBuilder imageData = new StringBuilder();
       for (List<int[]> row : m.getWorkingImageData()) {
         for (int[] pixel : row) {

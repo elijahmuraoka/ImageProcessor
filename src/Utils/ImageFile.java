@@ -12,7 +12,7 @@ public interface ImageFile {
   /**
    * Read any image file and store its data.
    *
-   * @param v         the Image Processor's view to render necessary message
+   * @param v the Image Processor's view to render necessary message
    * @throws IOException when either the input(s) and/or output(s) are invalid
    */
   void read(IPView v) throws IOException;
@@ -32,7 +32,7 @@ public interface ImageFile {
    *
    * @return the width of the image
    */
-   int getWidth();
+  int getWidth();
 
   /**
    * Retrieves the height of the image file.
@@ -40,6 +40,13 @@ public interface ImageFile {
    * @return the height of the image
    */
   int getHeight();
+
+  /**
+   * Retrieve the max color component of this image model.
+   *
+   * @return the max color component
+   */
+  int getMaxComponent();
 
   /**
    * Retrieves the image data of the image file.

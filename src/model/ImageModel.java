@@ -12,6 +12,8 @@ public class ImageModel implements IPModel {
   private int height;
   // the width of the image
   private int width;
+  // the maximum color component for this image model
+  private int maxComponent;
   // the working image data displayed as a 2-D list of Pixels
   // Each Pixel is an array of 3 integers that represent
   // its RGB components respectively
@@ -38,7 +40,8 @@ public class ImageModel implements IPModel {
    * @throws IllegalArgumentException when the image's height and/or width are negative.
    */
   public ImageModel(String imageName, int height, int width,
-                    List<List<int[]>> workingImageData) throws IllegalArgumentException {
+                    List<List<int[]>> workingImageData, int maxComponent)
+          throws IllegalArgumentException {
     if (height <= 0 || width <= 0) {
       throw new IllegalArgumentException("Image height and width must be greater than 0.");
     }
@@ -46,6 +49,7 @@ public class ImageModel implements IPModel {
     this.height = height;
     this.width = width;
     this.workingImageData = workingImageData;
+    this.maxComponent = maxComponent;
   }
 
   @Override
@@ -61,6 +65,11 @@ public class ImageModel implements IPModel {
   @Override
   public void setHeight(int height) {
     this.height = height;
+  }
+
+  @Override
+  public void setMaxComponent(int maxComponent) {
+    this.maxComponent = maxComponent;
   }
 
   @Override
@@ -81,6 +90,11 @@ public class ImageModel implements IPModel {
   @Override
   public int getHeight() {
     return this.height;
+  }
+
+  @Override
+  public int getMaxComponent() {
+    return this.maxComponent;
   }
 
   @Override

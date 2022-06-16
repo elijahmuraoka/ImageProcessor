@@ -30,6 +30,13 @@ public interface IPModel {
   void setHeight(int height);
 
   /**
+   * Sets the height field for this model using the given value.
+   *
+   * @param maxComponent the maximum color component
+   */
+  void setMaxComponent(int maxComponent);
+
+  /**
    * Sets the workingImageData field for this model using the given value.
    *
    * @param workingImageData a copy of the original image's pixel data represented as an array list
@@ -58,6 +65,13 @@ public interface IPModel {
    * @return the height field
    */
   int getHeight();
+
+  /**
+   * Retrieve the max color component of this image model.
+   *
+   * @return the max color component
+   */
+  int getMaxComponent();
 
   /**
    * Retrieve the pixel data of this image model.

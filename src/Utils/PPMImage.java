@@ -62,8 +62,9 @@ public class PPMImage extends AbstractImageFile {
     v.renderMessage("Width of image: " + this.width + "\n");
     this.height = sc.nextInt();
     v.renderMessage("Height of image: " + this.height + "\n");
-    int maxValue = sc.nextInt();
-    v.renderMessage("Maximum value of a color in this file (usually 255): " + maxValue + "\n");
+    this.maxComponent = sc.nextInt();
+    v.renderMessage("Maximum value of a color in this file (usually 255): "
+            + this.maxComponent + "\n");
 
     for (int i = 0; i < this.height; i++) {
       ArrayList<int[]> newColumn = new ArrayList<>();

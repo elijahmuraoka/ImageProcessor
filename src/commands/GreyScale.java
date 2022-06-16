@@ -12,8 +12,6 @@ import model.IPModel;
 public class GreyScale implements IPCommand {
   // a string that describes the type of greyscale to create and how to visualize it
   private String visType;
-  // the new destination name representing the image
-  private String destName;
 
   /**
    * An empty GrayScale command constructor.
@@ -55,11 +53,13 @@ public class GreyScale implements IPCommand {
    */
   @Override
   public IPModel execute(IPModel m, Scanner scan) throws IllegalStateException {
+    // the new destination name representing the image
+    String destName;
     try {
       if (this.visType == null) {
         this.visType = scan.next();
       }
-      this.destName = scan.next();
+      destName = scan.next();
     } catch (NoSuchElementException e) {
       throw new IllegalStateException("The GreyScale command was not called properly.\n"
               + "Please pass in new parameters with the correct format.\n"
@@ -73,7 +73,7 @@ public class GreyScale implements IPCommand {
         vHelper(current);
       }
     }
-    m.setImageName(this.destName);
+    m.setImageName(destName);
     return m;
   }
 
@@ -97,7 +97,7 @@ public class GreyScale implements IPCommand {
     int sepiaG = (int) ((0.349 * r) + (0.686 * g) + (0.168 * b));
     int sepiaB = (int) ((0.272 * r) + (0.534 * g) + (0.131 * b));
 
-    switch (this.visType) {
+    switch (this.visType.toLowerCase()) {
       case "red":
         pixel[1] = pixel[0];
         pixel[2] = pixel[0];

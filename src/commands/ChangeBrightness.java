@@ -3,6 +3,7 @@ package commands;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import Utils.IPUtils;
 import model.IPModel;
 
 /**
@@ -23,6 +24,7 @@ public class ChangeBrightness implements IPCommand {
    *                               not meet the required command arguments needed.
    */
   public IPModel execute(IPModel m, Scanner scan) throws IllegalStateException {
+    IPUtils utils = new IPUtils();
     // how much to add to/subtract from the image's rgb values.
     int increment;
     // the new destination name representing the image
@@ -43,12 +45,7 @@ public class ChangeBrightness implements IPCommand {
           int component = m.getWorkingImageData().get(i).get(j)[k];
           // increase or decrease the new pixel component by the increment
           int newComponent = component + increment;
-          if (newComponent > 255) {
-            newComponent = 255;
-          }
-          if (newComponent < 0) {
-            newComponent = 0;
-          }
+          utils.capComponent(m, newComponent);
           // set the new (brighter or darker) pixel component
           m.getWorkingImageData().get(i).get(j)[k] = newComponent;
         }

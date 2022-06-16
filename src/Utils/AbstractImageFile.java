@@ -26,6 +26,8 @@ public abstract class AbstractImageFile implements ImageFile {
   protected int height;
   // the width of the PPM image
   protected int width;
+  // the maximum color component for this image model
+  protected int maxComponent;
   // the working image displayed as a 1-D list of Pixels
   // Each Pixel is an array of 3 integers that represent
   // its RGB components respectively
@@ -61,8 +63,9 @@ public abstract class AbstractImageFile implements ImageFile {
       v.renderMessage("Width of image: " + this.width + "\n");
       this.height = img.getHeight();
       v.renderMessage("Height of image: " + this.height + "\n");
-      int maxValue = 255;
-      v.renderMessage("Maximum value of a color in this file (usually 255): " + maxValue + "\n");
+      this.maxComponent = 255;
+      v.renderMessage("Maximum value of a color in this file (usually 255): " +
+              this.maxComponent + "\n");
       for (int i = 0; i < this.height; i++) {
         ArrayList<int[]> newColumn = new ArrayList<>();
         for (int j = 0; j < this.width; j++) {
@@ -95,5 +98,10 @@ public abstract class AbstractImageFile implements ImageFile {
   @Override
   public List<List<int[]>> getWorkingImageData() {
     return this.workingImageData;
+  }
+
+  @Override
+  public int getMaxComponent() {
+    return this.maxComponent;
   }
 }
