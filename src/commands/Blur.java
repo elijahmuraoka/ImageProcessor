@@ -28,10 +28,10 @@ public class Blur implements IPCommand {
     try {
       destName = scan.next();
     } catch (NoSuchElementException e) {
-      throw new IllegalStateException("The ChangeBrightness command was not called properly.\n"
+      throw new IllegalStateException("The Blur command was not called properly.\n"
               + "Please pass in new parameters with the following format.\n"
               + "\nHere is an example:\n"
-              + "ChangeBrightness <increment> <imageName> <destName>\n");
+              + "Blur <imageName> <destName>\n");
     }
     utils.blurAndSharpenHelper(m, this.generateBlurMatrix());
     m.setImageName(destName);

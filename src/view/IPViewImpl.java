@@ -16,6 +16,7 @@ public class IPViewImpl implements IPView {
    */
   public IPViewImpl() {
     this.a = System.out;
+
   }
 
   /**

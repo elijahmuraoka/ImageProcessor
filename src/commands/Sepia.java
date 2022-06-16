@@ -10,9 +10,9 @@ public class Sepia implements IPCommand {
 
   public Sepia() {
     this.matrix = new double[][]{
-        new double[]{0.393, 0.769, 0.189},
-        new double[]{0.349, 0.686, 0.168},
-        new double[]{0.272, 0.534, 0.131},
+            new double[]{0.393, 0.769, 0.189},
+            new double[]{0.349, 0.686, 0.168},
+            new double[]{0.272, 0.534, 0.131},
     };
   }
 
@@ -46,8 +46,8 @@ public class Sepia implements IPCommand {
     for (int i = 0; i < pixel.length; i++) {
 
       //for each matrix element
-      for (int j = 0; j < matrix.length; i++) {
-        for (int k = 0; k < matrix[j].length; i++) {
+      for (int j = 0; j < matrix.length; j++) {
+        for (int k = 0; k < matrix.length; k++) {
           // multiply this pixel component value by every element in the matrix.
           // then add that value to a summation matrix
           sum[i] += pixel[i] * matrix[j][k];
@@ -55,8 +55,22 @@ public class Sepia implements IPCommand {
       }
     }
 
-    pixel[0] = (int)(sum[0]);
-    pixel[1] = (int)(sum[1]);
-    pixel[2] = (int)(sum[2]);
+    pixel[0] = (int) (sum[0]);
+    pixel[1] = (int) (sum[1]);
+    pixel[2] = (int) (sum[2]);
   }
 }
+
+/*
+
+import commands.HorizontalFlip;
+import commands.HorizontalFlip;
+import commands.HorizontalFlip;
+import commands.HorizontalFlip;
+import commands.HorizontalFlip;
+import commands.HorizontalFlip;
+import commands.HorizontalFlip;
+import commands.HorizontalFlip;
+import commands.HorizontalFlip;
+import commands.HorizontalFlip;
+ */

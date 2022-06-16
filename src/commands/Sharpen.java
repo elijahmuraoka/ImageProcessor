@@ -21,10 +21,10 @@ public class Sharpen implements IPCommand {
     try {
       destName = scan.next();
     } catch (NoSuchElementException e) {
-      throw new IllegalStateException("The ChangeBrightness command was not called properly.\n"
+      throw new IllegalStateException("The Sharpen command was not called properly.\n"
               + "Please pass in new parameters with the following format.\n"
               + "\nHere is an example:\n"
-              + "ChangeBrightness <increment> <imageName> <destName>\n");
+              + "Sharpen <imageName> <destName>\n");
     }
     utils.blurAndSharpenHelper(m, this.generateSharpenMatrix());
     m.setImageName(destName);
