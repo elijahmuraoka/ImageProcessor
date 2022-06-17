@@ -1,11 +1,5 @@
 package commands;
 
-import java.util.NoSuchElementException;
-import java.util.Scanner;
-
-import utils.IPUtils;
-import model.IPModel;
-
 /**
  * This command is used to convert a normal color image into a sepia-toned image.
  * Sepia-toned images refer to ones taken in the 19th and early 20th century

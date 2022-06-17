@@ -1,6 +1,6 @@
 package utils;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -66,8 +66,8 @@ public abstract class AbstractImageFile implements ImageFile {
       this.height = img.getHeight();
       v.renderMessage("Height of image: " + this.height + "\n");
       this.maxComponent = 255;
-      v.renderMessage("Maximum value of a color in this file (usually 255): " +
-              this.maxComponent + "\n");
+      v.renderMessage("Maximum value of a color in this file (usually 255): "
+              + this.maxComponent + "\n");
       for (int i = 0; i < this.height; i++) {
         ArrayList<int[]> newColumn = new ArrayList<>();
         for (int j = 0; j < this.width; j++) {

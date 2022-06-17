@@ -1,11 +1,5 @@
 package commands;
 
-import java.util.NoSuchElementException;
-import java.util.Scanner;
-
-import utils.IPUtils;
-import model.IPModel;
-
 /**
  * This command is used to sharpen an image. Sharpening works by accentuating the edges
  * (the boundaries between regions of high contrast) of an image,

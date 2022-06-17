@@ -85,5 +85,6 @@ public class HorizontalFlipTest {
     // compare each element of the horizontally flipped expected array and the
     // newly modified image data array
     TestUtils.imageDataEquals(m, expectedHF, this.m.getWorkingImageData());
+
   }
 }

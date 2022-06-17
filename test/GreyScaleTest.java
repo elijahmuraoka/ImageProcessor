@@ -8,16 +8,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import utils.ImageFactory;
-import utils.ImageFile;
 import commands.GreyScale;
 import model.IPModel;
 import model.ImageModel;
+import utils.ImageFactory;
+import utils.ImageFile;
 import view.IPView;
 import view.IPViewImpl;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -65,6 +64,7 @@ public class GreyScaleTest {
 
   @Test
   public void gsRed() {
+    assertEquals("TestGS", this.m.getImageName());
     // execute the red greyscale command
     this.scan = new Scanner(new StringReader("red gs-red"));
     this.gs.execute(this.m, this.scan);
@@ -76,11 +76,11 @@ public class GreyScaleTest {
     // compare each element of the red greyscale expected array and the
     // newly modified image data array
     TestUtils.imageDataEquals(m, expectedGsRed, this.m.getWorkingImageData());
-    assertTrue(true);
   }
 
   @Test
   public void gsGreen() {
+    assertEquals("TestGS", this.m.getImageName());
     // execute the green greyscale command
     this.scan = new Scanner(new StringReader("green gs-green"));
     this.gs.execute(this.m, this.scan);
@@ -92,11 +92,11 @@ public class GreyScaleTest {
     // compare each element of the green greyscale expected array and the
     // newly modified image data array
     TestUtils.imageDataEquals(m, expectedGsGreen, this.m.getWorkingImageData());
-    assertTrue(true);
   }
 
   @Test
   public void gsBlue() {
+    assertEquals("TestGS", this.m.getImageName());
     // execute the blue greyscale command
     this.scan = new Scanner(new StringReader("blue gs-blue"));
     this.gs.execute(this.m, this.scan);
@@ -108,11 +108,11 @@ public class GreyScaleTest {
     // compare each element of the blue greyscale expected array and the
     // newly modified image data array
     TestUtils.imageDataEquals(m, expectedGSBlue, this.m.getWorkingImageData());
-    assertTrue(true);
   }
 
   @Test
   public void gsLuma() {
+    assertEquals("TestGS", this.m.getImageName());
     // execute the luma greyscale command
     this.scan = new Scanner(new StringReader("luma gs-luma"));
     this.gs.execute(this.m, this.scan);
@@ -123,11 +123,11 @@ public class GreyScaleTest {
     // compare each element of the luma greyscale expected array and the
     // newly modified image data array
     TestUtils.imageDataEquals(m, expectedGsLuma, this.m.getWorkingImageData());
-    assertTrue(true);
   }
 
   @Test
   public void gsIntensity() {
+    assertEquals("TestGS", this.m.getImageName());
     // execute the intensity greyscale command
     this.scan = new Scanner(new StringReader("intensity gs-intensity"));
     this.gs.execute(this.m, this.scan);
@@ -139,11 +139,11 @@ public class GreyScaleTest {
     // compare each element of the intensity greyscale expected array and the
     // newly modified image data array
     TestUtils.imageDataEquals(m, expectedGsIntensity, this.m.getWorkingImageData());
-    assertTrue(true);
   }
 
   @Test
   public void gsValue() {
+    assertEquals("TestGS", this.m.getImageName());
     // execute the value greyscale command
     this.scan = new Scanner(new StringReader("value gs-value"));
     this.gs.execute(this.m, this.scan);
@@ -155,6 +155,5 @@ public class GreyScaleTest {
     // compare each element of the value greyscale expected array and the
     // newly modified image data array
     TestUtils.imageDataEquals(m, expectedGsValue, this.m.getWorkingImageData());
-    assertTrue(true);
   }
 }

@@ -1,11 +1,5 @@
 package commands;
 
-import java.util.NoSuchElementException;
-import java.util.Scanner;
-
-import model.IPModel;
-import utils.IPUtils;
-
 /**
  * This command is used to blur an image using a filtering algorithm.
  * In this class, we used a 3x3 kernel matrix to create what is known as

@@ -12,7 +12,6 @@ import utils.IPUtils;
 /**
  * This abstract class is used when creating any Image Processor editing features that need
  * a kernel matrix to filter images in a specific manner.
- * <p>
  * A basic operation in many image processing algorithms is filtering.
  * A filter has a "kernel," which is a 2D array of numbers, having odd dimensions
  * (3x3, 5x5, etc.). Given a pixel in the image and a channel, the result of the filter

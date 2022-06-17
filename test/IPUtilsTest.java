@@ -10,6 +10,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * This class tests the functionality of all methods in the IPUtils class.
+ */
 public class IPUtilsTest {
   IPModel model;
   IPUtils utils;

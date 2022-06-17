@@ -5,6 +5,7 @@ import utils.ImageFile;
 import utils.JPGImage;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * This class tests the Image Factory class and its creation of different image files.
@@ -23,8 +24,8 @@ public class ImageFactoryTest {
 
   @Test(expected = IllegalStateException.class)
   public void createInvalidImageFile() {
-    this.factory = new ImageFactory("dogjpg");
-    //ImageFile expectedJPG = new JPGImage("dogjpg");
-
+    ImageFactory badFactory = new ImageFactory("dogjpg");
+    ImageFile expectedJPG = new JPGImage("dog.jpg");
+    assertNotEquals(expectedJPG.getWidth(), badFactory.createImageFile().getWidth());
   }
 }
