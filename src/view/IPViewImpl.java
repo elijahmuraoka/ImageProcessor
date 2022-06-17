@@ -15,7 +15,7 @@ public class IPViewImpl implements IPView {
    * uses the System console as its Appendable object.
    */
   public IPViewImpl() {
-    this.a = new StringBuilder();
+    this.a = System.out;
   }
 
   /**
