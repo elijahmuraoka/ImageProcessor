@@ -1,4 +1,4 @@
-package Utils;
+package utils;
 
 /**
  * This Image Factory is used to create different types of Image Files

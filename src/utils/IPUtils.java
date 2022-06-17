@@ -1,4 +1,4 @@
-package Utils;
+package utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ public class IPUtils {
    * @param row the given row value
    * @param col the given column value
    * @return a boolean representing whether the (row, column) exists within the model's
-   * image dimensions
+   *         image dimensions
    */
   public boolean isWithinDimensions(IPModel m, int row, int col) {
     return row >= 0 && row < m.getHeight() && col >= 0 && col < m.getWidth();
@@ -34,7 +34,9 @@ public class IPUtils {
   public int capComponent(IPModel m, int component) {
     if (component > m.getMaxComponent()) {
       return m.getMaxComponent();
-    } else return Math.max(0, component);
+    } else {
+      return Math.max(0, component);
+    }
   }
 
   /**

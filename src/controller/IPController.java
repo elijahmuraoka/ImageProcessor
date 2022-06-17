@@ -36,5 +36,6 @@ public interface IPController {
    * @throws IllegalArgumentException when unable to transmit the input(s)
    *                                  and/or output(s) properly
    */
-  void save(String imageName, String saveAsName, String imagePath, String extension) throws IOException;
+  void save(String imageName, String saveAsName, String imagePath, String extension)
+          throws IOException;
 }

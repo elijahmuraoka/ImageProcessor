@@ -1,8 +1,8 @@
 import org.junit.Test;
 
-import Utils.ImageFactory;
-import Utils.ImageFile;
-import Utils.JPGImage;
+import utils.ImageFactory;
+import utils.ImageFile;
+import utils.JPGImage;
 
 import static org.junit.Assert.assertEquals;
 

@@ -8,11 +8,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import Utils.ImageFactory;
-import Utils.ImageFile;
 import commands.VerticalFlip;
 import model.IPModel;
 import model.ImageModel;
+import utils.ImageFactory;
+import utils.ImageFile;
 import view.IPView;
 import view.IPViewImpl;
 
@@ -59,9 +59,10 @@ public class VerticalFlipTest {
     assertEquals(3, this.m.getHeight());
     List<List<int[]>> expectedImageData = new ArrayList<>(Arrays.asList((new ArrayList<>(
             Arrays.asList(new int[]{86, 213, 93}, new int[]{116, 203, 163},
-                    new int[]{171, 228, 66}))), (new ArrayList<>(Arrays.asList(new int[]{0, 57, 166},
-            new int[]{71, 101, 127}, new int[]{240, 15, 80}))), (new ArrayList<>(Arrays.asList(
-            new int[]{64, 241, 185}, new int[]{13, 241, 245}, new int[]{97, 72, 170})))));
+                    new int[]{171, 228, 66}))), (new ArrayList<>(Arrays.asList(
+                    new int[]{0, 57, 166}, new int[]{71, 101, 127},
+                    new int[]{240, 15, 80}))), (new ArrayList<>(Arrays.asList(
+                    new int[]{64, 241, 185}, new int[]{13, 241, 245}, new int[]{97, 72, 170})))));
     // compare each element of the two array lists
     TestUtils.imageDataEquals(m, expectedImageData, this.file.getWorkingImageData());
 
@@ -72,8 +73,9 @@ public class VerticalFlipTest {
     List<List<int[]>> expectedVF = new ArrayList<>(Arrays.asList((new ArrayList<>(Arrays.asList(
             new int[]{64, 241, 185}, new int[]{13, 241, 245}, new int[]{97, 72, 170}))), (
             new ArrayList<>(Arrays.asList(new int[]{0, 57, 166}, new int[]{71, 101, 127},
-                    new int[]{240, 15, 80}))), (new ArrayList<>(Arrays.asList(new int[]{86, 213, 93},
-            new int[]{116, 203, 163}, new int[]{171, 228, 66})))));
+                    new int[]{240, 15, 80}))), (new ArrayList<>(
+            Arrays.asList(new int[]{86, 213, 93},
+                    new int[]{116, 203, 163}, new int[]{171, 228, 66})))));
 
     // compare each element of the vertically flipped expected array and the
     // newly modified image data array

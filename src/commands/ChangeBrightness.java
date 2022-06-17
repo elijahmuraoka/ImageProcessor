@@ -3,7 +3,7 @@ package commands;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import Utils.IPUtils;
+import utils.IPUtils;
 import model.IPModel;
 
 /**
@@ -48,7 +48,6 @@ public class ChangeBrightness implements IPCommand {
           int newComponent = component + increment;
           // set the new (brighter or darker) pixel component
           m.getWorkingImageData().get(i).get(j)[k] = utils.capComponent(m, newComponent);
-          ;
         }
       }
     }

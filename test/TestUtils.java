@@ -17,7 +17,8 @@ public class TestUtils {
    * @param expected the expected image data
    * @param actual   the actual image data
    */
-  public static void imageDataEquals(IPModel m, List<List<int[]>> expected, List<List<int[]>> actual) {
+  public static void imageDataEquals(IPModel m, List<List<int[]>> expected,
+                                     List<List<int[]>> actual) {
     for (int i = 0; i < m.getHeight(); i++) {
       for (int j = 0; j < m.getWidth(); j++) {
         for (int k = 0; k < 3; k++) {

@@ -3,7 +3,7 @@ package commands;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import Utils.IPUtils;
+import utils.IPUtils;
 import model.IPModel;
 
 /**
@@ -15,7 +15,7 @@ public class Sepia implements IPCommand {
 
   @Override
   public IPModel execute(IPModel m, Scanner scan) throws IllegalStateException {
-    Utils.IPUtils utils = new IPUtils();
+    utils.IPUtils utils = new IPUtils();
     // the new destination name representing the image
     String destName;
     try {

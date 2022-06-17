@@ -8,16 +8,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import Utils.ImageFactory;
-import Utils.ImageFile;
 import commands.HorizontalFlip;
 import model.IPModel;
 import model.ImageModel;
+import utils.ImageFactory;
+import utils.ImageFile;
 import view.IPView;
 import view.IPViewImpl;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**

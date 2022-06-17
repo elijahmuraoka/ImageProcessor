@@ -8,8 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import Utils.ImageFactory;
-import Utils.ImageFile;
+import utils.ImageFactory;
+import utils.ImageFile;
 import commands.GreyScale;
 import model.IPModel;
 import model.ImageModel;

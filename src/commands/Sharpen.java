@@ -3,7 +3,7 @@ package commands;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import Utils.IPUtils;
+import utils.IPUtils;
 import model.IPModel;
 
 /**
@@ -47,10 +47,10 @@ public class Sharpen implements IPCommand {
    */
   private double[][] generateSharpenMatrix() {
     return new double[][]{
-            new double[]{-1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8},
-            new double[]{-1.0 / 8, 1.0 / 4, 1.0 / 4, 1.0 / 4, -1.0 / 8},
-            new double[]{-1.0 / 8, 1.0 / 4, 1.0, 1.0 / 4, -1.0 / 8},
-            new double[]{-1.0 / 8, 1.0 / 4, 1.0 / 4, 1.0 / 4, -1.0 / 8},
-            new double[]{-1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8}};
+        new double[]{-1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8},
+        new double[]{-1.0 / 8, 1.0 / 4, 1.0 / 4, 1.0 / 4, -1.0 / 8},
+        new double[]{-1.0 / 8, 1.0 / 4, 1.0, 1.0 / 4, -1.0 / 8},
+        new double[]{-1.0 / 8, 1.0 / 4, 1.0 / 4, 1.0 / 4, -1.0 / 8},
+        new double[]{-1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8, -1.0 / 8}};
   }
 }

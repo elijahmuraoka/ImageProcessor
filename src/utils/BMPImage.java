@@ -1,21 +1,21 @@
-package Utils;
+package utils;
 
 /**
- * A JPG image file representation.
+ * A BMP image file representation.
  */
-public class JPGImage extends AbstractImageFile {
+public class BMPImage extends AbstractImageFile {
   /**
    * The abstract image file constructor used to create an Image File object and store its
    * file name.
    *
    * @param fileName the (desired) name of the file
    */
-  public JPGImage(String fileName) {
+  public BMPImage(String fileName) {
     super(fileName);
   }
 
   @Override
   public String generateFileName(String saveAsName, String imagePath) {
-    return imagePath + "/" + saveAsName + ".jpg";
+    return imagePath + "/" + saveAsName + ".bmp";
   }
 }

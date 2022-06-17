@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
 
-import Utils.ImageFactory;
-import Utils.ImageFile;
+import utils.ImageFactory;
+import utils.ImageFile;
 import controller.IPController;
 import controller.IPControllerImpl;
 import view.IPView;

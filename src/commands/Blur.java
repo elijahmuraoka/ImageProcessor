@@ -3,8 +3,8 @@ package commands;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import Utils.IPUtils;
 import model.IPModel;
+import utils.IPUtils;
 
 /**
  * This command is used to blur an image using a filtering algorithm.
@@ -48,8 +48,8 @@ public class Blur implements IPCommand {
    */
   private double[][] generateBlurMatrix() {
     return new double[][]{
-            new double[]{1.0 / 16, 1.0 / 8, 1.0 / 16},
-            new double[]{1.0 / 8, 1.0 / 4, 1.0 / 8},
-            new double[]{1.0 / 16, 1.0 / 8, 1.0 / 16}};
+        new double[]{1.0 / 16, 1.0 / 8, 1.0 / 16},
+        new double[]{1.0 / 8, 1.0 / 4, 1.0 / 8},
+        new double[]{1.0 / 16, 1.0 / 8, 1.0 / 16}};
   }
 }

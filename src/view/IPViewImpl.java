@@ -15,8 +15,7 @@ public class IPViewImpl implements IPView {
    * uses the System console as its Appendable object.
    */
   public IPViewImpl() {
-    this.a = System.out;
-
+    this.a = new StringBuilder();
   }
 
   /**
@@ -28,7 +27,7 @@ public class IPViewImpl implements IPView {
   public IPViewImpl(Appendable a) throws IllegalArgumentException {
     if (a == null) {
       throw new IllegalArgumentException("The appendable object cannot be null."
-          + "\nPlease try a new valid parameter");
+              + "\nPlease try a new valid parameter");
     }
     this.a = a;
   }

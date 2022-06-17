@@ -11,8 +11,8 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
 
-import Utils.ImageFactory;
-import Utils.ImageFile;
+import utils.ImageFactory;
+import utils.ImageFile;
 import commands.Blur;
 import commands.ChangeBrightness;
 import commands.GreyScale;
