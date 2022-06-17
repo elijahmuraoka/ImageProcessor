@@ -60,9 +60,9 @@ public class VerticalFlipTest {
     List<List<int[]>> expectedImageData = new ArrayList<>(Arrays.asList((new ArrayList<>(
             Arrays.asList(new int[]{86, 213, 93}, new int[]{116, 203, 163},
                     new int[]{171, 228, 66}))), (new ArrayList<>(Arrays.asList(
-                    new int[]{0, 57, 166}, new int[]{71, 101, 127},
-                    new int[]{240, 15, 80}))), (new ArrayList<>(Arrays.asList(
-                    new int[]{64, 241, 185}, new int[]{13, 241, 245}, new int[]{97, 72, 170})))));
+            new int[]{0, 57, 166}, new int[]{71, 101, 127},
+            new int[]{240, 15, 80}))), (new ArrayList<>(Arrays.asList(
+            new int[]{64, 241, 185}, new int[]{13, 241, 245}, new int[]{97, 72, 170})))));
     // compare each element of the two array lists
     TestUtils.imageDataEquals(m, expectedImageData, this.file.getWorkingImageData());
 

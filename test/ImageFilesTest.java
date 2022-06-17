@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import utils.BMPImage;
 import utils.ImageFile;
 import utils.JPGImage;
 import utils.PNGImage;
@@ -75,7 +76,7 @@ public class ImageFilesTest {
     assertEquals("Width of image: 3\n"
             + "Height of image: 3\n"
             + "Maximum value of a color in this file (usually 255): 245\n"
-            + "Successfully loaded image: testFiles/PPM1.ppm", this.a.toString());
+            + "Successfully loaded image: testFiles/PPM1.ppm\n", this.a.toString());
 
     try {
       this.file = new JPGImage("damian.jpg");
@@ -88,9 +89,22 @@ public class ImageFilesTest {
 
   @Test
   public void generateFileName() {
+    // PNG generate file name test
     this.file = new PNGImage("");
     assertEquals("res/newImage.png",
             this.file.generateFileName("newImage", "res"));
+    // JPG generate file name test
+    this.file = new JPGImage("");
+    assertEquals("res/chicken.jpg",
+            this.file.generateFileName("chicken", "res"));
+    // BMP generate file name test
+    this.file = new BMPImage("");
+    assertEquals("images/dog.bmp",
+            this.file.generateFileName("dog", "images"));
+    // PPM generate file name test
+    this.file = new PPMImage("");
+    assertEquals("files/beach.ppm",
+            this.file.generateFileName("beach", "files"));
   }
 
   @Test

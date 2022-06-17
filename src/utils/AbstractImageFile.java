@@ -43,6 +43,8 @@ public abstract class AbstractImageFile implements ImageFile {
     this.fileName = fileName;
   }
 
+  public abstract String generateFileName(String saveAsName, String imagePath);
+
   /**
    * Read any image file and store its data.
    *
@@ -82,8 +84,6 @@ public abstract class AbstractImageFile implements ImageFile {
       v.renderMessage("Successfully loaded image: " + this.fileName + "\n");
     }
   }
-
-  public abstract String generateFileName(String saveAsName, String imagePath);
 
   @Override
   public int getWidth() {

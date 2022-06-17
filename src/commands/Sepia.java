@@ -11,32 +11,15 @@ import model.IPModel;
  * Sepia-toned images refer to ones taken in the 19th and early 20th century
  * which had a characteristic reddish brown tone.
  */
-public class Sepia implements IPCommand {
-
-  @Override
-  public IPModel execute(IPModel m, Scanner scan) throws IllegalStateException {
-    utils.IPUtils utils = new IPUtils();
-    // the new destination name representing the image
-    String destName;
-    try {
-      destName = scan.next();
-    } catch (NoSuchElementException e) {
-      throw new IllegalStateException("The Sepia command was not called properly.\n"
-              + "Please pass in new parameters with the correct format.\n"
-              + "\nHere is an example:\n"
-              + "Sepia <imageName> <destName>\n");
-    }
-    utils.transformColorHelper(m, this.generateSepiaMatrix());
-    m.setImageName(destName);
-    return m;
-  }
+public class Sepia extends AbstractTransformColor {
 
   /**
    * Generates a specific kernel matrix used to create a Sepia-tone image.
    *
    * @return a 2-D array representing the matrix to be used in the color transformation algorithm
    */
-  private double[][] generateSepiaMatrix() {
+  @Override
+  protected double[][] generateColorMatrix() {
     double[][] result = new double[3][3];
     result[0][0] = 0.393;
     result[0][1] = 0.769;
