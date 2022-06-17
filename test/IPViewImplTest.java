@@ -43,13 +43,15 @@ public class IPViewImplTest {
     this.v = new IPViewImpl(this.a);
     // checks that the current appendable object is empty
     assertEquals("", this.a.toString());
-    // checks that the user can sucessfully add string messages to the appendable object
+
+    // checks that the user can sucessfully add string messages to the appendable objec
     try {
       this.v.renderMessage("This is a test.");
     } catch (IOException e) {
       fail("renderMessage threw an IOException when it was not supposed to.");
     }
     assertEquals("This is a test.", this.a.toString());
+
     try {
       this.v.renderMessage(" Please work.");
     } catch (IOException e) {

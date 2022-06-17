@@ -7,6 +7,7 @@ import utils.IPUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class IPUtilsTest {
@@ -21,6 +22,18 @@ public class IPUtilsTest {
     this.model.setWidth(5);
     this.model.setHeight(7);
     this.model.setMaxComponent(500);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void invalidInit() {
+    // Shouldn't have negative width
+    this.model.setWidth(-50);
+    this.model.setHeight(-70);
+    this.model.setMaxComponent(-500);
+
+    assertNotEquals(-50, this.model.getWidth());
+    assertNotEquals(-70, this.model.getHeight());
+    assertNotEquals(-500, this.model.getMaxComponent());
   }
 
   @Test

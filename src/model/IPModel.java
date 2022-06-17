@@ -20,21 +20,21 @@ public interface IPModel {
    *
    * @param width the width of the image.
    */
-  void setWidth(int width);
+  void setWidth(int width) throws IllegalArgumentException;
 
   /**
    * Sets the height field for this model using the given value.
    *
    * @param height the height of the image.
    */
-  void setHeight(int height);
+  void setHeight(int height) throws IllegalArgumentException;
 
   /**
    * Sets the height field for this model using the given value.
    *
    * @param maxComponent the maximum color component
    */
-  void setMaxComponent(int maxComponent);
+  void setMaxComponent(int maxComponent) throws IllegalArgumentException;
 
   /**
    * Sets the workingImageData field for this model using the given value.

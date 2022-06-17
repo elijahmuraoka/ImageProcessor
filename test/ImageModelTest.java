@@ -29,8 +29,7 @@ public class ImageModelTest {
 
     workingImageData.add(row1);
 
-    this.m = new ImageModel("TestModel", 3, 4, workingImageData,
-            255);
+    this.m = new ImageModel("TestModel", 3, 4, workingImageData, 255);
   }
 
   // tests any exceptions needing to be thrown when constructing an invalid co
@@ -39,8 +38,7 @@ public class ImageModelTest {
     // tests for an invalid negative height passed to an Image Model
     try {
       List<List<int[]>> test = new ArrayList<>();
-      this.m = new ImageModel("Bob's Selfie", -32, 50, test,
-              255);
+      this.m = new ImageModel("Bob's Selfie", -32, 50, test, 255);
       fail("Did not throw an IllegalArgumentException when given a negative height.");
     } catch (IllegalArgumentException e) {
       // successfully caught an IAE when given a negative height
@@ -48,8 +46,7 @@ public class ImageModelTest {
     // tests for an invalid negative width passed to an Image Model
     try {
       List<List<int[]>> test = new ArrayList<>();
-      this.m = new ImageModel("Bob's Selfie", 502, -4320, test,
-              255);
+      this.m = new ImageModel("Bob's Selfie", 502, -4320, test, 255);
       fail("Did not throw an IllegalArgumentException when given a negative height.");
     } catch (IllegalArgumentException e) {
       // successfully caught an IAE when given a negative width

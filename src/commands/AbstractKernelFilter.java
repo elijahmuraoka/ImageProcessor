@@ -10,15 +10,35 @@ import model.IPModel;
 import utils.IPUtils;
 
 /**
- * Use this class when creating any Image Processor editing features that need to use
+ * This abstract class is used when creating any Image Processor editing features that need
+ * a kernel matrix to filter images in a specific manner.
+ * <p>
+ * A basic operation in many image processing algorithms is filtering.
+ * A filter has a "kernel," which is a 2D array of numbers, having odd dimensions
+ * (3x3, 5x5, etc.). Given a pixel in the image and a channel, the result of the filter
+ * can be computed for that pixel and channel.
  */
 public abstract class AbstractKernelFilter implements IPCommand {
-  // the kernel matrix to be used in filtering the image
-  protected double[][] kernel = this.generateKernelMatrix();
+  protected double[][] kernel; // the kernel matrix needed to filter the image
 
-  AbstractKernelFilter() {
-
+  /**
+   * An empty public constructor for the AbstractKernelFilter class
+   * used to initialize the specific kernel matrix needed for filtering.
+   *
+   * @throws IllegalStateException when the size of the kernel matrix is even
+   */
+  public AbstractKernelFilter() throws IllegalStateException {
+    this.kernel = this.generateKernelMatrix();
+    if (this.kernel.length % 2 == 0) {
+      throw new IllegalStateException("The Kernel Matrix's size cannot be an even number.");
+    }
   }
+
+  /**
+   * Generates kernel matrix needed to filter the image.
+   *
+   * @return the kernel matrix as a 2D array of doubles
+   */
   protected abstract double[][] generateKernelMatrix();
 
   @Override
@@ -34,7 +54,7 @@ public abstract class AbstractKernelFilter implements IPCommand {
               + "\nHere is an example:\n"
               + "Blur <imageName> <destName>\n");
     }
-    this.blurAndSharpenHelper(m, this.kernel);
+    this.blurAndSharpenHelper(m);
     m.setImageName(destName);
     return m;
   }
@@ -42,13 +62,11 @@ public abstract class AbstractKernelFilter implements IPCommand {
   /**
    * A helper command method used in both the blur and sharpen classes.
    *
-   * @param m      the IPModel to be modified
-   * @param matrix the matrix which will be used in the image processing algorithm to either blur
-   *               or sharpen an image
+   * @param m the IPModel to be modifiedge
    */
-  private void blurAndSharpenHelper(IPModel m, double[][] matrix) {
+  private void blurAndSharpenHelper(IPModel m) {
     IPUtils utils = new IPUtils();
-    int matrixStart = (matrix.length - 1) / 2;
+    int matrixStart = (this.kernel.length - 1) / 2;
     List<List<int[]>> result = new ArrayList<>();
     // for each row
     for (int i = 0; i < m.getHeight(); i++) {
@@ -59,8 +77,8 @@ public abstract class AbstractKernelFilter implements IPCommand {
         double sumGreen = 0;
         double sumBlue = 0;
         // for every cell in the given matrix
-        for (int matrixI = 0; matrixI < matrix.length; matrixI++) {
-          for (int matrixJ = 0; matrixJ < matrix.length; matrixJ++) {
+        for (int matrixI = 0; matrixI < this.kernel.length; matrixI++) {
+          for (int matrixJ = 0; matrixJ < this.kernel.length; matrixJ++) {
             // math to get the matrix coordinate with respect to the original image 2-D array
             // and the current center pixel
             int overlapPixelRow = i - matrixStart + matrixI;
@@ -72,9 +90,9 @@ public abstract class AbstractKernelFilter implements IPCommand {
               int[] overlapPixel = m.getWorkingImageData().get(overlapPixelRow)
                       .get(overlapPixelCol);
               // add to the RGB sums when a matrix cell is overlapped on an existing image pixel
-              sumRed += overlapPixel[0] * matrix[matrixI][matrixJ];
-              sumGreen += overlapPixel[1] * matrix[matrixI][matrixJ];
-              sumBlue += overlapPixel[2] * matrix[matrixI][matrixJ];
+              sumRed += overlapPixel[0] * this.kernel[matrixI][matrixJ];
+              sumGreen += overlapPixel[1] * this.kernel[matrixI][matrixJ];
+              sumBlue += overlapPixel[2] * this.kernel[matrixI][matrixJ];
             }
           }
         }

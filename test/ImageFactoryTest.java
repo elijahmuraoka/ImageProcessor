@@ -20,4 +20,11 @@ public class ImageFactoryTest {
     assertEquals(expectedJPG.getHeight(), factory.createImageFile().getHeight());
     assertEquals(expectedJPG.getHeight(), factory.createImageFile().getHeight());
   }
+
+  @Test(expected = IllegalStateException.class)
+  public void createInvalidImageFile() {
+    this.factory = new ImageFactory("dogjpg");
+    //ImageFile expectedJPG = new JPGImage("dogjpg");
+
+  }
 }

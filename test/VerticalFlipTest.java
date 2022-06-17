@@ -16,6 +16,7 @@ import utils.ImageFile;
 import view.IPView;
 import view.IPViewImpl;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -57,6 +58,7 @@ public class VerticalFlipTest {
     assertEquals("TestVF", this.m.getImageName());
     assertEquals(3, this.m.getWidth());
     assertEquals(3, this.m.getHeight());
+
     List<List<int[]>> expectedImageData = new ArrayList<>(Arrays.asList((new ArrayList<>(
             Arrays.asList(new int[]{86, 213, 93}, new int[]{116, 203, 163},
                     new int[]{171, 228, 66}))), (new ArrayList<>(Arrays.asList(
@@ -80,5 +82,17 @@ public class VerticalFlipTest {
     // compare each element of the vertically flipped expected array and the
     // newly modified image data array
     TestUtils.imageDataEquals(m, expectedVF, this.m.getWorkingImageData());
+
+    List<List<int[]>> actualData = this.m.getWorkingImageData();
+
+    // for each row
+    for (int i = 0; i < actualData.size(); i++) {
+      // for each pixel in every column
+      for (int j = 0; j < actualData.get(i).size(); j++) {
+        // does the actual pixel equal the text pixel and at the same coordinate
+        int[] actualPix = actualData.get(i).get(j);
+        assertArrayEquals(actualPix, expectedVF.get(i).get(j));
+      }
+    }
   }
 }
