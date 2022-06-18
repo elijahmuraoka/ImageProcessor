@@ -235,24 +235,30 @@ private int[] cbHelper(int[] pixel): The helper method used to change the bright
 
 ![ImageProcessor](https://user-images.githubusercontent.com/91427887/173166302-d8cc9330-cea0-4dfc-a199-78bd84eaf418.png)
 
-## Script File Instructions
+## Script File Instructions (Togo flag image created by Damian Uduevbo using Paint.net)
 In testFiles, there is a text file called "ScriptCommandExamples", if you are not running text-based commands from the terminal, you can use this file instead to run some simple script commands. First, create a valid controller and some example parameters to be used for testing. Then create a new FileReader object with this file's path given as a string. Pass this new FileReader object in as the Readable controller parameter. Then run the test. This script file should first produce an error message to the user since this first argument is not a valid one. Then it will load the appropriate image, in this case it is togo.ppm from the images directory. Then it will greyscale the togo image according to its intensity and also flip it vertically. Next, it will save the flipped greyscale togo image to the res directory as a new file. Then, since the next argument is "menu", it will produce the menu instructions again. Finally, it will quit the program as the last argument is "q".
 
 ## Commands:
+#### _(All commands are case-insensitive for user-friendliness)_
 
-**Import any image you would you would like to use in this program when running.**
+**Import any image you would like to use in this program when running.**
 ~~~~
 > load {imageName} {imagePath}
+
+Example: load Koala images/Koala.ppm
 ~~~~
 
 **Save any (un)modified images to a path on your device.**
 ~~~~
-> save {imageName} {saveAsName} {imagePath}
+> save {imageName} {saveAsName} {imagePath} {extension}
+
+Example: save Koala KoalaNew testFolder png
 ~~~~
 
 **Displays the instructions including the list of commands.**
 ~~~~
 > menu
+> help
 ~~~~
 
 **Quits the program at any time.**
@@ -261,28 +267,37 @@ In testFiles, there is a text file called "ScriptCommandExamples", if you are no
 > Q
 ~~~~
 
-**Change the brightness of an image. Increasing then decrease bright wont go back to original image.**
+**Change the brightness of an image.<br />
+Limitations: Increasing then decreasing brightness won't revert to original image.**
 ~~~~
 > ChangeBrightness {imageName} {increment} {destName}
 > cb {imageName} {increment} {destName}
+
+Example: ChangeBrightness Koala 40 KoalaBright
 ~~~~
 
 **Flips an image horizontally.**
 ~~~~
 > HorizontalFlip {imageName} {destName}
 > flip-h {imageName} {destName}
+
+Example: HorizontalFlip Koala Koala-Flipped-H
 ~~~~
 
 **Flips an image vertically.**
 ~~~~
 > VerticalFlip {imageName} {destName}
 > flip-v {imageName} {destName}
+
+Example: VerticalFlip Koala Koala-Flipped-V
 ~~~~
 
 **Creates a greyscale image.**
 ~~~~
 > Greyscale {imageName} {visType} {destName}
 > gs {imageName} {visType} {destName}
+
+Example: GreyScale Koala luma KoalaGS-Luma
 ~~~~
 
 **Creates a greyscale that visualizes the red component of an image.**
@@ -315,4 +330,28 @@ In testFiles, there is a text file called "ScriptCommandExamples", if you are no
 > gs-luma {imageName} {destName}
 ~~~~
 
-##### **We own the Thanos.ppm image and authorize its use in this project.**
+**Blurs an image.**
+~~~~
+> Blur {imageName} {destName}
+
+Example: Blur Koala KoalaBlurry
+~~~~
+
+**Sharpens an image.**
+~~~~
+> Sharpen {imageName} {destName}
+
+Example: Sharpen Koala KoalaSharp
+~~~~
+
+**Adds a Sepia-tone filter on an image.**
+~~~~
+> Sepia {imageName} {destName}
+
+Example: Sepia Koala KoalaSepia
+~~~~
+
+
+##### **We own the "eli" and "d" images and authorize their use in this project.**
+##### **Bucketboi URL: https://www.reddit.com/r/funny/comments/1h4w91/working_at_a_camp_and_i_found_this_kid/**
+

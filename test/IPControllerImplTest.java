@@ -9,10 +9,10 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
 
-import utils.ImageFactory;
-import utils.ImageFile;
 import controller.IPController;
 import controller.IPControllerImpl;
+import utils.ImageFactory;
+import utils.ImageFile;
 import view.IPView;
 import view.IPViewImpl;
 
@@ -98,54 +98,69 @@ public class IPControllerImplTest {
     this.c = new IPControllerImpl(this.v, this.in);
     this.c.run();
     System.out.println(this.a.toString());
-    assertEquals("Welcome to our Image Processor Program!\n"
-            + "Press `q` or 'Q' to quit the program at any time.\n"
-            + "Type 'commands' to see the available list of image processing commands.\n"
-            + "Type 'help' or 'menu' if you would like to see this information again.\n"
-            + "Not a valid command. Please try again.\n"
-            + "Currently loading image...\n" + "Width of image: 750\n" + "Height of image: 1000\n"
-            + "Maximum value of a color in this file (usually 255): 255\n"
-            + "Successfully loaded image: images/bucketboi.jpg\n"
-            + "Successfully executed the command: sharpen\n"
-            + "Successfully executed the command: flip-v\n"
-            + "Successfully executed the command: cb\n" + "Saving image to res now...\n"
-            + "Successfully saved new-bucketboi to res as a ppm image!\n"
-            + "Welcome to our Image Processor Program!\n"
-            + "Press `q` or 'Q' to quit the program at any time.\n"
-            + "Type 'commands' to see the available list of image processing commands.\n"
-            + "Type 'help' or 'menu' if you would like to see this information again.\n"
-            + "Listed below are some basic commands you can execute on an image:\n"
-            + "* All commands are case-insensitive *\n" + "\n"
-            + "(1) Load and store an image in this application.\n"
-            + "    Input Format Example(s):\n"
-            + "       load <imageName> <imagePath>\n"
-            + "(2) Save any (un)modified images to this device.\n"
-            + "    Input Format Example(s):\n"
-            + "       save <imageName> <saveAsName> <saveLocation> <extensionType>\n"
-            + "(3) Change the brightness of an image.\n" + "    Input Format Example(s):\n"
-            + "       ChangeBrightness <imageName> <increment> <destName>\n"
-            + "       cb <imageName> <increment> <destName>\n" + "(4) Flip an image horizontally.\n"
-            + "    Input Format Example(s):\n" + "       HorizontalFlip <imageName> <destName>\n"
-            + "       flip-h <imageName> <destName>\n" + "(4) Flip an image vertically.\n"
-            + "    Input Format Example(s):\n" + "       VerticalFlip <imageName> <destName>\n"
-            + "       flip-v <imageName> <destName>\n"
-            + "(5) Create a greyscale that visualizes the red, green, blue,\n"
-            + "    value, intensity, or luma component of an image.\n"
-            + "    Input Format Example(s):\n"
-            + "       Greyscale <imageName> <visType> <destName>\n"
-            + "       gs <imageName> <visType> <destName>\n"
-            + "       gs-red <imageName> <destName>\n" + "       gs-blue <imageName> <destName>\n"
-            + "       gs-green <imageName> <destName>\n"
-            + "       gs-value <imageName> <destName>\n"
-            + "       gs-intensity <imageName> <destName>\n"
-            + "       gs-luma <imageName> <destName>\n" + "(6) Blur an image.\n"
-            + "    Input Format Example(s):\n" + "       Blur <imageName> <destName>\n"
-            + "(7) Sharpen an image.\n" + "    Input Format Example(s):\n"
-            + "       Sharpen <imageName> <destName>\n"
-            + "(8) Add a sepia-tone color filter to an image.\n"
-            + "    Input Format Example(s):\n" + "       Sepia <imageName> <destName>\n"
-            + "\n" + "Type 'commands' if you would like to see this information again.\n"
-            + "Quitting the Image Processor Application now...\n", this.a.toString());
+    assertEquals("Welcome to our Image Processor Program!\n" +
+            "Press `q` or 'Q' to quit the program at any time.\n" +
+            "Type 'commands' to see the available list of image processing commands.\n" +
+            "Type 'help' or 'menu' if you would like to see this information again.\n" +
+            "Not a valid command. Please try again.\n" +
+            "Currently loading image...\n" +
+            "Width of image: 750\n" +
+            "Height of image: 1000\n" +
+            "Maximum value of a color in this file (usually 255): 255\n" +
+            "Successfully loaded image: images/bucketboi.jpg\n" +
+            "Successfully executed the command: sharpen\n" +
+            "Successfully executed the command: flip-h\n" +
+            "Successfully executed the command: cb\n" +
+            "Saving image to res now...\n" +
+            "Successfully saved new-bucketboi to res as a ppm image!\n" +
+            "Welcome to our Image Processor Program!\n" +
+            "Press `q` or 'Q' to quit the program at any time.\n" +
+            "Type 'commands' to see the available list of image processing commands.\n" +
+            "Type 'help' or 'menu' if you would like to see this information again.\n" +
+            "Listed below are some basic commands you can execute on an image:\n" +
+            "* All commands are case-insensitive *\n" +
+            "\n" +
+            "(1) Load and store an image in this application.\n" +
+            "    Input Format Example(s):\n" +
+            "       load <imageName> <imagePath>\n" +
+            "(2) Save any (un)modified images to this device.\n" +
+            "    Input Format Example(s):\n" +
+            "       save <imageName> <saveAsName> <saveLocation> <extensionType>\n" +
+            "(3) Change the brightness of an image.\n" +
+            "    Input Format Example(s):\n" +
+            "       ChangeBrightness <imageName> <increment> <destName>\n" +
+            "       cb <imageName> <increment> <destName>\n" +
+            "(4) Flip an image horizontally.\n" +
+            "    Input Format Example(s):\n" +
+            "       HorizontalFlip <imageName> <destName>\n" +
+            "       flip-h <imageName> <destName>\n" +
+            "(4) Flip an image vertically.\n" +
+            "    Input Format Example(s):\n" +
+            "       VerticalFlip <imageName> <destName>\n" +
+            "       flip-v <imageName> <destName>\n" +
+            "(5) Create a greyscale that visualizes the red, green, blue,\n" +
+            "    value, intensity, or luma component of an image.\n" +
+            "    Input Format Example(s):\n" +
+            "       Greyscale <imageName> <visType> <destName>\n" +
+            "       gs <imageName> <visType> <destName>\n" +
+            "       gs-red <imageName> <destName>\n" +
+            "       gs-blue <imageName> <destName>\n" +
+            "       gs-green <imageName> <destName>\n" +
+            "       gs-value <imageName> <destName>\n" +
+            "       gs-intensity <imageName> <destName>\n" +
+            "       gs-luma <imageName> <destName>\n" +
+            "(6) Blur an image.\n" +
+            "    Input Format Example(s):\n" +
+            "       Blur <imageName> <destName>\n" +
+            "(7) Sharpen an image.\n" +
+            "    Input Format Example(s):\n" +
+            "       Sharpen <imageName> <destName>\n" +
+            "(8) Add a sepia-tone color filter to an image.\n" +
+            "    Input Format Example(s):\n" +
+            "       Sepia <imageName> <destName>\n" +
+            "\n" +
+            "Type 'commands' if you would like to see this information again.\n" +
+            "Quitting the Image Processor Application now...\n", this.a.toString());
 
     File newImage = new File("res/new-bucketboi.ppm");
     boolean existsNewImage = newImage.exists();

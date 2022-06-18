@@ -1,8 +1,8 @@
 NotAValidCommand
 load bucketboi images/bucketboi.jpg
 sharpen bucketboi bucketboi1
-flip-v bucketboi1 bucketboi2
-cb bucketboi2 30 bucketboi3
+flip-h bucketboi1 bucketboi2
+cb bucketboi2 40 bucketboi3
 save bucketboi3 new-bucketboi res ppm
 menu
 commands

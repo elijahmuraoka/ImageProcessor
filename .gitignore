@@ -30,3 +30,5 @@ images/
 ImageProcessorREADME.webloc
 testFiles/ScriptCommandPlay
 saveCode
+out/
+src/META-INF/

@@ -59,29 +59,29 @@ public class ImageModel implements IPModel {
 
   @Override
   public void setWidth(int width) throws IllegalArgumentException {
-    if (width >= 0) {
+    if (width > 0) {
       this.width = width;
       return;
     }
-    throw new IllegalArgumentException("Max component must be positive.");
+    throw new IllegalArgumentException("Max component must be greater than zero.");
   }
 
   @Override
   public void setHeight(int height) throws IllegalArgumentException {
-    if (height >= 0) {
+    if (height > 0) {
       this.height = height;
       return;
     }
-    throw new IllegalArgumentException("Height must be positive.");
+    throw new IllegalArgumentException("Height must be greater than zero.");
   }
 
   @Override
   public void setMaxComponent(int maxComponent) throws IllegalArgumentException {
-    if (maxComponent >= 0) {
+    if (maxComponent > 0) {
       this.maxComponent = maxComponent;
       return;
     }
-    throw new IllegalArgumentException("Max component must be positive.");
+    throw new IllegalArgumentException("Max component must be greater than zero.");
   }
 
   @Override
