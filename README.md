@@ -4,6 +4,7 @@
 ## Design Overview
 > This section provides details on all interfaces, classes, and methods within our program including their purposes and relationships with one another.
 We used the Model View Controller design pattern to have the user interact with the programme, the Command design pattern to handle image manipulation, saving and loading, and abstract classes to perform simplify our code and make it more readable.
+
 **Interface IPCommand (public):** This class represents any command that can be executed on a specific image.
 ~~~~
 IPModel execute(IPModel m, Scanner scan) throws IllegalStateException: This method carries out a specific function, applying it to the given model.
