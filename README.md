@@ -1,10 +1,11 @@
-# ImageProcessor
-
 ### Welcome to Elijah and Damian's Image Processor Application!
 > In this document, you will find everything you need to understand our program design and also use it yourself.
 
 ## Design Overview
 > This section provides details on all interfaces, classes, and methods within our program including their purposes and relationships with one another.
+> The Model View Controller design pattern to allow
+> The Command design pattern to handle image manipulation, saving, and loading.
+> abstract classes to perform simplify our code and make it more readable.
 
 **Interface IPCommand (public):** This class represents any command that can be executed on a specific image.
 ~~~~
