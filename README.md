@@ -4,33 +4,21 @@
 ## Design Overview
 > This section provides details on all interfaces, classes, and methods within our program including their purposes and relationships with one another.
 We used the Model View Controller design pattern to have the user interact with the programme, the Command design pattern to handle image manipulation, saving and loading, and abstract classes to perform simplify our code and make it more readable.
-
 **Interface IPCommand (public):** This class represents any command that can be executed on a specific image.
 ~~~~
-  /**
-   * This method carries out a specific function, applying it to the given model.
-   *
-   * @param m    the Image represented model to be used and acted on.
-   * @param scan the scanner used to read and retrieve user inputs.
-   * @return the modified Image model.
-   * @throws IllegalStateException when the image data retrieved from the scanner does not meet the required command arguments needed.
-   */
-  IPModel execute(IPModel m, Scanner scan) throws IllegalStateException;
+IPModel execute(IPModel m, Scanner scan) throws IllegalStateException: This method carries out a specific function, applying it to the given model.
+    takes in the Image represented model to be used and acted on.
+    takes in the scanner used to read and retrieve user inputs.
+    the Image data retrieved from the scanner must meet the required command arguments needed.
 ~~~~
 * **Class VerticalFlip (public):** This class represents the command that is used to flip an image vertically.
 ~~~~
-@Override IPModel execute(IPModel m, Scanner scan): Flip an image vertically to create a new image,
-referred to henceforth by the given destination name.
-
-  @return the modified IPModel that is now flipped vertically.
+execute(IPModel m, Scanner scan): Flip an image vertically to create a new image, referred to henceforth by the given destination name.
 ~~~~
 
 * **Class HorizontalFlip (public):** This class represents the command that is used to flip an image Horizontally.
 ~~~~
-@Override IPModel execute(IPModel m, Scanner scan): Flip an image horizontally to create a new image,
-referred to henceforth by the given destination name.
-
-  @return the modified IPModel that is now flipped horizontally.
+execute(IPModel m, Scanner scan): Flip an image horizontally to create a new image, referred to henceforth by the given destination name.
 ~~~~
 
 * **Class GreyScale (public):** This class represents the command that is used to create a greyscale version of an image according to a specific channel. Either red, blue, green, value, intensity or luma.
@@ -57,10 +45,7 @@ private void vHelper(int[] pixel): The helper method used to alter a pixel's com
 
 * **Class ChangeBrightness (public):** This class represents the command that is used to change the brightness of a certain image. This means all RGB values increase or decrease by a set increment amount.
 ~~~~
-@Override IPModel execute(IPModel m, Scanner scan):Change the brightness of the image by the given increment to create a new image,
-  referred to henceforth by the given destination name. The increment may be positive (brightening) or negative (darkening).
-  
-  @return the modified image model with a new level of brightness.
+execute(IPModel m, Scanner scan):Change the brightness of the image by the given increment to create a new image, referred to henceforth by the given destination name. The increment may be positive (brightening) or negative (darkening).
 ~~~~
 ~~~~
 private int[] cbHelper(int[] pixel): The helper method used to change the brightness of a pixel.
@@ -68,167 +53,163 @@ private int[] cbHelper(int[] pixel): The helper method used to change the bright
   @return a new pixel with its components incremented(or decremented) appropriately
 ~~~~
 
+* **Class AbstractKernelFilter (abstract, implements IPCommand):** This abstract class is used when creating any Image Processor editing features that need a kernel matrix to filter images in a specific manner. A basic operation in many image processing algorithms is filtering. A filter has a "kernel," which is a 2D array of numbers, having odd dimensions (3x3, 5x5, etc.). Given a pixel in the image and a channel, the result of the filter can be computed for that pixel and channel.
+~~~~
+generateKernelMatrix(): Generates kernel matrix needed to filter the image.
+~~~~
+~~~~
+blurAndSharpenHelper(IPModel m): A helper command method used in both the blur and sharpen classes.
+    Takes in the IPModel to be modified.
+~~~~
+
+* **Class AbstractTransformColor (abstract, implements IPCommand):** This abstract class is used when creating any Image Processor editing features that use a matrix to transform the color (RGB values) of an image. Use matrix multiplication to change a pixel's RGB components accordingly.
+~~~~
+generateColorMatrix(): Generate the matrix needed to transform the image's color.
+~~~~
+~~~~
+transformColorHelper(IPModel m, double[][] matrix): A helper method used that can be used in color transformation commands.
+    Takes in the IPModel to be modified.
+    The matrix which will be used in the image processing algorithm to either blur or sharpen an image.
+~~~~
+
+* **Class Blur (public, extends AbstractKernelFilter):** This class represents the command  that is used to Gaussian blur an image using a filtering algorithm using a 3x3 kernel matrix.
+~~~~
+generateKernelMatrix(): Generates a specific kernel matrix used to blur an image.
+~~~~
+* **Class Sepia (public, extends AbstractTransformColor):** This command is used to convert a normal color image into a sepia-toned image.
+~~~~
+generateKernelMatrix(): Generates a specific kernel matrix used to create a Sepia-tone image.
+~~~~
+* **Class Sharpen (public, extends AbstractKernelFilter):** This command is used to sharpen an image.
+~~~~
+generateKernelMatrix(): Generates a specific kernel matrix used to sharpen an image.
+~~~~
+
+#
 
 **Interface IPController (public):** The Image Processor's controller interface which supports the 'go' method used to run the application and transmit inputs and outputs between the view and the model.
 ~~~~
-  /**
-   * The main controller method which handles user inputs and reacts accordingly.
-   *
-   * @throws IllegalStateException when the controller is unable to successfully read the input
-   *                               and/or output the value appropriately
-   */
-  void run() throws IllegalStateException;
+run() The main controller method which handles user inputs and reacts accordingly.
+    throws an error when the programme is unable to successfully read the input and/or output values appropriately.
 ~~~~
 ~~~~
-  /**
-   * Load an image from the specified path and refer it to henceforth in the program
-   * by the given image name.
-   *
-   * @param imageName the name of the image
-   * @param imagePath the file path for a specific image
-   * @throws IOException when unable to transmit the input(s) and/or output(s) properly
-   */
-  void load(String imageName, String imagePath) throws IOException;
+load(String imageName, String imagePath): Load an image from the specified path and refer it to henceforth in the program by the given image name.
+    Takes in an the name of the image to be loaded as
+    Takes in the file path for a specific image
+    Throws an error when unable to transmit the input(s) and/or output(s) properly
 ~~~~
 ~~~~
-  /**
-   * Save an image using its current name and new save name to the specified path.
-   *
-   * @param imageName  the current name of the image
-   * @param saveAsName the name used to save this image as
-   * @param imagePath  the file path for a specific image
-   * @throws IllegalArgumentException when unable to transmit the input(s)
-   *                                  and/or output(s) properly
-   */
-  void save(String imageName, String saveAsName, String imagePath) throws IOException;
+save(String imageName, String saveAsName, String imagePath): Save an image using its current name and new save name to the specified path.
+    Takes in the current name of the image.
+    Takes in the name used to save this image as
+    Takes in the file path for a specific image
+    Throws an error when unable to transmit the input(s) and/or output(s) properly
 ~~~~
 
 * **Class IPControllerImpl (public):** An implementation of the Image Processor controller interface used to process user inputs and communicate between the model and view. Specifically, this controller supports and can apply any operation provided from its list of commands (See Commands section below).
 ~~~~
-  /**
-   * Prints and displays the menu instructions to the user.
-   *
-   * @throws IllegalStateException when unable to transmit the input(s) and/or output(s) properly
-   */
-  private void printMenu() throws IllegalStateException;
+printMenu(): Prints and displays the menu instructions to the user.
+    Throws an error when unable to transmit the input(s) and/or output(s) properly
 ~~~~
 ~~~~
-  /**
-   * Process the user's inputs and apply some command to the given image model
-   * as long as the inputs are valid and sufficient.
-   * Required: The command input must be contained in the list of known commands
-   * Required: The image name input must be recognizable to retrieve its corresponding model
-   *
-   * @param userInput the user's input to the controller
-   * @param scan      the scanner used to read the user's inputs
-   * @throws IOException when unable to transmit the input(s) and/or output(s) properly
-   */
-  private void processCommand(String userInput, Scanner scan) throws IOException;
+processCommand(String userInput, Scanner scan): Process the user's inputs and apply some command to the given image model as long as the inputs are valid and sufficient.
+    Takes in the user's input to the programme.
+    Takes in the user input reader used to read the user's inputs.
+    Throws an error when unable to transmit the input(s) and/or output(s) properly.
 ~~~~
 
 **Interface IPModel (public):** The interface for a generic Image Processor model which supports various operations that can be applied to a specific image.
 ~~~~
-  /**
-   * Sets the image name field for this model using the given value.
-   *
-   * @param imageName the name of the image
-   */
-  void setImageName(String imageName);
+setImageName(String imageName): Sets the image name field for this model using the given value.
+    Takes in the name of the image
 ~~~~
 ~~~~
-  /**
-   * Sets the width field for this model using the given value.
-   *
-   * @param width the width of the image
-   */
-  void setWidth(int width);
+setWidth(int width): Sets the width field for this model using the given value.
+    Takes in the width of the image
 ~~~~
 ~~~~
-  /**
-   * Sets the height field for this model using the given value.
-   *
-   * @param height the height of the image
-   */
-  void setHeight(int height);
-~~~~
-
-~~~~
-  /**
-   * Sets the workingImageData field for this model using the given value.
-   *
-   * @param workingImageData a copy of the original image's pixel data represented as an array list
-   *                         of size-3 integer arrays representing a single pixel and its
-   *                         RGB values respectively
-   */
-  void setWorkingImageData(List<List<int[]>> workingImageData);
+setHeight(int height): Sets the height field for this model using the given value.
+    Takes in the height of the image
 ~~~~
 ~~~~
-  /**
-   * Retrieve the name of this image model.
-   *
-   * @return the image field
-   */
-  String getImageName();
+setWorkingImageData(List<List<int[]>> workingImageData): Sets the workingImageData field for this model using the given value.
+    Takes in a copy of the original image's pixel data represented as an array list of size-3 integer arrays representing a single pixel and its RGB values respectively
 ~~~~
 ~~~~
-  /**
-   * Retrieve the width of this image model.
-   *
-   * @return the width field
-   */
-  int getWidth();
+getImageName(): Retrieve the name of this image model.
 ~~~~
 ~~~~
-  /**
-   * Retrieve the height of this image model.
-   *
-   * @return the height field
-   */
-  int getHeight();
+int getWidth(): Retrieve the width of this image model.
 ~~~~
 ~~~~
-  /**
-   * Retrieve the pixel data of this image model.
-   *
-   * @return the workingImageData field
-   */
-  List<List<int[]>> getWorkingImageData();
+int getHeight(): Retrieve the height of this image model.
+~~~~
+~~~~
+List<List<int[]>> getWorkingImageData(): Retrieve the pixel data of this image model.
 ~~~~
 
 * **Class ImageModel (public):** An implementation of the Image Processor model interface.
 
+**Interface ImageFile (public):** Handles various image files.
+~~~~
+read(IPView v): Read any image file and store its data.
+    Takes in the Image Processor's view to render necessary message
+    Errors when either the input(s) and/or output(s) are invalid
+~~~~
+~~~~
+generateFileName(String saveAsName, String imagePath): Appends the appropriate extension and makes an appropriate file name given a name and image path.
+    takes in a name to save this image as.
+    takes in a path of the file.
+~~~~
+~~~~
+getWidth(): Retrieves the width of the image file.
+~~~~
+~~~~
+getHeight(): Retrieves the height of the image file.
+~~~~
+~~~~
+getMaxComponent(): Retrieve the max color component of this image model.
+~~~~
+~~~~
+getWorkingImageData(): Retrieves the image data of the image file.
+~~~~
+
+
 **Class IPUtil (public):** This class contains utility methods to read an image from file and simply print its contents. Feel free to change this method as required.
 ~~~~
-  /**
-   * Read an image file in the PPM format and print the colors.
-   *
-   * @param filename the path of the file.
-   */
-  public void readPPM(String filename, IPView v) throws IOException;
+readPPM(String filename, IPView v): Read an image file in the PPM format and print the colors.
+   Takes in the path of the file. 
 ~~~~
+~~~~
+isWithinDimensions(IPModel m, int row, int col): Checks a given row and column and whether they are both within the given image model's width and height.
+   Takes in the given IPModel.
+   Takes in the given row of a pixel
+   Takes in the given column of a pixel
+~~~~
+~~~~
+capComponent(IPModel m, int component): Caps a given color component, forcing it to exist between 0 and 255.
+   Takes in the IPModel used to retrieve its max component.
+   Takes in the the component to be evaluated.
+~~~~
+
+
+#
+
 **Interface IPView (public):** The view interface. MORE TO BE ADDED.
 ~~~~
-  /**
-   * Transmits and outputs the given message to a later specified destination.
-   *
-   * @param message the string message to be passed on to the user
-   *                through the view's appendable object
-   * @throws IOException when the message does not transmit/output correctly
-   */
-  void renderMessage(String message) throws IOException;
+renderMessage(String message) throws IOException: Transmits and outputs the given message to a later specified destination.
+    Takes in message the string message to be passed on to the user through the view's appendable object.
+    throws an error when the message does not transmit/output correctly.
 ~~~~
 * **Class IPViewImpl (public):** An implementation of the Image Processor View interface. This implementation supports the ability to render messages.
 
 **Class ImageProcessor (public):**
 * This Image Processor application is used to edit photos and save them as a new file.
 ~~~~
-  /**
-   * The main method used to run this Image Processor application.
-   *
-   * @param args the user's inputs represented as an array of strings
-   */
-  public static void main(String[] args)
+main(String[] args): The main method used to run this Image Processor application.
+    Takes in the user's inputs in a list form.
 ~~~~
+
 
 ## UML Diagram
 
