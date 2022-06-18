@@ -13,7 +13,7 @@ IPModel execute(IPModel m, Scanner scan) throws IllegalStateException: This meth
     the Image data retrieved from the scanner must meet the required command arguments needed.
 ~~~~
 * **Class VerticalFlip (public):** This class represents the command that is used to flip an image vertically.
-~~~~
+> ~~~~
 execute(IPModel m, Scanner scan): Flip an image vertically to create a new image, referred to henceforth by the given destination name.
 ~~~~
 
