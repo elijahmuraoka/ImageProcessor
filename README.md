@@ -206,7 +206,7 @@ main(String[] args): The main method used to run this Image Processor applicatio
 
 ## UML Diagram
 
-![ImageProcessor](https://user-images.githubusercontent.com/91427887/173166302-d8cc9330-cea0-4dfc-a199-78bd84eaf418.png)
+![ImageProcessorUML](https://user-images.githubusercontent.com/91427887/174504119-0d15be33-104d-42dc-9b07-e72bee9aa1dd.png)
 
 ## Script File Instructions (Togo flag image created by Damian Uduevbo using Paint.net)
 In testFiles, there is a text file called "ScriptCommandExamples", if you are not running text-based commands from the terminal, you can use this file instead to run some simple script commands. First, create a valid controller and some example parameters to be used for testing. Then create a new FileReader object with this file's path given as a string. Pass this new FileReader object in as the Readable controller parameter. Then run the test. This script file should first produce an error message to the user since this first argument is not a valid one. Then it will load the appropriate image, in this case it is togo.ppm from the images directory. Then it will greyscale the togo image according to its intensity and also flip it vertically. Next, it will save the flipped greyscale togo image to the res directory as a new file. Then, since the next argument is "menu", it will produce the menu instructions again. Finally, it will quit the program as the last argument is "q".
