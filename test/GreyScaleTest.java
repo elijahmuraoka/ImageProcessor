@@ -1,7 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,9 +9,7 @@ import java.util.Scanner;
 
 import commands.GreyScale;
 import model.IPModel;
-import model.ImageModel;
-import utils.ImageFactory;
-import utils.ImageFile;
+import model.ImageFactory;
 import view.IPView;
 import view.IPViewImpl;
 
@@ -27,7 +24,6 @@ public class GreyScaleTest {
   Appendable a;
   IPView v;
   ImageFactory factory;
-  ImageFile file;
   IPModel m;
   Scanner scan;
 
@@ -37,18 +33,14 @@ public class GreyScaleTest {
     this.a = new StringBuilder();
     this.v = new IPViewImpl(this.a);
     this.factory = new ImageFactory("testFiles/PPM4.ppm");
-    this.file = this.factory.createImageFile();
+    this.m = this.factory.createImageModel();
     try {
-      this.file.read(this.v);
-    } catch (IOException e) {
-      fail("read threw an IOException when it was not supposed to.");
+      this.m.read();
+    } catch (IllegalStateException e) {
+      fail("read threw an IllegalStateException when it was not supposed to.");
     }
-    this.m = new ImageModel();
-    this.m.setImageName("TestGS");
-    this.m.setWidth(this.file.getWidth());
-    this.m.setHeight(this.file.getHeight());
-    this.m.setWorkingImageData(this.file.getWorkingImageData());
     this.gs = new GreyScale();
+    this.m.setImageName("TestGS");
 
     // confirm initial values
     assertEquals("TestGS", this.m.getImageName());
@@ -59,7 +51,7 @@ public class GreyScaleTest {
             Arrays.asList(new int[]{203, 185, 231}, new int[]{135, 149, 254})))));
 
     // compare each element of the two array lists
-    TestUtils.imageDataEquals(m, expectedImageData, this.file.getWorkingImageData());
+    TestUtils.imageDataEquals(m, expectedImageData, this.m.getWorkingImageData());
   }
 
   @Test
@@ -155,5 +147,21 @@ public class GreyScaleTest {
     // compare each element of the value greyscale expected array and the
     // newly modified image data array
     TestUtils.imageDataEquals(m, expectedGsValue, this.m.getWorkingImageData());
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void gsInvalidInput() {
+    assertEquals("TestGS", this.m.getImageName());
+    // execute the greyscale command with an invalid visType
+    this.scan = new Scanner(new StringReader("pokemon gs-pokemon"));
+    this.gs.execute(this.m, this.scan);
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void gsEmptyInput() {
+    assertEquals("TestGS", this.m.getImageName());
+    // execute the greyscale command with an empty visType/destName
+    this.scan = new Scanner(new StringReader("gs-pokemon"));
+    this.gs.execute(this.m, this.scan);
   }
 }

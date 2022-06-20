@@ -1,18 +1,15 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import utils.ImageFactory;
-import utils.ImageFile;
 import commands.ChangeBrightness;
 import model.IPModel;
-import model.ImageModel;
+import model.ImageFactory;
 import view.IPView;
 import view.IPViewImpl;
 
@@ -27,7 +24,6 @@ public class ChangeBrightnessTest {
   Appendable a;
   IPView v;
   ImageFactory factory;
-  ImageFile file;
   IPModel m;
   Scanner scan;
 
@@ -37,18 +33,13 @@ public class ChangeBrightnessTest {
     this.a = new StringBuilder();
     this.v = new IPViewImpl(this.a);
     this.factory = new ImageFactory("testFiles/PPM2.ppm");
-    this.file = this.factory.createImageFile();
+    this.m = this.factory.createImageModel();
     try {
-      this.file.read(this.v);
-    } catch (IOException e) {
-      fail("read threw an IOException when it was not supposed to.");
+      this.m.read();
+    } catch (IllegalStateException e) {
+      fail("read threw an IllegalStateException when it was not supposed to.");
     }
-    this.m = new ImageModel();
     this.m.setImageName("TestCB");
-    this.m.setWidth(this.file.getWidth());
-    this.m.setHeight(this.file.getHeight());
-    this.m.setWorkingImageData(this.file.getWorkingImageData());
-    this.m.setMaxComponent(this.file.getMaxComponent());
     this.cb = new ChangeBrightness();
   }
 
@@ -64,15 +55,16 @@ public class ChangeBrightnessTest {
             new int[]{163, 29, 242})))));
 
     // compare each element of the two array lists
-    TestUtils.imageDataEquals(m, expectedImageData, this.file.getWorkingImageData());
+    TestUtils.imageDataEquals(m, expectedImageData, this.m.getWorkingImageData());
 
     this.scan = new Scanner(new StringReader("50 brightPPM2"));
     this.cb.execute(this.m, this.scan);
     // brighten the pixels by increasing each component appropriately
-    List<List<int[]>> expectedBright = new ArrayList<>(Arrays.asList((new ArrayList<>(Arrays.asList(
-            new int[]{73, 72, 195}))), (new ArrayList<>(Arrays.asList(new int[]{249, 149, 249}))), (
-            new ArrayList<>(Arrays.asList(new int[]{222, 231, 100}))), (new ArrayList<>(
-            Arrays.asList(new int[]{213, 79, 249})))));
+    List<List<int[]>> expectedBright = new ArrayList<>(Arrays.asList((new ArrayList<>(
+            Arrays.asList(new int[]{150, 149, 255}))), (new ArrayList<>(Arrays.asList(
+            new int[]{255, 226, 255}))), (new ArrayList<>(Arrays.asList(
+            new int[]{255, 255, 177}))), (new ArrayList<>(Arrays.asList(
+            new int[]{255, 156, 255})))));
 
     // compare each element of the bright expected array and the
     // newly modified image data array
@@ -90,18 +82,42 @@ public class ChangeBrightnessTest {
             new ArrayList<>(Arrays.asList(new int[]{163, 29, 242})))));
 
     // compare each element of the two array lists
-    TestUtils.imageDataEquals(m, expectedImageData, this.file.getWorkingImageData());
+    TestUtils.imageDataEquals(m, expectedImageData, this.m.getWorkingImageData());
 
     this.scan = new Scanner(new StringReader("-50 brightPPM2"));
     this.cb.execute(this.m, this.scan);
     // brighten the pixels by increasing each component appropriately
-    List<List<int[]>> expectedDark = new ArrayList<>(Arrays.asList((new ArrayList<>(Arrays.asList(
-            new int[]{0, 0, 95}))), (new ArrayList<>(Arrays.asList(new int[]{199, 49, 193}))), (
-            new ArrayList<>(Arrays.asList(new int[]{122, 131, 0}))), (new ArrayList<>(
-            Arrays.asList(new int[]{113, 0, 192})))));
+    List<List<int[]>> expectedDark = new ArrayList<>(Arrays.asList((new ArrayList<>(
+            Arrays.asList(new int[]{0, 0, 17}))), (new ArrayList<>(Arrays.asList(
+            new int[]{121, 0, 115}))), (new ArrayList<>(Arrays.asList(new int[]{44, 53, 0}))), (
+            new ArrayList<>(Arrays.asList(new int[]{35, 0, 114})))));
 
     // compare each element of the bright expected array and the
     // newly modified image data array
     TestUtils.imageDataEquals(m, expectedDark, this.m.getWorkingImageData());
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void cbInvalidInput() {
+    assertEquals("TestCB", this.m.getImageName());
+    // execute the ChangeBrightness command with an invalid increment
+    this.scan = new Scanner(new StringReader("dog newDog"));
+    this.cb.execute(this.m, this.scan);
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void cbEmptyIncrementInput() {
+    assertEquals("TestCB", this.m.getImageName());
+    // execute the ChangeBrightness command with an empty increment
+    this.scan = new Scanner(new StringReader("newDog"));
+    this.cb.execute(this.m, this.scan);
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void cbEmptyDestNameInput() {
+    assertEquals("TestCB", this.m.getImageName());
+    // execute the ChangeBrightness command with an empty destination name
+    this.scan = new Scanner(new StringReader("59"));
+    this.cb.execute(this.m, this.scan);
   }
 }

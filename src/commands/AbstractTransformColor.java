@@ -39,9 +39,9 @@ public abstract class AbstractTransformColor implements IPCommand {
     try {
       destName = scan.next();
     } catch (NoSuchElementException e) {
-      throw new IllegalStateException("The Sepia command was not called properly.\n"
+      throw new IllegalStateException("This command was not called properly.\n"
               + "Please pass in new parameters with the correct format.\n"
-              + "\nHere is an example:\n"
+              + "\nHere are some examples:\n"
               + "Sepia <imageName> <destName>\n");
     }
     this.transformColorHelper(m, this.generateColorMatrix());
@@ -76,7 +76,7 @@ public abstract class AbstractTransformColor implements IPCommand {
             newComponent += matrix[matrixI][matrixJ] * pixel[matrixJ];
           }
           // adds and caps the new pixel component to the new pixel
-          newPixel[matrixI] = utils.capComponent(m, (int) newComponent);
+          newPixel[matrixI] = utils.capComponent((int) newComponent);
         }
         newColumn.add(newPixel);
       }

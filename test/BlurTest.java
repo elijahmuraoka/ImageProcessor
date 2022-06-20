@@ -1,18 +1,15 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import utils.ImageFactory;
-import utils.ImageFile;
 import commands.Blur;
 import model.IPModel;
-import model.ImageModel;
+import model.ImageFactory;
 import view.IPView;
 import view.IPViewImpl;
 
@@ -27,7 +24,6 @@ public class BlurTest {
   Appendable a;
   IPView v;
   ImageFactory factory;
-  ImageFile file;
   IPModel m;
   Scanner scan;
 
@@ -37,18 +33,13 @@ public class BlurTest {
     this.a = new StringBuilder();
     this.v = new IPViewImpl(this.a);
     this.factory = new ImageFactory("testFiles/PPM4.ppm");
-    this.file = this.factory.createImageFile();
+    this.m = this.factory.createImageModel();
     try {
-      this.file.read(this.v);
-    } catch (IOException e) {
-      fail("read threw an IOException when it was not supposed to.");
+      this.m.read();
+    } catch (IllegalStateException e) {
+      fail("read threw an IllegalStateException when it was not supposed to.");
     }
-    this.m = new ImageModel();
     this.m.setImageName("TestBlur");
-    this.m.setWidth(this.file.getWidth());
-    this.m.setHeight(this.file.getHeight());
-    this.m.setWorkingImageData(this.file.getWorkingImageData());
-    this.m.setMaxComponent(this.file.getMaxComponent());
     this.b = new Blur();
   }
 
@@ -62,7 +53,7 @@ public class BlurTest {
             Arrays.asList(new int[]{203, 185, 231}, new int[]{135, 149, 254})))));
 
     // compare each element of the two array lists
-    TestUtils.imageDataEquals(m, expectedImageData, this.file.getWorkingImageData());
+    TestUtils.imageDataEquals(m, expectedImageData, this.m.getWorkingImageData());
 
     this.scan = new Scanner(new StringReader("newBlur"));
     this.b.execute(this.m, this.scan);
@@ -74,5 +65,13 @@ public class BlurTest {
     // compare each element of the blurred expected array and the
     // newly modified image data array
     TestUtils.imageDataEquals(m, expectedBlur, this.m.getWorkingImageData());
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void blurEmptyInput() {
+    assertEquals("TestBlur", this.m.getImageName());
+    // execute the Blur command with an empty destination name input
+    this.scan = new Scanner(new StringReader(""));
+    this.b.execute(this.m, this.scan);
   }
 }

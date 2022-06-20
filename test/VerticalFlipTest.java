@@ -1,7 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,9 +9,7 @@ import java.util.Scanner;
 
 import commands.VerticalFlip;
 import model.IPModel;
-import model.ImageModel;
-import utils.ImageFactory;
-import utils.ImageFile;
+import model.ImageFactory;
 import view.IPView;
 import view.IPViewImpl;
 
@@ -28,7 +25,6 @@ public class VerticalFlipTest {
   Appendable a;
   IPView v;
   ImageFactory factory;
-  ImageFile file;
   IPModel m;
   Scanner scan;
 
@@ -38,17 +34,13 @@ public class VerticalFlipTest {
     this.a = new StringBuilder();
     this.v = new IPViewImpl(this.a);
     this.factory = new ImageFactory("testFiles/PPM1.ppm");
-    this.file = this.factory.createImageFile();
+    this.m = this.factory.createImageModel();
     try {
-      this.file.read(this.v);
-    } catch (IOException e) {
-      fail("read threw an IOException when it was not supposed to.");
+      this.m.read();
+    } catch (IllegalStateException e) {
+      fail("read threw an IllegalStateException when it was not supposed to.");
     }
-    this.m = new ImageModel();
     this.m.setImageName("TestVF");
-    this.m.setWidth(this.file.getWidth());
-    this.m.setHeight(this.file.getHeight());
-    this.m.setWorkingImageData(this.file.getWorkingImageData());
     this.vf = new VerticalFlip();
   }
 
@@ -66,7 +58,7 @@ public class VerticalFlipTest {
             new int[]{240, 15, 80}))), (new ArrayList<>(Arrays.asList(
             new int[]{64, 241, 185}, new int[]{13, 241, 245}, new int[]{97, 72, 170})))));
     // compare each element of the two array lists
-    TestUtils.imageDataEquals(m, expectedImageData, this.file.getWorkingImageData());
+    TestUtils.imageDataEquals(m, expectedImageData, this.m.getWorkingImageData());
 
     // execute the vertical flip command
     this.scan = new Scanner(new StringReader("FlippedV"));
@@ -94,5 +86,13 @@ public class VerticalFlipTest {
         assertArrayEquals(actualPix, expectedVF.get(i).get(j));
       }
     }
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void vfEmptyInput() {
+    assertEquals("TestVF", this.m.getImageName());
+    // execute the HorizontalFlip command with an empty destination name input
+    this.scan = new Scanner(new StringReader(""));
+    this.vf.execute(this.m, this.scan);
   }
 }

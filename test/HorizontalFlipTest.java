@@ -10,9 +10,7 @@ import java.util.Scanner;
 
 import commands.HorizontalFlip;
 import model.IPModel;
-import model.ImageModel;
-import utils.ImageFactory;
-import utils.ImageFile;
+import model.ImageFactory;
 import view.IPView;
 import view.IPViewImpl;
 
@@ -27,7 +25,6 @@ public class HorizontalFlipTest {
   Appendable a;
   IPView v;
   ImageFactory factory;
-  ImageFile file;
   IPModel m;
   Scanner scan;
 
@@ -37,17 +34,13 @@ public class HorizontalFlipTest {
     this.a = new StringBuilder();
     this.v = new IPViewImpl(this.a);
     this.factory = new ImageFactory("testFiles/PPM1.ppm");
-    this.file = this.factory.createImageFile();
+    this.m = this.factory.createImageModel();
     try {
-      this.file.read(this.v);
-    } catch (IOException e) {
-      fail("read threw an IOException when it was not supposed to.");
+      this.m.read();
+    } catch (IllegalStateException e) {
+      fail("read threw an IllegalStateException when it was not supposed to.");
     }
-    this.m = new ImageModel();
     this.m.setImageName("TestHF");
-    this.m.setWidth(this.file.getWidth());
-    this.m.setHeight(this.file.getHeight());
-    this.m.setWorkingImageData(this.file.getWorkingImageData());
     this.hf = new HorizontalFlip();
   }
 
@@ -65,7 +58,7 @@ public class HorizontalFlipTest {
             new int[]{64, 241, 185}, new int[]{13, 241, 245},
             new int[]{97, 72, 170})))));
     // compare each element of the two array lists
-    TestUtils.imageDataEquals(m, expectedImageData, this.file.getWorkingImageData());
+    TestUtils.imageDataEquals(m, expectedImageData, this.m.getWorkingImageData());
 
     // execute the horizontal flip command
     this.scan = new Scanner(new StringReader("FlippedH"));
@@ -85,6 +78,13 @@ public class HorizontalFlipTest {
     // compare each element of the horizontally flipped expected array and the
     // newly modified image data array
     TestUtils.imageDataEquals(m, expectedHF, this.m.getWorkingImageData());
+  }
 
+  @Test(expected = IllegalStateException.class)
+  public void hfEmptyInput() {
+    assertEquals("TestHF", this.m.getImageName());
+    // execute the HorizontalFlip command with an empty destination name input
+    this.scan = new Scanner(new StringReader(""));
+    this.hf.execute(this.m, this.scan);
   }
 }

@@ -11,8 +11,6 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
 
-import utils.ImageFactory;
-import utils.ImageFile;
 import commands.Blur;
 import commands.ChangeBrightness;
 import commands.GreyScale;
@@ -22,7 +20,7 @@ import commands.Sepia;
 import commands.Sharpen;
 import commands.VerticalFlip;
 import model.IPModel;
-import model.ImageModel;
+import model.ImageFactory;
 import view.IPView;
 
 /**
@@ -145,6 +143,87 @@ public class IPControllerImpl implements IPController {
     }
   }
 
+  @Override
+  public void load(String imageName, String imagePath) throws IOException {
+    try {
+      this.v.renderMessage("Currently loading image...\n");
+      // read the image file passed in
+      ImageFactory factory = new ImageFactory(imagePath);
+      IPModel m = factory.createImageModel();
+      m.read();
+      m.setImageName(imageName);
+      v.renderMessage("Width of image: " + m.getWidth() + "\n");
+      v.renderMessage("Height of image: " + m.getHeight() + "\n");
+      v.renderMessage("Maximum value of a color in this file (usually 255): "
+              + m.getMaxComponent() + "\n");
+      v.renderMessage("Successfully loaded image: " + m.getImageName() + "\n");
+      this.knownImageModels.put(m.getImageName(), m);
+    } catch (IllegalStateException e) {
+      this.v.renderMessage(e.getMessage());
+    }
+  }
+
+  @Override
+  public void save(String imageName, String saveAsName, String imagePath, String extension)
+          throws IOException {
+    IPModel m = this.knownImageModels.getOrDefault(imageName, null);
+    if (m == null) {
+      this.v.renderMessage("The image name, " + imageName
+              + ", is not recognized. Please try again.\n");
+    } else {
+      this.v.renderMessage("Saving image to " + imagePath + " now...\n");
+      String header = "P3\n" + m.getWidth() + " " + m.getHeight() + "\n"
+              + m.getMaxComponent() + "\n";
+      StringBuilder imageData = new StringBuilder();
+      for (List<int[]> row : m.getWorkingImageData()) {
+        for (int[] pixel : row) {
+          for (int component : pixel) {
+            imageData.append(component).append(" ");
+          }
+        }
+      }
+      BufferedWriter bw;
+      IPModel newM;
+      try {
+        ImageFactory factory = new ImageFactory("." + extension);
+        newM = factory.createImageModel();
+        newM.setImageName(saveAsName);
+        newM.setHeight(m.getHeight());
+        newM.setWidth(m.getWidth());
+        newM.setMaxComponent(m.getMaxComponent());
+        List<List<int[]>> copyImageData = new ArrayList<>();
+        for (int i = 0; i < m.getHeight(); i++) {
+          List<int[]> copyRow = new ArrayList<>();
+          for (int j = 0; j < m.getWidth(); j++) {
+            int[] copyPixel = new int[3];
+            for (int k = 0; k < 3; k++) {
+              copyPixel[k] = m.getWorkingImageData().get(i).get(j)[k];
+            }
+            copyRow.add(copyPixel);
+          }
+          copyImageData.add(copyRow);
+        }
+        newM.setWorkingImageData(copyImageData);
+        bw = new BufferedWriter(new FileWriter(
+                m.generateFileName(saveAsName, imagePath)));
+      } catch (IllegalStateException e) {
+        this.v.renderMessage(e.getMessage());
+        return;
+      }
+      try {
+        Objects.requireNonNull(bw);
+        bw.write(header);
+        bw.write(imageData.toString());
+        this.knownImageModels.put(saveAsName, newM);
+        this.v.renderMessage("Successfully saved " + saveAsName + " to " + imagePath
+                + " as a " + extension + " image!\n");
+        bw.close();
+      } catch (IOException e) {
+        this.v.renderMessage("Invalid file path. Please input new values and try again.\n");
+      }
+    }
+  }
+
   /**
    * Prints and displays both a welcome message and a help menu for the user to reference whenever
    * they would like.
@@ -252,77 +331,19 @@ public class IPControllerImpl implements IPController {
             copyImageData.add(copyRow);
           }
           // this.v.renderMessage("Editing " + imageName + " now...\n");
-          IPModel newM = new ImageModel(m.getImageName(), m.getHeight(),
-                  m.getWidth(), copyImageData, m.getMaxComponent());
+          ImageFactory factory = new ImageFactory(m.getFileName());
+          IPModel newM = factory.createImageModel();
+          newM.setImageName(m.getImageName());
+          newM.setHeight(m.getHeight());
+          newM.setWidth(m.getWidth());
+          newM.setMaxComponent(m.getMaxComponent());
+          newM.setWorkingImageData(copyImageData);
           newM = cmd.execute(newM, scan);
           this.v.renderMessage("Successfully executed the command: " + userInput + "\n");
           this.knownImageModels.put(newM.getImageName(), newM);
         } catch (IllegalStateException e) {
           this.v.renderMessage(e.getMessage());
         }
-      }
-    }
-  }
-
-  @Override
-  public void load(String imageName, String imagePath) throws IOException {
-    try {
-      this.v.renderMessage("Currently loading image...\n");
-      IPModel m = new ImageModel();
-      // read the image file passed in
-      ImageFactory factory = new ImageFactory(imagePath);
-      ImageFile i = factory.createImageFile();
-      i.read(this.v);
-      // make a copy of the image data in this model
-      m.setImageName(imageName);
-      m.setWidth(i.getWidth());
-      m.setHeight(i.getHeight());
-      m.setMaxComponent(i.getMaxComponent());
-      m.setWorkingImageData(i.getWorkingImageData());
-      this.knownImageModels.put(m.getImageName(), m);
-    } catch (IllegalStateException e) {
-      this.v.renderMessage(e.getMessage());
-    }
-  }
-
-  @Override
-  public void save(String imageName, String saveAsName, String imagePath, String extension)
-          throws IOException {
-    IPModel m = this.knownImageModels.getOrDefault(imageName, null);
-    if (m == null) {
-      this.v.renderMessage("The image name, " + imageName
-              + ", is not recognized. Please try again.\n");
-    } else {
-      this.v.renderMessage("Saving image to " + imagePath + " now...\n");
-      String header = "P3\n" + m.getWidth() + " " + m.getHeight() + "\n"
-              + m.getMaxComponent() + "\n";
-      StringBuilder imageData = new StringBuilder();
-      for (List<int[]> row : m.getWorkingImageData()) {
-        for (int[] pixel : row) {
-          for (int component : pixel) {
-            imageData.append(component).append(" ");
-          }
-        }
-      }
-      BufferedWriter bw = null;
-      try {
-        ImageFactory factory = new ImageFactory("." + extension);
-        ImageFile i = factory.createImageFile();
-        bw = new BufferedWriter(new FileWriter(
-                i.generateFileName(saveAsName, imagePath)));
-      } catch (IllegalStateException e) {
-        this.v.renderMessage(e.getMessage());
-        return;
-      }
-      try {
-        Objects.requireNonNull(bw);
-        bw.write(header);
-        bw.write(imageData.toString());
-        this.v.renderMessage("Successfully saved " + saveAsName + " to " + imagePath
-                + " as a " + extension + " image!\n");
-        bw.close();
-      } catch (IOException e) {
-        this.v.renderMessage("Invalid file path. Please input new values and try again.\n");
       }
     }
   }

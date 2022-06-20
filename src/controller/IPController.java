@@ -33,7 +33,7 @@ public interface IPController {
    * @param saveAsName the name used to save this image as
    * @param imagePath  the file path for a specific image
    * @param extension  the desired extension and file type of the image
-   * @throws IllegalArgumentException when unable to transmit the input(s)
+   * @throws IOException when unable to transmit the input(s)
    *                                  and/or output(s) properly
    */
   void save(String imageName, String saveAsName, String imagePath, String extension)

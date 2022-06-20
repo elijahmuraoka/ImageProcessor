@@ -1,17 +1,15 @@
-package utils;
+package model;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-import view.IPView;
-
 /**
- * A PPM image file representation.
+ * A PPM image file and model representation.
  */
-public class PPMImage extends AbstractImageFile {
+public class PPMImage extends AbstractImageModel {
 
   /**
    * The abstract image file constructor used to create an Image File object and store its
@@ -24,20 +22,36 @@ public class PPMImage extends AbstractImageFile {
   }
 
   /**
+   * A super constructor that takes in all fields and creates a PPM image object.
+   *
+   * @param imageName        the name of the image
+   * @param height           the height of the image
+   * @param width            the width of the image
+   * @param maxComponent     the maximum color component
+   * @param workingImageData the 2D array list of pixels representing the image's data
+   * @param fileName         the name of the image file
+   * @throws IllegalArgumentException when the width, height, or maximum color component is
+   *                                  less than zero
+   */
+  public PPMImage(String imageName, int height, int width, int maxComponent,
+                  List<List<int[]>> workingImageData, String fileName)
+          throws IllegalArgumentException {
+    super(imageName, height, width, maxComponent, workingImageData, fileName);
+  }
+
+  /**
    * Read an image file in the PPM format and store its data.
    *
-   * @param v the Image Processor's view to render necessary messages to
-   * @throws IOException when either the input(s) and/or output(s) are invalid
+   * @throws IllegalStateException when either the input(s) and/or output(s) are invalid
    */
   @Override
-  public void read(IPView v) throws IOException {
+  public void read() throws IllegalStateException {
     Scanner sc;
 
     try {
       sc = new Scanner(new FileInputStream(this.fileName));
     } catch (FileNotFoundException e) {
-      v.renderMessage("File " + this.fileName + " not found!\n");
-      return;
+      throw new IllegalStateException("File " + this.fileName + " not found!\n");
     }
     StringBuilder builder = new StringBuilder();
     //read the file line by line, and populate a string. This will throw away any comment lines
@@ -56,15 +70,11 @@ public class PPMImage extends AbstractImageFile {
 
     token = sc.next();
     if (!token.equals("P3")) {
-      v.renderMessage("Invalid PPM file: plain RAW file should begin with P3.");
+      throw new IllegalStateException("Invalid PPM file: plain RAW file should begin with P3.");
     }
     this.width = sc.nextInt();
-    v.renderMessage("Width of image: " + this.width + "\n");
     this.height = sc.nextInt();
-    v.renderMessage("Height of image: " + this.height + "\n");
     this.maxComponent = sc.nextInt();
-    v.renderMessage("Maximum value of a color in this file (usually 255): "
-            + this.maxComponent + "\n");
 
     for (int i = 0; i < this.height; i++) {
       ArrayList<int[]> newColumn = new ArrayList<>();
@@ -79,7 +89,6 @@ public class PPMImage extends AbstractImageFile {
       }
       this.workingImageData.add(newColumn);
     }
-    v.renderMessage("Successfully loaded image: " + this.fileName + "\n");
   }
 
   @Override

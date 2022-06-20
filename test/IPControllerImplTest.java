@@ -7,12 +7,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.List;
 
 import controller.IPController;
 import controller.IPControllerImpl;
-import utils.ImageFactory;
-import utils.ImageFile;
+import model.IPModel;
+import model.ImageFactory;
 import view.IPView;
 import view.IPViewImpl;
 
@@ -27,12 +26,11 @@ import static org.junit.Assert.fail;
  */
 public class IPControllerImplTest {
   ImageFactory factory;
-  ImageFile file;
   IPView v;
   IPController c;
   Appendable a;
   Readable in;
-  List<List<int[]>> imageData;
+  IPModel m;
 
   // initializes some conditions and examples before testing
   @Before
@@ -74,9 +72,9 @@ public class IPControllerImplTest {
       this.v = new IPViewImpl(new BadAppendable());
       this.c = new IPControllerImpl(this.v, this.in);
       c.run();
-      fail("Did not throw an IOException for a bad appendable.");
+      fail("Did not throw an IllegalStateException for a bad appendable.");
     } catch (IllegalStateException e) {
-      // successfully caught the IOException for a bad appendable object
+      // successfully caught the IllegalStateException for a bad appendable object
       // passed to the view
     }
   }
@@ -107,7 +105,7 @@ public class IPControllerImplTest {
             "Width of image: 750\n" +
             "Height of image: 1000\n" +
             "Maximum value of a color in this file (usually 255): 255\n" +
-            "Successfully loaded image: images/bucketboi.jpg\n" +
+            "Successfully loaded image: bucketboi\n" +
             "Successfully executed the command: sharpen\n" +
             "Successfully executed the command: flip-h\n" +
             "Successfully executed the command: cb\n" +
@@ -171,7 +169,7 @@ public class IPControllerImplTest {
   @Test
   public void loadAndSave() {
     this.factory = new ImageFactory("testFiles/PPM2.ppm");
-    this.file = this.factory.createImageFile();
+    this.m = this.factory.createImageModel();
     this.a = new StringBuilder();
     this.v = new IPViewImpl(this.a);
     this.in = new StringReader("");
@@ -183,8 +181,8 @@ public class IPControllerImplTest {
       throw new RuntimeException(e);
     }
 
-    assertNotEquals(1, this.file.getWidth());
-    assertNotNull(this.file.getWorkingImageData());
+    assertNotEquals(1, this.m.getWidth());
+    assertNotNull(this.m.getWorkingImageData());
     // load successfully read the image file and created a corresponding
     // image model representation
     try {

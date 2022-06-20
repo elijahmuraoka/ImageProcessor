@@ -12,7 +12,7 @@ public class IPViewImpl implements IPView {
 
   /**
    * An empty Image Processor view implementation constructor that
-   * uses the System console as its Appendable object.
+   * initializes the System console as its Appendable object.
    */
   public IPViewImpl() {
     this.a = System.out;
@@ -28,8 +28,9 @@ public class IPViewImpl implements IPView {
     if (a == null) {
       throw new IllegalArgumentException("The appendable object cannot be null."
               + "\nPlease try a new valid parameter");
+    } else {
+      this.a = a;
     }
-    this.a = a;
   }
 
   @Override

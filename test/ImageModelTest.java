@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import model.ImageModel;
+import model.IPModel;
+import model.PPMImage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -15,7 +16,7 @@ import static org.junit.Assert.fail;
  * This class represents all tests needed for an Image model.
  */
 public class ImageModelTest {
-  ImageModel m;
+  IPModel m;
 
   // initializes some conditions and examples before testing
   @Before
@@ -29,8 +30,8 @@ public class ImageModelTest {
 
     workingImageData.add(row1);
 
-    this.m = new ImageModel("TestModel", 3, 4, workingImageData,
-            255);
+    this.m = new PPMImage("TestModel", 3, 4, 255,
+            workingImageData, "PPMFile");
   }
 
   // tests any exceptions needing to be thrown when constructing an invalid co
@@ -39,8 +40,8 @@ public class ImageModelTest {
     // tests for an invalid negative height passed to an Image Model
     try {
       List<List<int[]>> test = new ArrayList<>();
-      this.m = new ImageModel("Bob's Selfie", -32, 50, test,
-              255);
+      this.m = new PPMImage("Bob's Selfie", -32, 50, 255,
+              test, "BobFileName");
       fail("Did not throw an IllegalArgumentException when given a negative height.");
     } catch (IllegalArgumentException e) {
       // successfully caught an IAE when given a negative height
@@ -48,8 +49,8 @@ public class ImageModelTest {
     // tests for an invalid negative width passed to an Image Model
     try {
       List<List<int[]>> test = new ArrayList<>();
-      this.m = new ImageModel("Bob's Selfie", 502, -4320, test,
-              255);
+      this.m = new PPMImage("Bob's Selfie", 502, -4320, 255,
+              test, "BobFileName");
       fail("Did not throw an IllegalArgumentException when given a negative height.");
     } catch (IllegalArgumentException e) {
       // successfully caught an IAE when given a negative width
@@ -92,15 +93,22 @@ public class ImageModelTest {
   @Test
   public void setMaxComponent() {
     assertEquals(255, this.m.getMaxComponent());
-    assertNotEquals(500, this.m.getMaxComponent());
-    this.m.setMaxComponent(500);
-    assertEquals(500, this.m.getMaxComponent());
+    assertNotEquals(156, this.m.getMaxComponent());
+    this.m.setMaxComponent(156);
+    assertEquals(156, this.m.getMaxComponent());
 
     try {
       this.m.setMaxComponent(-2);
     } catch (IllegalArgumentException e) {
       // successfully caught the IAE thrown by the ImageModel when setting a negative maximum
       // color component
+    }
+
+    try {
+      this.m.setMaxComponent(369);
+    } catch (IllegalArgumentException e) {
+      // successfully caught the IAE thrown by the ImageModel when setting a color component
+      // greater than 255
     }
   }
 

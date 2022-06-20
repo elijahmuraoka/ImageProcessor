@@ -37,23 +37,25 @@ public abstract class AbstractKernelFilter implements IPCommand {
    * Generates kernel matrix needed to filter the image.
    *
    * @return the kernel matrix as a 2D array of doubles
+   * @throws IllegalStateException when the image data retrieved from the scanner does
+   *                               not meet the required command arguments needed.
    */
   protected abstract double[][] generateKernelMatrix();
 
   @Override
   public IPModel execute(IPModel m, Scanner scan) throws IllegalStateException {
-    IPUtils utils = new IPUtils();
     // the new destination name representing the image
     String destName;
     try {
       destName = scan.next();
     } catch (NoSuchElementException e) {
-      throw new IllegalStateException("The Blur command was not called properly.\n"
+      throw new IllegalStateException("This command was not called properly.\n"
               + "Please pass in new parameters with the following format.\n"
-              + "\nHere is an example:\n"
-              + "Blur <imageName> <destName>\n");
+              + "\nHere are some examples:\n"
+              + "Blur <imageName> <destName>\n"
+              + "Sharpen <imageName> <destName>\n");
     }
-    this.blurAndSharpenHelper(m);
+    this.kernelFilterHelper(m);
     m.setImageName(destName);
     return m;
   }
@@ -61,9 +63,9 @@ public abstract class AbstractKernelFilter implements IPCommand {
   /**
    * A helper command method used in both the blur and sharpen classes.
    *
-   * @param m the IPModel to be modifiedge
+   * @param m the IPModel to be modified
    */
-  private void blurAndSharpenHelper(IPModel m) {
+  private void kernelFilterHelper(IPModel m) {
     IPUtils utils = new IPUtils();
     int matrixStart = (this.kernel.length - 1) / 2;
     List<List<int[]>> result = new ArrayList<>();
@@ -96,9 +98,9 @@ public abstract class AbstractKernelFilter implements IPCommand {
           }
         }
         // make a new pixel with the new pixel components
-        int newR = utils.capComponent(m, (int) sumRed);
-        int newG = utils.capComponent(m, (int) sumGreen);
-        int newB = utils.capComponent(m, (int) sumBlue);
+        int newR = utils.capComponent((int) sumRed);
+        int newG = utils.capComponent((int) sumGreen);
+        int newB = utils.capComponent((int) sumBlue);
         int[] newPixel = new int[]{newR, newG, newB};
         newColumn.add(newPixel);
       }

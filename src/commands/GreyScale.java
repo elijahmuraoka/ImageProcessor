@@ -47,7 +47,8 @@ public class GreyScale implements IPCommand {
    * @param scan the scanner used to read and retrieve user inputs
    * @return the modified IPModel that is now flipped horizontally
    * @throws IllegalStateException when the image data retrieved from the scanner does
-   *                               not meet the required command arguments needed
+   *                               not meet the required command arguments needed or
+   *                               the visType given is not a valid one
    */
   @Override
   public IPModel execute(IPModel m, Scanner scan) throws IllegalStateException {
@@ -81,8 +82,9 @@ public class GreyScale implements IPCommand {
    *
    * @param pixel a size-3 array of integers each representing a red, green, and blue
    *              component respectively
+   * @throws IllegalStateException when the visType given is not a valid one
    */
-  private void vHelper(int[] pixel) {
+  private void vHelper(int[] pixel) throws IllegalStateException {
     int r = pixel[0];
     int g = pixel[1];
     int b = pixel[2];

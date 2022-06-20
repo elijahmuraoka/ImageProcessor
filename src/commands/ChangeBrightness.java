@@ -3,8 +3,8 @@ package commands;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import utils.IPUtils;
 import model.IPModel;
+import utils.IPUtils;
 
 /**
  * The command is used to change the brightness of a certain image.
@@ -26,12 +26,12 @@ public class ChangeBrightness implements IPCommand {
   @Override
   public IPModel execute(IPModel m, Scanner scan) throws IllegalStateException {
     IPUtils utils = new IPUtils();
-    // how much to add to/subtract from the image's rgb values.
-    int increment;
+    // the percentage increase/decrease to invoke on the given image model
+    int percentage;
     // the new destination name representing the image
     String destName;
     try {
-      increment = scan.nextInt();
+      percentage = scan.nextInt();
       destName = scan.next();
     } catch (NoSuchElementException e) {
       throw new IllegalStateException("The ChangeBrightness command was not called properly.\n"
@@ -45,9 +45,9 @@ public class ChangeBrightness implements IPCommand {
         for (int k = 0; k < 3; k++) {
           int component = m.getWorkingImageData().get(i).get(j)[k];
           // increase or decrease the new pixel component by the increment
-          int newComponent = component + increment;
+          double newComponent = component + ((percentage / 100.0) * 255);
           // set the new (brighter or darker) pixel component
-          m.getWorkingImageData().get(i).get(j)[k] = utils.capComponent(m, newComponent);
+          m.getWorkingImageData().get(i).get(j)[k] = utils.capComponent((int) newComponent);
         }
       }
     }

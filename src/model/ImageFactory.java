@@ -1,28 +1,29 @@
-package utils;
+package model;
 
 /**
- * This Image Factory is used to create different types of Image Files
- * according to a specific file path.
+ * This Image Factory is used to dynamically create unique IPModel objects
+ * according to a specific file path and its extension type (e.g. JPG, PNG, BMP, PPM, etc.).
  */
 public class ImageFactory {
   private final String fileName;
 
   /**
-   * An ImageFactory constructor used to initialize the imagePath field when given one.
+   * An ImageFactory constructor used to initialize the fileName field when given one.
    *
-   * @param fileName the path of the file
+   * @param fileName the name of the file, which must specifically include the file extension type
    */
   public ImageFactory(String fileName) {
     this.fileName = fileName;
   }
 
   /**
-   * Creates the appropriate image file based on the image path and specifically, its extension.
+   * Creates the appropriate image model object based on the file name, but more specifically,
+   * its extension.
    *
-   * @return the ImageFile object matching the given image path
+   * @return the ImageModel object matching the given image path
    * @throws IllegalStateException when there is no valid extension found
    */
-  public ImageFile createImageFile() throws IllegalStateException {
+  public IPModel createImageModel() throws IllegalStateException {
     String reverseImgPath = new StringBuilder(this.fileName).reverse().toString();
     String[] splitImgPath = reverseImgPath.split("\\.");
     String reverseExtension = splitImgPath[0];

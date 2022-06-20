@@ -2,7 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.IPModel;
-import model.ImageModel;
+import model.PPMImage;
 import utils.IPUtils;
 
 import static org.junit.Assert.assertEquals;
@@ -20,11 +20,11 @@ public class IPUtilsTest {
   // initializes some conditions and examples before testing
   @Before
   public void init() {
-    this.model = new ImageModel();
+    this.model = new PPMImage("PPMImage");
     this.utils = new IPUtils();
     this.model.setWidth(5);
     this.model.setHeight(7);
-    this.model.setMaxComponent(500);
+    this.model.setMaxComponent(244);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -55,11 +55,11 @@ public class IPUtilsTest {
 
   @Test
   public void capComponent() {
-    // caps the component at 500 since it goes over
-    assertEquals(500, this.utils.capComponent(this.model, 5320));
-    // leaves the component untouched because it is between 0 and 500
-    assertEquals(200, this.utils.capComponent(this.model, 200));
+    // caps the component at 255 since it goes over
+    assertEquals(255, this.utils.capComponent(5320));
+    // leaves the component untouched because it is between 0 and 255
+    assertEquals(200, this.utils.capComponent(200));
     // caps the component at 0 since it goes under (components cannot be negative)
-    assertEquals(0, this.utils.capComponent(this.model, -85));
+    assertEquals(0, this.utils.capComponent(-85));
   }
 }
