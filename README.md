@@ -1,27 +1,19 @@
+# ImageProcessor
+
 ### Welcome to Elijah and Damian's Image Processor Application!
 > In this document, you will find everything you need to understand our program design and also use it yourself.
 
 ## Design Overview
-<<<<<<< HEAD
 > This section provides details on all interfaces, classes, and methods within our program including their purposes and relationships with one another. We used the Model View Controller design pattern to have the user interact with the programme, the Command design pattern to handle image manipulation, saving and loading, and abstract classes to simplify our code and make it more readable.
 
 **Interface IPCommand (public):** This class represents any command that can be executed on a specific image.
 ~~~~
 execute(IPModel m, Scanner scan) throws IllegalStateException: This method carries out a specific function, applying it to the given model.
-=======
-> This section provides details on all interfaces, classes, and methods within our program including their purposes and relationships with one another.
-We used the Model View Controller design pattern to have the user interact with the programme, the Command design pattern to handle image manipulation, saving and loading, and abstract classes to simplify our code and make it more readable.
-
-**Interface IPCommand (public):** This class represents any command that can be executed on a specific image.
-~~~~
-IPModel execute(IPModel m, Scanner scan) throws IllegalStateException: This method carries out a specific function, applying it to the given model.
->>>>>>> 3db39e74fc249bae9501c8d06589d404928ae87b
     takes in the Image represented model to be used and acted on.
     takes in the scanner used to read and retrieve user inputs.
     the Image data retrieved from the scanner must meet the required command arguments needed.
 ~~~~
 * **Class VerticalFlip (public):** This class represents the command that is used to flip an image vertically.
-<<<<<<< HEAD
     ~~~~
     execute(IPModel m, Scanner scan): Flip an image vertically to create a new image, referred to henceforth by the given destination name.
     ~~~~
@@ -47,32 +39,6 @@ IPModel execute(IPModel m, Scanner scan) throws IllegalStateException: This meth
       to the greyscale * visualizing type (visType).
       Takes in a size-3 array of integers each representing a red, green, and blue component respectively.
     ~~~~
-=======
->
-~~~~
-execute(IPModel m, Scanner scan): Flip an image vertically to create a new image, referred to henceforth by the given destination name.
-~~~~
->
-* **Class HorizontalFlip (public):** This class represents the command that is used to flip an image Horizontally.
-~~~~
-execute(IPModel m, Scanner scan): Flip an image horizontally to create a new image, referred to henceforth by the given destination name.
-~~~~
-
-* **Class GreyScale (public):** This class represents the command that is used to create a greyscale version of an image according to a specific channel. Either red, blue, green, value, intensity or luma.
-~~~~
-execute(IPModel m, Scanner scan): Create a greyscale version of the image with a new name, and refer to it henceforth in the program by the given destination name. You should be able to create greyscale images that specifically visualize the following:
-   * Redness of a pixel
-   * Green-ness of a pixel
-   * Blue-ness of a pixel
-   * Value of a pixel
-   * Intensity of a pixel
-   * Luma of a pixel
-~~~~
-~~~~
-vHelper(int[] pixel): The helper method used to alter a pixel's components according to the greyscale * visualizing type.
-  takes in a size-3 array of integers each representing a red, green, and blue component respectively.
-~~~~
->>>>>>> 3db39e74fc249bae9501c8d06589d404928ae87b
 
 * **Class ChangeBrightness (public):** This class represents the command that is used to change the brightness of a certain image. This means all RGB values increase or decrease by a set increment amount.
     ~~~~
@@ -86,7 +52,6 @@ vHelper(int[] pixel): The helper method used to alter a pixel's components accor
 
 * **Class AbstractKernelFilter (abstract, implements IPCommand):** This abstract class is used when creating any Image Processor editing features that need a kernel matrix to filter images in a specific manner. A basic operation in many image processing algorithms is filtering. A filter has a "kernel," which is a 2D array of numbers, having odd dimensions (3x3, 5x5, etc.). Given a pixel in the image and a channel, the result of the filter can be computed for that pixel and channel.
 ~~~~
-<<<<<<< HEAD
 generateKernelMatrix(): Generates kernel matrix needed to filter the image.
 ~~~~
 ~~~~
@@ -94,24 +59,6 @@ blurAndSharpenHelper(IPModel m): A helper command method used in both the blur a
     Takes in the IPModel to be modified.
 ~~~~
 
-=======
-execute(IPModel m, Scanner scan): Change the brightness of the image by the given increment to create a new image, referred to henceforth by the given destination name. The increment may be positive (brightening) or negative (darkening).
-~~~~
-~~~~
-cbHelper(int[] pixel): The helper method used to change the brightness of a pixel.
-  Takes in a size-3 array of integers each representing a red, green, and blue component respectively.
-~~~~
-
-* **Class AbstractKernelFilter (abstract, implements IPCommand):** This abstract class is used when creating any Image Processor editing features that need a kernel matrix to filter images in a specific manner. A basic operation in many image processing algorithms is filtering. A filter has a "kernel," which is a 2D array of numbers, having odd dimensions (3x3, 5x5, etc.). Given a pixel in the image and a channel, the result of the filter can be computed for that pixel and channel.
-~~~~
-generateKernelMatrix(): Generates kernel matrix needed to filter the image.
-~~~~
-~~~~
-blurAndSharpenHelper(IPModel m): A helper command method used in both the blur and sharpen classes.
-    Takes in the IPModel to be modified.
-~~~~
-
->>>>>>> 3db39e74fc249bae9501c8d06589d404928ae87b
 * **Class AbstractTransformColor (abstract, implements IPCommand):** This abstract class is used when creating any Image Processor editing features that use a matrix to transform the color (RGB values) of an image. Use matrix multiplication to change a pixel's RGB components accordingly.
 ~~~~
 generateColorMatrix(): Generate the matrix needed to transform the image's color.
@@ -134,11 +81,8 @@ generateKernelMatrix(): Generates a specific kernel matrix used to create a Sepi
 ~~~~
 generateKernelMatrix(): Generates a specific kernel matrix used to sharpen an image.
 ~~~~
-<<<<<<< HEAD
-=======
 
 #
->>>>>>> 3db39e74fc249bae9501c8d06589d404928ae87b
 
 **Interface IPController (public):** The Image Processor's controller interface which supports the 'go' method used to run the application and transmit inputs and outputs between the view and the model.
 ~~~~
@@ -192,7 +136,6 @@ setWorkingImageData(List<List<int[]>> workingImageData): Sets the workingImageDa
 getImageName(): Retrieve the name of this image model.
 ~~~~
 ~~~~
-<<<<<<< HEAD
 getWidth(): Retrieve the width of this image model.
 ~~~~
 ~~~~
@@ -200,15 +143,6 @@ getHeight(): Retrieve the height of this image model.
 ~~~~
 ~~~~
 getWorkingImageData(): Retrieve the pixel data of this image model.
-=======
-int getWidth(): Retrieve the width of this image model.
-~~~~
-~~~~
-int getHeight(): Retrieve the height of this image model.
-~~~~
-~~~~
-List<List<int[]>> getWorkingImageData(): Retrieve the pixel data of this image model.
->>>>>>> 3db39e74fc249bae9501c8d06589d404928ae87b
 ~~~~
 
 * **Class ImageModel (public):** An implementation of the Image Processor model interface.
@@ -255,10 +189,7 @@ capComponent(IPModel m, int component): Caps a given color component, forcing it
    Takes in the the component to be evaluated.
 ~~~~
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 3db39e74fc249bae9501c8d06589d404928ae87b
 #
 
 **Interface IPView (public):** The view interface. MORE TO BE ADDED.
@@ -275,14 +206,9 @@ renderMessage(String message) throws IOException: Transmits and outputs the give
 main(String[] args): The main method used to run this Image Processor application.
     Takes in the user's inputs in a list form.
 ~~~~
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 3db39e74fc249bae9501c8d06589d404928ae87b
 ## UML Diagram
 
-![ImageProcessorUML](https://user-images.githubusercontent.com/91427887/174504119-0d15be33-104d-42dc-9b07-e72bee9aa1dd.png)
+![ImageProcessor](https://user-images.githubusercontent.com/91427887/173166302-d8cc9330-cea0-4dfc-a199-78bd84eaf418.png)
 
 ## Script File Instructions (Togo flag image created by Damian Uduevbo using Paint.net)
 In testFiles, there is a text file called "ScriptCommandExamples", if you are not running text-based commands from the terminal, you can use this file instead to run some simple script commands. First, create a valid controller and some example parameters to be used for testing. Then create a new FileReader object with this file's path given as a string. Pass this new FileReader object in as the Readable controller parameter. Then run the test. This script file should first produce an error message to the user since this first argument is not a valid one. Then it will load the appropriate image, in this case it is togo.ppm from the images directory. Then it will greyscale the togo image according to its intensity and also flip it vertically. Next, it will save the flipped greyscale togo image to the res directory as a new file. Then, since the next argument is "menu", it will produce the menu instructions again. Finally, it will quit the program as the last argument is "q".
