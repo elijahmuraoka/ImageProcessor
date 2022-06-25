@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * A BMP image file and model representation.
  */
-public class BMPImage extends AbstractImageModel {
+public class BMPImage extends BetterAbstractImageModel {
   /**
    * The abstract image file constructor used to create an Image File object and store its
    * file name.

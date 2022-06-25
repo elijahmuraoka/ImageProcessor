@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import model.BetterIPModel;
 import model.IPModel;
 import utils.IPUtils;
 
@@ -43,7 +44,7 @@ public abstract class AbstractKernelFilter implements IPCommand {
   protected abstract double[][] generateKernelMatrix();
 
   @Override
-  public IPModel execute(IPModel m, Scanner scan) throws IllegalStateException {
+  public BetterIPModel execute(BetterIPModel m, Scanner scan) throws IllegalStateException {
     // the new destination name representing the image
     String destName;
     try {

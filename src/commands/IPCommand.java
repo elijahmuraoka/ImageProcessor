@@ -2,7 +2,7 @@ package commands;
 
 import java.util.Scanner;
 
-import model.IPModel;
+import model.BetterIPModel;
 
 /**
  * This class represents any command that can be executed on a specific image.
@@ -18,5 +18,5 @@ public interface IPCommand {
    * @throws IllegalStateException when the image data retrieved from the scanner does
    *                               not meet the required command arguments needed
    */
-  IPModel execute(IPModel m, Scanner scan) throws IllegalStateException;
+  BetterIPModel execute(BetterIPModel m, Scanner scan) throws IllegalStateException;
 }

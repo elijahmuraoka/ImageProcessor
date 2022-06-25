@@ -71,7 +71,7 @@ public abstract class AbstractImageModel implements IPModel {
    *
    * @param fileName the (desired) name of the file
    */
-  AbstractImageModel(String fileName) {
+  public AbstractImageModel(String fileName) {
     this.fileName = fileName;
   }
 

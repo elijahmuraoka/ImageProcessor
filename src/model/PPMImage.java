@@ -9,7 +9,7 @@ import java.util.Scanner;
 /**
  * A PPM image file and model representation.
  */
-public class PPMImage extends AbstractImageModel {
+public class PPMImage extends BetterAbstractImageModel {
 
   /**
    * The abstract image file constructor used to create an Image File object and store its
@@ -47,6 +47,7 @@ public class PPMImage extends AbstractImageModel {
   @Override
   public void read() throws IllegalStateException {
     Scanner sc;
+    System.out.println("Current File Name:" + this.fileName);
 
     try {
       sc = new Scanner(new FileInputStream(this.fileName));

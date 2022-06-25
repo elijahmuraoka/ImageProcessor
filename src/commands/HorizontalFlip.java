@@ -3,7 +3,7 @@ package commands;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import model.IPModel;
+import model.BetterIPModel;
 
 /**
  * The command is used to flip an image horizontally.
@@ -21,7 +21,7 @@ public class HorizontalFlip implements IPCommand {
    *                               not meet the required command arguments needed.
    */
   @Override
-  public IPModel execute(IPModel m, Scanner scan) throws IllegalStateException {
+  public BetterIPModel execute(BetterIPModel m, Scanner scan) throws IllegalStateException {
     // the new destination name representing the image
     String destName;
     try {

@@ -3,7 +3,7 @@ package commands;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import model.IPModel;
+import model.BetterIPModel;
 
 /**
  * This command is used to create a greyscale version of an image according to
@@ -51,7 +51,7 @@ public class GreyScale implements IPCommand {
    *                               the visType given is not a valid one
    */
   @Override
-  public IPModel execute(IPModel m, Scanner scan) throws IllegalStateException {
+  public BetterIPModel execute(BetterIPModel m, Scanner scan) throws IllegalStateException {
     // the new destination name representing the image
     String destName;
     try {

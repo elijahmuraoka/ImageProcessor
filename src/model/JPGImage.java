@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * A JPG image file and model representation.
  */
-public class JPGImage extends AbstractImageModel {
+public class JPGImage extends BetterAbstractImageModel {
   /**
    * The abstract image file constructor used to create an Image File object and store its
    * file name.

@@ -1,4 +1,4 @@
-# USE ME
+# USE ME (Command Line)
 
 **Upon starting up the application, read the instructions on the screen.
 Then you must first load an image to edit using this command:**

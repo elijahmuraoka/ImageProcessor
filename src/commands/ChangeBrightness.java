@@ -3,7 +3,7 @@ package commands;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import model.IPModel;
+import model.BetterIPModel;
 import utils.IPUtils;
 
 /**
@@ -24,7 +24,7 @@ public class ChangeBrightness implements IPCommand {
    *                               not meet the required command arguments needed.
    */
   @Override
-  public IPModel execute(IPModel m, Scanner scan) throws IllegalStateException {
+  public BetterIPModel execute(BetterIPModel m, Scanner scan) throws IllegalStateException {
     IPUtils utils = new IPUtils();
     // the percentage increase/decrease to invoke on the given image model
     int percentage;

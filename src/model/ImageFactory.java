@@ -23,7 +23,7 @@ public class ImageFactory {
    * @return the ImageModel object matching the given image path
    * @throws IllegalStateException when there is no valid extension found
    */
-  public IPModel createImageModel() throws IllegalStateException {
+  public BetterIPModel createImageModel() throws IllegalStateException {
     String reverseImgPath = new StringBuilder(this.fileName).reverse().toString();
     String[] splitImgPath = reverseImgPath.split("\\.");
     String reverseExtension = splitImgPath[0];
@@ -40,7 +40,7 @@ public class ImageFactory {
       case "bmp":
         return new BMPImage(this.fileName);
       default:
-        throw new IllegalStateException("No valid extension found. Please try again.\n");
+        throw new IllegalStateException("Unsupported Image File Type. Please try again.\n");
     }
   }
 }
