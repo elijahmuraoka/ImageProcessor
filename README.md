@@ -229,7 +229,7 @@ capComponent(IPModel m, int component): Caps a given color component, forcing it
 * **Added a factory for commands (Command Factory)**
 * **Fixed issue with grey scaling**
 
-~~~~
+
 ## UML Diagram
 
 ![ImageProcessor](https://user-images.githubusercontent.com/91427887/173166302-d8cc9330-cea0-4dfc-a199-78bd84eaf418.png)
