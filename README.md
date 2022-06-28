@@ -111,6 +111,7 @@ execute(IPModel m, Scanner scan) throws IllegalStateException: This method carri
       Takes in a size-3 array of integers each representing a red, green, and blue component respectively
       Produces a new pixel with its components incremented(or decremented) appropriately
     ~~~~
+<<<<<<< HEAD
 
 * **Class AbstractKernelFilter (abstract, implements IPCommand):** This abstract class is used when
   creating any Image Processor editing features that need a kernel matrix to filter images in a
@@ -161,6 +162,44 @@ generateKernelMatrix(): Generates a specific kernel matrix used to create a Sepi
 ~~~~
 generateKernelMatrix(): Generates a specific kernel matrix used to sharpen an image.
 ~~~~
+=======
+* **Class AbstractKernelFilter (abstract, implements IPCommand):** This abstract class is used when creating any Image Processor editing features that need a kernel matrix to filter images in a specific manner. A basic operation in many image processing algorithms is filtering. A filter has a "kernel," which is a 2D array of numbers, having odd dimensions (3x3, 5x5, etc.). Given a pixel in the image and a channel, the result of the filter can be computed for that pixel and channel.
+  ~~~~
+  generateKernelMatrix(): Generates kernel matrix needed to filter the image.
+  ~~~~
+  ~~~~
+  blurAndSharpenHelper(IPModel m): A helper command method used in both the blur and sharpen classes.
+      Takes in the IPModel to be modified.
+  ~~~~
+
+* **Class AbstractTransformColor (abstract, implements IPCommand):** This abstract class is used when creating any Image Processor editing features that use a matrix to transform the color (RGB values) of an image. Use matrix multiplication to change a pixel's RGB components accordingly.
+  ~~~~
+  generateColorMatrix(): Generate the matrix needed to transform the image's color.
+  ~~~~
+  ~~~~
+  transformColorHelper(IPModel m, double[][] matrix): A helper method used that can be used in color transformation commands.
+      Takes in the IPModel to be modified.
+      The matrix which will be used in the image processing algorithm to either blur or sharpen an image.
+  ~~~~
+
+  * **Class Blur (public, extends AbstractKernelFilter):** This class represents the command  that is used to Gaussian blur an image using a filtering algorithm using a 3x3 kernel matrix.
+    ~~~~
+    generateKernelMatrix(): Generates a specific kernel matrix used to blur an image.
+    ~~~~
+  * **Class Sepia (public, extends AbstractTransformColor):** This command is used to convert a normal color image into a sepia-toned image.
+    ~~~~
+    generateKernelMatrix(): Generates a specific kernel matrix used to create a Sepia-tone image.
+    ~~~~
+  * **Class Sharpen (public, extends AbstractKernelFilter):** This command is used to sharpen an image.
+    ~~~~
+    generateKernelMatrix(): Generates a specific kernel matrix used to sharpen an image.
+    ~~~~
+  * **Class CommandFactory (public):** This command creates unique Command objects according to a specific string command parameter.
+    ~~~~
+    createCommand(): Creates the appropriate IPCommand object based on the user's input.
+      throws an error when the user's input does not match any valid command
+    ~~~~
+>>>>>>> f90ea074050342b90bfec9286dbd25c415fc5be7
 
 ### Controller
 
@@ -187,6 +226,7 @@ save(String imageName, String saveAsName, String imagePath): Save an image using
     Takes in the file path for a specific image
     Throws an error when unable to transmit the input(s) and/or output(s) properly
 ~~~~
+<<<<<<< HEAD
 
 * **Class IPControllerImpl (public):** An implementation of the Image Processor controller interface
   used to process user inputs and communicate between the model and view. Specifically, this
@@ -208,10 +248,42 @@ processCommand(String userInput, Scanner scan): Process the user's inputs and ap
 **Interface BetterIPController (public):** An additional controller interface used to incorporate
 and add on more functionality to the original controller interface without modifying it.
 
+=======
+* **Class IPControllerImpl (public):** An implementation of the Image Processor controller interface used to process user inputs and communicate between the model and view. Specifically, this controller supports and can apply any operation provided from its list of commands (See Commands section below).
+  ~~~~
+  printMenu(): Prints and displays the menu instructions to the user.
+      Throws an error when unable to transmit the input(s) and/or output(s) properly
+  ~~~~
+  ~~~~
+  processCommand(String userInput, Scanner scan): Process the user's inputs and apply some command to the given image model as long as the inputs are valid and sufficient.
+      Takes in the user's input to the programme.
+      Takes in the user input reader used to read the user's inputs.
+      Throws an error when unable to transmit the input(s) and/or output(s) properly.
+  ~~~~
+* **Interface BetterIPController (public, extends IPController):** An improved controller for Image Processor that now works with GUI's.
+  ~~~~
+  getKnownImageModels(): Retrieves the controller's knownImageModels field and passes it on to the client.
+  ~~~~
+  ~~~~
+  setReadable(Readable in): Sets the stream that the current controller should read from.
+    takes in a Readable java object.
+  ~~~~
+  * **Class BetterIPControllerImpl (public):** Ditto IPControllerImpl but with support for GUIs.
+
+#
+**Interface IPModel (public):** The interface for a generic Image Processor model which supports various operations that can be applied to a specific image.
+>>>>>>> f90ea074050342b90bfec9286dbd25c415fc5be7
 ~~~~
 getKnownImageModels(): Retrieves the controller's knownImageModels field and passes it on to the client. 
     The known image models are represented as a map of image names to the image models themself.
 ~~~~
+* **Interface BetterIPModel (public, extends IPModel):** A better version that enhances the current IPModel interface.
+  ~~~~
+  getCommandList(): Retrieves the model's current list of commands to be executed.
+  
+  addToCommandList(String command): adds a command to a command list
+    Takes in text input from the user to represent a command
+  ~~~~
 
 ~~~~
 setReadable(Readable in): Sets the 'in' field of the current controller using the given readable object.
@@ -244,7 +316,16 @@ generateFileName(String saveAsName, String imagePath): Appends the appropriate e
 setImageName(String imageName): Sets the image name field for this model using the given value.
     Takes in the name of the image
 ~~~~
+#
+**Interface IPView (public):** The view interface. MORE TO BE ADDED.
+~~~~
+renderMessage(String message) throws IOException: Transmits and outputs the given message to a later specified destination.
+    Takes in message the string message to be passed on to the user through the view's appendable object.
+    throws an error when the message does not transmit/output correctly.
+~~~~
+* **Class IPViewImpl (public):** An implementation of the Image Processor View interface. This implementation supports the ability to render messages.
 
+<<<<<<< HEAD
 ~~~~
 setWidth(int width): Sets the width field for this model using the given value.
     Takes in the width of the image
@@ -441,6 +522,14 @@ on a specified panel.
 
 **Class IPUtil (public):** This class contains utility methods to read an image from file and simply
 print its contents. Feel free to change this method as required.
+=======
+**Class ImageProcessor (public):**
+* This Image Processor application is used to edit photos and save them as a new file.
+~~~~
+main(String[] args): The main method used to run this Image Processor application.
+    Takes in the user's inputs in a list form.
+~~~~
+>>>>>>> f90ea074050342b90bfec9286dbd25c415fc5be7
 
 ~~~~
 readPPM(String filename, IPView v): Read an image file in the PPM format and print the colors.
@@ -460,6 +549,7 @@ capComponent(IPModel m, int component): Caps a given color component, forcing it
    Takes in the the component to be evaluated.
 ~~~~
 
+<<<<<<< HEAD
 **Class LoadActionListener (public, implements ActionListener):** This class allows the "load"
 buttons to perform certain actions when clicked. This includes "loading" the image, meaning the
 program reads and stores all its data in a new model instance.
@@ -481,6 +571,15 @@ This main method can respond to program arguments in 3 different ways:
    multiple files to run at once. E.g. -file file1Path -file file2Path -file file3Path ...
 ~~~~
 
+=======
+# Changelog ~ What's New In Assignment 6
+* **GUI Version of Image Processor** You can choose between a text-based or GUI-based processor.
+  * **Implemented a new controller (BetterIPConrtoller) to support the GUI-based Image Processor.**
+* **Added a factory for commands (Command Factory)**
+* **Fixed issue with grey scaling**
+
+
+>>>>>>> f90ea074050342b90bfec9286dbd25c415fc5be7
 ## UML Diagram
 
 ![ImageProcessor](https://user-images.githubusercontent.com/91427887/173166302-d8cc9330-cea0-4dfc-a199-78bd84eaf418.png)
