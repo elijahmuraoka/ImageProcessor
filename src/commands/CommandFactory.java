@@ -13,7 +13,7 @@ public class CommandFactory {
    * @param command the user command input represented as a string
    */
   public CommandFactory(String command) {
-    this.command = command;
+    this.command = command; // the command represented as a string
   }
 
   /**

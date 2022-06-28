@@ -3,6 +3,7 @@ package controller;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,10 @@ import view.IPGuiView;
  * - Visualizing a specific RGB component of an image.
  * - Visualizing value, intensity, or luma of an image.
  * - Flip an image horizontally or vertically.
- * - Brightening an image.
+ * - Brightening an image
+ * - Sharpening an image
+ * - Blurring an image
+ * - Adding a Sepia color transformation on top of an image
  */
 public class BetterIPControllerImpl implements BetterIPController {
   // the view used by this controller to process and display
@@ -36,6 +40,23 @@ public class BetterIPControllerImpl implements BetterIPController {
   // a map used to store all current working images
   private final HashMap<String, BetterIPModel> knownImageModels;
   // a map used to store all known Image Processing commands
+
+  /**
+   * An Image Processor controller implementation constructor that takes in only a readable object.
+   *
+   * @param v  an Image Processor view.
+   * @throws IllegalArgumentException when either the model and/or Readable object are null.
+   */
+  public BetterIPControllerImpl(IPGuiView v) throws IllegalArgumentException {
+    if (v == null) {
+      throw new IllegalArgumentException("Either the model, view, and/or "
+              + "readable object(s) are null.\nPlease try new valid parameters.\n");
+    }
+    this.v = v;
+    this.in = new StringReader("");
+    this.v.setController(this);
+    this.knownImageModels = new HashMap<>();
+  }
 
   /**
    * An Image Processor controller implementation constructor that takes in
@@ -51,8 +72,8 @@ public class BetterIPControllerImpl implements BetterIPController {
               + "readable object(s) are null.\nPlease try new valid parameters.\n");
     }
     this.v = v;
-    this.v.setController(this);
     this.in = in;
+    this.v.setController(this);
     this.knownImageModels = new HashMap<>();
   }
 
@@ -70,7 +91,7 @@ public class BetterIPControllerImpl implements BetterIPController {
       switch (userInput.toLowerCase()) {
         case "help":
         case "menu":
-          this.printHelpMenu();
+          //this.printHelpMenu();
           break;
         case "undo": {
           String imageName = scan.next();
@@ -82,7 +103,7 @@ public class BetterIPControllerImpl implements BetterIPController {
           break;
         }
         case "commands":
-          this.printCommands();
+          //this.printCommands();
           break;
         case "load": {
           try {
@@ -196,78 +217,6 @@ public class BetterIPControllerImpl implements BetterIPController {
       } catch (IOException e) {
         this.v.renderMessage("Invalid file path. Please input new values and try again.\n");
       }
-    }
-  }
-
-  /**
-   * Prints and displays both a welcome message and a help menu for the user to reference whenever
-   * they would like.
-   *
-   * @throws IllegalStateException when unable to transmit the input(s) and/or output(s) properly
-   */
-  private void printHelpMenu() throws IllegalStateException {
-    try {
-      this.v.renderMessage(this.in.toString());
-      this.v.renderMessage("Welcome to our Image Processor Program!\n"
-              + "Press `q` or 'Q' to quit the program at any time.\n"
-              + "Type 'commands' to see the available list of image processing commands.\n"
-              + "Type 'help' or 'menu' if you would like to see this information again.\n");
-    } catch (IOException e) {
-      throw new IllegalStateException("Error: Invalid input and/or output(s)");
-    }
-  }
-
-  /**
-   * Prints and displays an extensive list of available commands for the user to use when
-   * editing and processing their images.
-   *
-   * @throws IllegalStateException when unable to transmit the input(s) and/or output(s) properly
-   */
-  private void printCommands() throws IllegalStateException {
-    try {
-      this.v.renderMessage("Listed below are some basic commands you can execute on an image:\n"
-              + "* All commands are case-insensitive *\n\n"
-              + "(1) Load and store an image in this application.\n"
-              + "    Input Format Example(s):\n"
-              + "       load <imageName> <imagePath>\n"
-              + "(2) Save any (un)modified images to this device.\n"
-              + "    Input Format Example(s):\n"
-              + "       save <imageName> <saveAsName> <saveLocation> <extensionType>\n"
-              + "(3) Change the brightness of an image.\n"
-              + "    Input Format Example(s):\n"
-              + "       ChangeBrightness <imageName> <increment> <destName>\n"
-              + "       cb <imageName> <increment> <destName>\n"
-              + "(4) Flip an image horizontally.\n"
-              + "    Input Format Example(s):\n"
-              + "       HorizontalFlip <imageName> <destName>\n"
-              + "       flip-h <imageName> <destName>\n"
-              + "(4) Flip an image vertically.\n"
-              + "    Input Format Example(s):\n"
-              + "       VerticalFlip <imageName> <destName>\n"
-              + "       flip-v <imageName> <destName>\n"
-              + "(5) Create a greyscale that visualizes the red, green, blue,\n"
-              + "    value, intensity, or luma component of an image.\n"
-              + "    Input Format Example(s):\n"
-              + "       Greyscale <imageName> <visType> <destName>\n"
-              + "       gs <imageName> <visType> <destName>\n"
-              + "       gs-red <imageName> <destName>\n"
-              + "       gs-blue <imageName> <destName>\n"
-              + "       gs-green <imageName> <destName>\n"
-              + "       gs-value <imageName> <destName>\n"
-              + "       gs-intensity <imageName> <destName>\n"
-              + "       gs-luma <imageName> <destName>\n"
-              + "(6) Blur an image.\n"
-              + "    Input Format Example(s):\n"
-              + "       Blur <imageName> <destName>\n"
-              + "(7) Sharpen an image.\n"
-              + "    Input Format Example(s):\n"
-              + "       Sharpen <imageName> <destName>\n"
-              + "(8) Add a sepia-tone color filter to an image.\n"
-              + "    Input Format Example(s):\n"
-              + "       Sepia <imageName> <destName>\n"
-              + "\nType 'commands' if you would like to see this information again.\n");
-    } catch (IOException e) {
-      throw new IllegalStateException("Error: Invalid input and/or output(s)");
     }
   }
 

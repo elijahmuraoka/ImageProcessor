@@ -1,21 +1,38 @@
-package ActionListeners;
+package actionListeners;
 
-import java.awt.*;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JFileChooser;
+
 
 import controller.BetterIPController;
-import view.IPGuiView;
 
+/**
+ * This class allows the "load" buttons to perform certain actions when clicked.
+ * This includes "loading" the image, meaning the program reads and stores all its data
+ * in a new model instance.
+ */
 public class LoadActionListener implements ActionListener {
   BetterIPController c;
   JPanel parent;
 
-  public LoadActionListener(BetterIPController c, JPanel parent) {
+  /**
+   * A constructor for the LoadActionListener class.
+   *
+   * @param c      the program's controller
+   * @param parent the parent component of the specific load buttons
+   */
+  public LoadActionListener(BetterIPController c, JPanel parent)
+          throws IllegalArgumentException {
+    if (c == null || parent == null) {
+      throw new IllegalArgumentException("Error: Either the controller and/or view parameters " +
+              "for this LoadActionListener are null.");
+    }
     this.c = c;
     this.parent = parent;
   }

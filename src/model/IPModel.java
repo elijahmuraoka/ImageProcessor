@@ -49,7 +49,7 @@ public interface IPModel {
   void setHeight(int height) throws IllegalArgumentException;
 
   /**
-   * Sets the height field for this model using the given value.
+   * Sets the max component field for this model using the given value.
    *
    * @param maxComponent the maximum color component
    * @throws IllegalArgumentException when the maximum color component is negative or equal to zero

@@ -15,14 +15,14 @@ public class IPUtils {
    * @param row the given row value
    * @param col the given column value
    * @return a boolean representing whether the (row, column) coordinate exists within the model's
-   * image dimensions
+   *         image dimensions
    */
   public boolean isWithinDimensions(IPModel m, int row, int col) {
     return row >= 0 && row < m.getHeight() && col >= 0 && col < m.getWidth();
   }
 
   /**
-   * Caps a given color component, forcing it to exist between 0 and 255
+   * Caps a given color component, forcing it to exist between 0 and 255.
    *
    * @param component the component to be evaluated
    * @return the component in a range between 0 and 255

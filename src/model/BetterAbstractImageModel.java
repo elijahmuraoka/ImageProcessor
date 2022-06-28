@@ -1,6 +1,6 @@
 package model;
 
-import java.awt.*;
+import java.awt.Image;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;

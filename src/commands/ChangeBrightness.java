@@ -8,14 +8,14 @@ import utils.IPUtils;
 
 /**
  * The command is used to change the brightness of a certain image.
- * This means all RGB values increase or decrease by a set increment amount.
+ * This means all RGB values increase or decrease by a set percentage amount.
  */
 public class ChangeBrightness implements IPCommand {
 
   /**
-   * Change the brightness of the image by the given increment to create a new image,
+   * Change the brightness of the image by a given percentage to create a new image,
    * referred to henceforth by the given destination name.
-   * The increment may be positive (brightening) or negative (darkening).
+   * The percentage may be positive (brightening) or negative (darkening).
    *
    * @param m    the Image model to be used and acted on.
    * @param scan the scanner used to read and retrieve user inputs.

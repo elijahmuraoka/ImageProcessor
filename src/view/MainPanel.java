@@ -11,26 +11,39 @@ import java.util.Objects;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
-import ActionListeners.LoadActionListener;
+import actionListeners.LoadActionListener;
 import controller.BetterIPController;
 import model.BetterIPModel;
 
+/**
+ * The main panel class used for loading, editing, and saving images altogether.
+ * This main panel has the capability to interact and execute all commands within the command
+ * package as seen through its east panel and various buttons. It can also load and store
+ * multiple images so the user can work on multiple at once. A key feature of this class
+ * is the ability to call the undo method through this class's menu bar as well.
+ */
 public class MainPanel extends JPanel {
-  private int width;
-  private int height;
+  private final int width;
+  private final int height;
   private BetterIPModel model;
-  private int undoCounter;
-  private JPanel northPanel;
-  private JPanel southPanel;
+  private final JPanel southPanel;
   private JProgressBar progressBar;
-  private JPanel loadedImagesPanel;
-  private JPanel eastPanel;
-  private JPanel westPanel;
-  private JPanel centerPanel;
-  private JLabel mainImgLabel;
-  private IPGuiView v;
-  private BetterIPController c;
+  private final JPanel loadedImagesPanel;
+  private final JPanel eastPanel;
+  private final JPanel westPanel;
+  private final JPanel centerPanel;
+  private final JLabel mainImgLabel;
+  private final IPGuiView v;
+  private final BetterIPController c;
 
+  /**
+   * The Main Panel constructor used to generate a standard main panel object to produce the
+   * desired editing view.
+   * @param width the width of the main panel
+   * @param height the height of the main panel
+   * @param v the view for this main panel
+   * @param c the controller which this class communicates with
+   */
   public MainPanel(int width, int height, IPGuiView v, BetterIPController c) {
     this.width = width;
     this.height = height;
@@ -41,24 +54,24 @@ public class MainPanel extends JPanel {
     this.setBackground(Color.BLACK);
     this.setLayout(new BorderLayout(this.width / 360, this.height / 300));
 
-//    // create the north panel
-//    this.northPanel = new JPanel();
-//    this.northPanel.setPreferredSize(new Dimension(this.width,
-//            this.height / 10));
-//    this.northPanel.setBackground(Color.PINK);
-//    this.northPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-//    this.northPanel.setLayout(new GridBagLayout());
-//    this.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-//    JLabel title = new JLabel("Image Processor Application");
-//    title.setFont(new Font("Plain", Font.BOLD, this.height / 20));
-//    title.setHorizontalAlignment(JLabel.CENTER);
-//    title.setVerticalAlignment(JLabel.CENTER);
-//    title.setBorder(BorderFactory.createLineBorder(Color.RED));
-//    title.setBackground(Color.WHITE);
-//    title.setOpaque(true);
-//    this.northPanel.add(title);
-//    this.add(this.northPanel, BorderLayout.NORTH);
-//    this.northPanel.setLayout(new GridBagLayout());
+    //    // create the north panel
+    //    this.northPanel = new JPanel();
+    //    this.northPanel.setPreferredSize(new Dimension(this.width,
+    //            this.height / 10));
+    //    this.northPanel.setBackground(Color.PINK);
+    //    this.northPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+    //    this.northPanel.setLayout(new GridBagLayout());
+    //    this.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+    //    JLabel title = new JLabel("Image Processor Application");
+    //    title.setFont(new Font("Plain", Font.BOLD, this.height / 20));
+    //    title.setHorizontalAlignment(JLabel.CENTER);
+    //    title.setVerticalAlignment(JLabel.CENTER);
+    //    title.setBorder(BorderFactory.createLineBorder(Color.RED));
+    //    title.setBackground(Color.WHITE);
+    //    title.setOpaque(true);
+    //    this.northPanel.add(title);
+    //    this.add(this.northPanel, BorderLayout.NORTH);
+    //    this.northPanel.setLayout(new GridBagLayout());
     this.createMenuBar();
 
     // create the center panel
@@ -90,7 +103,7 @@ public class MainPanel extends JPanel {
 
     // create the west panel
     this.westPanel = new JPanel();
-    this.westPanel.setPreferredSize(new Dimension(this.width / 5, this.height));
+    this.westPanel.setPreferredSize(new Dimension(270, this.height));
     this.westPanel.setBackground(Color.DARK_GRAY);
     this.westPanel.setBorder(this.createTitledBorder("Histograms"));
     this.add(this.westPanel, BorderLayout.WEST);
@@ -106,40 +119,53 @@ public class MainPanel extends JPanel {
     this.makeCommandButtons();
   }
 
-  // creates a specific titled border
+  // Creates a titled border given a specific title string.
   private TitledBorder createTitledBorder(String title) {
     TitledBorder westBorder = new TitledBorder(title);
     westBorder.setTitleColor(Color.WHITE);
     return westBorder;
   }
 
-  // create the progress bar added at the bottom of the page
+  // Creates the progress bar that is added at the bottom of the page.
+  // STILL IN WORKS
   private void createProgressBar() {
     this.progressBar = new JProgressBar();
-    progressBar.setValue(0);
-    progressBar.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-    progressBar.setFont(new Font("Plain", Font.BOLD, this.height / 50));
-    progressBar.setString("Image Processing Bar");
+    this.progressBar.setValue(0);
+    this.progressBar.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+    this.progressBar.setFont(new Font("Plain", Font.BOLD, this.height / 50));
+    this.progressBar.setString("Image Processing Bar");
     this.progressBar.setBorderPainted(true);
     this.progressBar.setStringPainted(true);
     this.southPanel.add(this.progressBar, BorderLayout.PAGE_END);
   }
 
-
+  // *Temporary* helper method to set the progress bar to a specific amount with
+  // the "Loading..." string, letting the client know that the application is not finished
+  // doing its delegated tasks yet.
+  // This method also sets a wait cursor when running slower commands.
   private void loadingProgressBar() {
-    progressBar.setValue(50);
-    progressBar.setString("Loading...");
+    this.progressBar.setValue(50);
+    this.progressBar.setString("Loading...");
     setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
   }
 
+  // *Temporary* helper method to set the progress bar to full, with
+  // the "Done!" string, letting the client know that the application has finished
+  // doing its delegated tasks.
+  // This method also sets a wait cursor back to its default settings.
   private void completeProgressBar() {
     progressBar.setValue(100);
     progressBar.setString("Done!");
     setCursor(Cursor.getDefaultCursor());
   }
 
-  // creates the menu bar at the top of the page
-  private void createMenuBar() {
+  // Creates the menu bar at the top of the page
+  // Contains 4 key menu items...
+  // - help
+  // - load
+  // - undo
+  // - save
+  private void createMenuBar() throws IllegalStateException {
     JMenuBar menuBar = new JMenuBar();
     JMenu menu = new JMenu("Menu"); // create a menu page
     JMenuItem help = new JMenuItem("help");
@@ -147,19 +173,30 @@ public class MainPanel extends JPanel {
       try {
         this.v.renderMessage("Help Menu:\n"
                 + "---------------------------------------------------------------------------\n"
-                + "-- HOW TO LOAD AN IMAGE --\n"
+                + "HOW TO LOAD AN IMAGE\n"
                 + "     1. Click on the 'menu' icon in the top left corner\n"
                 + "     2. Click on the 'load' item\n"
                 + "     3. Select the image you would like to use "
                 + "(must load a .ppm, .jpg, .png, or .bmp file)\n"
-                + "-- HOW TO SAVE AN IMAGE --\n"
+                + "HOW TO EDIT AN IMAGE\n"
+                + "     1. Navigate to the east (right) panel titled 'Edit'\n"
+                + "     NOTE: All labeled buttons will automatically call the command once "
+                + "clicked\n"
+                + "                Set any sliders and/or select options beforehand\n"
+                + "     2. Click on the desired action button\n"
+                + "     3. Wait for the program to make its changes on the main image displayed\n"
+                + "HOW TO UNDO\n"
+                + "     1. Click on the 'menu' icon in the top left corner\n"
+                + "     2. Click on the 'undo' item\n"
+                + "     3. Wait for the program to make its changes on the main image displayed\n"
+                + "HOW TO SAVE AN IMAGE\n"
                 + "     1. Click on the 'menu' icon in the top left corner\n"
                 + "     2. Click on the 'save' item\n"
                 + "     3. Enter a valid name "
                 + "(must add a .ppm, .jpg, .png, or .bmp file extension at the end)\n"
                 + "     4. Select the desired destination to save your image");
       } catch (IOException ex) {
-        throw new RuntimeException(ex);
+        throw new IllegalStateException(ex.getMessage());
       }
     });
     JMenuItem load = new JMenuItem("load");
@@ -177,14 +214,14 @@ public class MainPanel extends JPanel {
             this.c.save(this.model.getImageName(), imagePath,
                     imagePath, null);
           } catch (IOException ex) {
-            throw new RuntimeException(ex);
+            throw new IllegalStateException(ex.getMessage());
           }
         }
       }
     });
     JMenuItem undo = new JMenuItem("undo");
     undo.addActionListener(e -> {
-      System.out.println("Attempting to Undo");
+      System.out.println("Attempting to Undo...");
       BetterIPModel current = this.c.getKnownImageModels().get(this.model.getImageName());
       this.loadingProgressBar();
       if (current.getUndoCounter().size() == 0) {
@@ -370,16 +407,15 @@ public class MainPanel extends JPanel {
     this.eastPanel.add(flipPanel);
   }
 
-  public void setMainImage(BetterIPModel model) {
-    this.model = model;
-  }
-
+  // Renders all the current model's histograms and displays them on the west panel
   private void createHistograms() {
     JPanel allHistograms = new JPanel(new GridLayout(0, 1));
     Map<Integer, Integer> redHistogram = this.model.generateHistograms().get(0);
     Map<Integer, Integer> greenHistogram = this.model.generateHistograms().get(1);
     Map<Integer, Integer> blueHistogram = this.model.generateHistograms().get(2);
     Map<Integer, Integer> intensityHistogram = this.model.generateHistograms().get(3);
+    int hWidth = this.westPanel.getWidth();
+    System.out.println(hWidth);
     int hHeight = this.height / 6;
     //    for (Map.Entry<Integer, Integer> entry : redHistogram.entrySet()) {
     //      System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
@@ -413,40 +449,64 @@ public class MainPanel extends JPanel {
     this.westPanel.add(allHistograms);
   }
 
-  public void showMainImageModel() throws IllegalStateException {
+  /**
+   * This method is used to set the main image model of the current view
+   *
+   * @param model the model to be prioritized and edited
+   */
+  public void setMainImage(BetterIPModel model) {
+    this.model = model;
+  }
+
+  /**
+   * Turns the current main image model into an image display which a user can apply changes to and
+   * visually see the results.
+   *
+   * @throws IOException when the message is unable to render/transmit properly.
+   */
+  public void showMainImageModel() throws IOException {
     this.centerPanel.setBorder(BorderFactory.createTitledBorder("Preview: "
             + this.model.getImageName()));
     System.out.println("Show Main Image Model Method: " + this.model.getImageName());
-    BufferedImage mainImg = new BufferedImage(this.model.getWidth(), this.model.getHeight(),
-            BufferedImage.TYPE_INT_ARGB);
-    for (int i = 0; i < this.model.getHeight(); i++) {
-      for (int j = 0; j < this.model.getWidth(); j++) {
-        int[] pixel = this.model.getWorkingImageData().get(i).get(j);
-        int r = pixel[0];
-        int g = pixel[1];
-        int b = pixel[2];
-        mainImg.setRGB(j, i, new Color(r, g, b).getRGB());
+    try {
+      BufferedImage mainImg = new BufferedImage(this.model.getWidth(), this.model.getHeight(),
+              BufferedImage.TYPE_INT_ARGB);
+      for (int i = 0; i < this.model.getHeight(); i++) {
+        for (int j = 0; j < this.model.getWidth(); j++) {
+          int[] pixel = this.model.getWorkingImageData().get(i).get(j);
+          int r = pixel[0];
+          int g = pixel[1];
+          int b = pixel[2];
+          mainImg.setRGB(j, i, new Color(r, g, b).getRGB());
+        }
       }
+      double widthToHeight = 1.0 * this.model.getWidth() / this.model.getHeight();
+      model.setImage(mainImg);
+      int newHeight = this.height * 3 / 5;
+      int newWidth = (int) (newHeight * widthToHeight);
+      Image mainImgScaled = mainImg.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+      this.mainImgLabel.setIcon(new ImageIcon(mainImgScaled));
+      // this.mainImgLabel.setText("Current Image: " + model.getImageName());
+      this.mainImgLabel.setVerticalTextPosition(JLabel.BOTTOM);
+      this.mainImgLabel.setHorizontalAlignment(JLabel.CENTER);
+      this.centerPanel.add(mainImgLabel);
+    } catch (IllegalArgumentException e) {
+      this.v.renderMessage("Unable to read this file. Please try again.");
+      return;
     }
-    double widthToHeight = 1.0 * this.model.getWidth() / this.model.getHeight();
-    model.setImage(mainImg);
-    int newHeight = this.height * 3 / 5;
-    int newWidth = (int) (newHeight * widthToHeight);
-    Image mainImgScaled = mainImg.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-    this.mainImgLabel.setIcon(new ImageIcon(mainImgScaled));
-    // this.mainImgLabel.setText("Current Image: " + model.getImageName());
-    this.mainImgLabel.setVerticalTextPosition(JLabel.BOTTOM);
-    this.mainImgLabel.setHorizontalAlignment(JLabel.CENTER);
-    this.centerPanel.add(mainImgLabel);
-//    JScrollPane scrollMainImage = new JScrollPane(this.centerPanel,
-//            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-//            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-//    this.add(scrollMainImage, BorderLayout.CENTER);
+    //    JScrollPane scrollMainImage = new JScrollPane(this.centerPanel,
+    //            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+    //            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    //    this.add(scrollMainImage, BorderLayout.CENTER);
 
     this.westPanel.removeAll();
     this.createHistograms();
   }
 
+  /**
+   * Shows all loaded images other than the current one at the bottom of the screen to allow the
+   * client to work on and edit multiple images at once from the gallery.
+   */
   public void showLoadedImages() {
     this.loadedImagesPanel.removeAll();
     Objects.requireNonNull(this.model);
@@ -458,12 +518,13 @@ public class MainPanel extends JPanel {
         this.addLoadedImage(entry.getValue());
       }
     }
-//    JScrollPane scrollLoaded = new JScrollPane(this.loadedImagesPanel,
-//            JScrollPane.VERTICAL_SCROLLBAR_NEVER,
-//            JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-//    this.southPanel.add(scrollLoaded);
+    //    JScrollPane scrollLoaded = new JScrollPane(this.loadedImagesPanel,
+    //            JScrollPane.VERTICAL_SCROLLBAR_NEVER,
+    //            JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    //    this.southPanel.add(scrollLoaded);
   }
 
+  // Adds a single model and its image display to the current loaded image gallery.
   private void addLoadedImage(BetterIPModel m) {
     Image image = m.getImage();
     double widthToHeight = 1.0 * m.getWidth() / m.getHeight();

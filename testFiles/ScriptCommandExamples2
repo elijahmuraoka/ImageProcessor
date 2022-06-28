@@ -1,0 +1,13 @@
+load
+images/togo.jpeg
+images/togo.jpeg
+
+cb images/togo.jpeg 60 images/togo.jpeg
+sepia images/togo.jpeg images/togo.jpeg
+flip-v images/togo.jpeg images/togo.jpeg
+blur images/togo.jpeg images/togo.jpeg
+save images/togo.jpeg new_togo res jpg
+
+load
+images/original.ppm
+images/original.ppm

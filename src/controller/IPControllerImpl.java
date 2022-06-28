@@ -20,7 +20,6 @@ import commands.Sepia;
 import commands.Sharpen;
 import commands.VerticalFlip;
 import model.BetterIPModel;
-import model.IPModel;
 import model.ImageFactory;
 import view.IPView;
 
