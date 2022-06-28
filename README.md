@@ -483,7 +483,7 @@ This main method can respond to program arguments in 3 different ways:
 
 ## UML Diagram
 
-![ImageProcessor](https://user-images.githubusercontent.com/91427887/173166302-d8cc9330-cea0-4dfc-a199-78bd84eaf418.png)
+![ImageProcessor](h![UML_FINAL](https://user-images.githubusercontent.com/91427887/176216160-f7e808bc-874e-451f-998a-b6db70ccf896.png)
 
 ## Script File Instructions
 
