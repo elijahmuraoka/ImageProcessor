@@ -630,8 +630,3 @@ Example: Sepia Koala KoalaSepia
 ~~~~
 
 ##### **We own the "togo," "eli" and "d" images and authorize their use in this project.**
-
-#####  
-
-**Bucketboi Citation
-URL: https://www.reddit.com/r/funny/comments/1h4w91/working_at_a_camp_and_i_found_this_kid/**
