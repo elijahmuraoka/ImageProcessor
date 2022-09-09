@@ -1,6 +1,6 @@
 # ImageProcessor
 
-### Welcome to Elijah and Damian's Image Processor Application!
+### Welcome to Elijah's Image Processor Application
 
 > In this document, you will find everything you need to understand our program design and also use
 > it yourself.
