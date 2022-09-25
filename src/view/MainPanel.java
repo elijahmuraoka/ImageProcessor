@@ -25,6 +25,7 @@ import model.BetterIPModel;
 public class MainPanel extends JPanel {
   private final int width;
   private final int height;
+  private boolean shown;
   private BetterIPModel model;
   private final JPanel southPanel;
   private JProgressBar progressBar;
@@ -47,6 +48,7 @@ public class MainPanel extends JPanel {
   public MainPanel(int width, int height, IPGuiView v, BetterIPController c) {
     this.width = width;
     this.height = height;
+    this.shown = false;
     this.v = v;
     this.c = c;
     this.mainImgLabel = new JLabel();
@@ -522,6 +524,17 @@ public class MainPanel extends JPanel {
     //            JScrollPane.VERTICAL_SCROLLBAR_NEVER,
     //            JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     //    this.southPanel.add(scrollLoaded);
+    try {
+      if (!this.shown) {
+        this.v.renderMessage("Hey user! Please refer to the menu in the top left corner,\n" +
+                "then click the help tab for instructions on how to use this application.\n" +
+                "Enjoy!");
+        this.shown = true;
+      }
+    }
+    catch(IOException e) {
+      throw new IllegalStateException(e);
+    }
   }
 
   // Adds a single model and its image display to the current loaded image gallery.

@@ -1,12 +1,10 @@
 package view;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 import actionListeners.LoadActionListener;
 import controller.BetterIPController;
@@ -62,45 +60,41 @@ public class SimpleGuiView implements IPGuiView {
     this.welcome.setPreferredSize(new Dimension(baseWidth, baseHeight));
     this.welcome.setBackground(Color.DARK_GRAY);
     this.welcome.setLayout(new GridBagLayout());
+    String fontType = "Roboto";
 
-    JLabel welcomeMessage = new JLabel("Welcome to the Image Processor Program!" +
-            " Please continue. I PROMISE ITS NOT THIS BAD.");
-    // welcomeMessage.setPreferredSize(new Dimension(baseWidth / 15, baseHeight / 10));
-    welcomeMessage.setHorizontalAlignment(JLabel.CENTER);
-    welcomeMessage.setVerticalAlignment(JLabel.CENTER);
-    welcomeMessage.setBackground(Color.WHITE);
-    welcomeMessage.setForeground(Color.BLACK);
-    welcomeMessage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    welcomeMessage.setFont(new Font("Plain", Font.BOLD, baseHeight / 65));
+    JLabel welcomeMessage = new JLabel("Welcome to Elijah's Image Processor Program!");
+    welcomeMessage.setFont(new Font(fontType, Font.ITALIC + Font.BOLD, baseHeight / 30));
+    welcomeMessage.setPreferredSize(welcomeMessage.getPreferredSize());
 
-    JButton loadButton = new JButton("Click to Load an Image");
-    //loadButton.setPreferredSize(new Dimension(baseWidth / 5, baseHeight /10));
-    loadButton.setHorizontalAlignment(JLabel.CENTER);
-    loadButton.setVerticalAlignment(JLabel.CENTER);
-    loadButton.setBackground(Color.GREEN);
-    loadButton.setForeground(Color.BLACK);
-    loadButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    //loadButton.setIcon(new ImageIcon("images/eli.jpg"));
-    // loadButton.setVerticalTextPosition(JButton.TOP);
-    loadButton.setFont(new Font("Plain", Font.PLAIN, baseHeight / 25));
+    JLabel helpMessage = new JLabel("<html>(Please load in either a PNG, JPG, BMP, or PPM image,<br>" +
+            "and keep in mind that larger image files may be slow to load & edit)</html>");
+    helpMessage.setFont(new Font(fontType, Font.BOLD, baseHeight / 60));
+    helpMessage.setPreferredSize(helpMessage.getPreferredSize());
+    helpMessage.setHorizontalAlignment(SwingConstants.CENTER);
+
+    JButton loadButton = new JButton("Click Here to Load an Image");
+    loadButton.setFont(new Font(fontType, Font.PLAIN, baseHeight / 30));
+    loadButton.setPreferredSize(new Dimension(baseHeight / 35, baseHeight / 25));
     loadButton.addActionListener(new LoadActionListener(this.c, this.welcome));
+    //loadButton.setBorder(new EmptyBorder(10, 0, 10, 0));
 
-    Image welcomeImage = null;
-    try {
-      welcomeImage = ImageIO.read(new File("images/bucketboi.jpg"));
-    } catch (IOException e) {
-      this.renderMessage("Error: Welcome Image Not Found.");
-    }
-    Objects.requireNonNull(welcomeImage);
-    Image welcomeImageScaled = welcomeImage.getScaledInstance(baseWidth / 6,
-            baseHeight / 5, Image.SCALE_SMOOTH);
-    ImageIcon welcomeImageIcon = new ImageIcon(welcomeImageScaled);
+    //    Image welcomeImage = null;
+    //    try {
+    //      welcomeImage = ImageIO.read(new File("images/bucketboi.jpg"));
+    //    } catch (IOException e) {
+    //      this.renderMessage("Error: Welcome Image Not Found.");
+    //    }
+    //    Objects.requireNonNull(welcomeImage);
+    //    Image welcomeImageScaled = welcomeImage.getScaledInstance(baseWidth / 6,
+    //            baseHeight / 5, Image.SCALE_SMOOTH);
+    //    ImageIcon welcomeImageIcon = new ImageIcon(welcomeImageScaled);
     JPanel centerWelcome = new JPanel();
     centerWelcome.setBackground(Color.LIGHT_GRAY);
     centerWelcome.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    centerWelcome.setLayout(new GridLayout(0, 1, 0, baseHeight / 20));
-    centerWelcome.add(new JLabel(welcomeImageIcon));
+    centerWelcome.setBorder(new EmptyBorder(20, baseWidth / 5, 20, baseWidth / 5));
+    centerWelcome.setLayout(new GridLayout(3, 1, 0, baseHeight / 25));
     centerWelcome.add(welcomeMessage);
+    centerWelcome.add(helpMessage);
     centerWelcome.add(loadButton);
     this.welcome.add(centerWelcome);
 
