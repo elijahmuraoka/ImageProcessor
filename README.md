@@ -1,6 +1,6 @@
 # ImageProcessor
 
-### Welcome to Elijah and Damian's Image Processor Application!
+### Welcome to Elijah's Image Processor Application
 
 > In this document, you will find everything you need to understand our program design and also use
 > it yourself.
@@ -483,7 +483,7 @@ This main method can respond to program arguments in 3 different ways:
 
 ## UML Diagram
 
-![ImageProcessor](https://user-images.githubusercontent.com/91427887/173166302-d8cc9330-cea0-4dfc-a199-78bd84eaf418.png)
+![ImageProcessor](https://user-images.githubusercontent.com/91427887/176216160-f7e808bc-874e-451f-998a-b6db70ccf896.png)
 
 ## Script File Instructions
 
@@ -630,8 +630,3 @@ Example: Sepia Koala KoalaSepia
 ~~~~
 
 ##### **We own the "togo," "eli" and "d" images and authorize their use in this project.**
-
-#####  
-
-**Bucketboi Citation
-URL: https://www.reddit.com/r/funny/comments/1h4w91/working_at_a_camp_and_i_found_this_kid/**
